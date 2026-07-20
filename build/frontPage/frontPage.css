@@ -1244,8 +1244,14 @@ h1,
 .static{
   position: static;
 }
+.block{
+  display: block;
+}
 .contents{
   display: contents;
+}
+.hidden{
+  display: none;
 }
 .grow{
   flex-grow: 1;

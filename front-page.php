@@ -1,112 +1,228 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+/**
+ * Homepage Template — Garden Basket Hub
+ */
 
-<head>
+get_header();
+?>
 
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link
-		href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=Roboto:wght@400;500&display=swap"
-		rel="stylesheet">
-	<link rel="stylesheet" href='/wp-content/themes/gardenbaskethubb/build/frontPage/frontPage.css?a8'>
-	<script type="module" defer
-		src='/wp-content/themes/gardenbaskethubb/build/frontPage/frontPage.bundle.js?a8'></script>
+<!-- ============================================================
+     HOMEPAGE HERO SECTION
+     ============================================================ -->
+<section class="page-hero"
+  style="padding:180px 80px 100px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);">
+  <p class="section-label">🌿 Rooted in Jaipur · Same-Day Delivery</p>
+  <h1 style="font-size:clamp(2.8rem, 5vw, 4.5rem);">Growing happiness, <em>one seed</em> at a time.</h1>
+  <p style="font-size:1.15rem;max-width:620px;margin:20px auto 36px;">
+    Fresh pesticide-free seedlings, heirloom organic seeds, nutrient-rich vermicompost, and essential gardening tools
+    delivered directly to your doorstep.
+  </p>
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>" class="btn-primary" style="padding:16px 36px;font-size:1rem;">
+      Explore Shop ➔
+    </a>
+    <a href="<?php echo esc_url(home_url('/about-us/')); ?>" class="btn-ghost"
+      style="padding:16px 24px;font-size:1rem;">
+      Read Our Story
+    </a>
+  </div>
+</section>
 
-	<?php
-	$homeUrl = get_home_url();
-	get_header();
-	?>
+<!-- ============================================================
+     FEATURED CATEGORIES
+     ============================================================ -->
+<section style="padding:60px 80px 80px;">
+  <p class="section-label">Browse by category</p>
+  <h2 class="section-title">Everything for your home garden</h2>
 
-	<main class="main--container">
+  <div style="display:grid;grid-template-columns:repeat(5, 1fr);gap:20px;margin-top:40px;" class="cat-grid-wrapper">
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>"
+      style="background:var(--sand);padding:32px 20px;border-radius:4px;text-align:center;text-decoration:none;transition:transform 0.2s;">
+      <div style="font-size:3.5rem;margin-bottom:12px;">🌱</div>
+      <h3 style="font-family:var(--f-display);font-size:1.1rem;color:var(--soil);">Seeds</h3>
+      <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-transform:uppercase;">120+
+        Varieties</span>
+    </a>
 
-		<section class="blog-header-section">
-			<div class="blog-img-text-container">
-				<img src="https://gardenbaskethubb.com/wp-content/uploads/2025/01/home-banner-1.webp" width="427"
-					height="437" fetchpriority="high" alt="gardenbaskethubb">
-				<div class="text-container">
-					<p>I make it Simple,</p>
-					<p> I make it Valuable,and</p>
-					<p> I do it for the Long term.</p>
-				</div>
-			</div>
-		</section>
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>"
+      style="background:var(--sand);padding:32px 20px;border-radius:4px;text-align:center;text-decoration:none;transition:transform 0.2s;">
+      <div style="font-size:3.5rem;margin-bottom:12px;">🌿</div>
+      <h3 style="font-family:var(--f-display);font-size:1.1rem;color:var(--soil);">Seedlings</h3>
+      <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-transform:uppercase;">Jaipur
+        Only</span>
+    </a>
 
-		<section class="blogs">
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>"
+      style="background:var(--sand);padding:32px 20px;border-radius:4px;text-align:center;text-decoration:none;transition:transform 0.2s;">
+      <div style="font-size:3.5rem;margin-bottom:12px;">🪴</div>
+      <h3 style="font-family:var(--f-display);font-size:1.1rem;color:var(--soil);">Compost & Soil</h3>
+      <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-transform:uppercase;">100%
+        Organic</span>
+    </a>
 
-			<?php
-			$args = [
-				'post_type' => 'blog',
-				'numberposts' => -1,
-			];
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>"
+      style="background:var(--sand);padding:32px 20px;border-radius:4px;text-align:center;text-decoration:none;transition:transform 0.2s;">
+      <div style="font-size:3.5rem;margin-bottom:12px;">🛠️</div>
+      <h3 style="font-family:var(--f-display);font-size:1.1rem;color:var(--soil);">Tools</h3>
+      <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-transform:uppercase;">Durable
+        Kits</span>
+    </a>
 
-			$filtered_posts = get_posts($args);
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>"
+      style="background:var(--sand);padding:32px 20px;border-radius:4px;text-align:center;text-decoration:none;transition:transform 0.2s;">
+      <div style="font-size:3.5rem;margin-bottom:12px;">🌸</div>
+      <h3 style="font-family:var(--f-display);font-size:1.1rem;color:var(--soil);">Pots & Planters</h3>
+      <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-transform:uppercase;">Terracotta &
+        Plastic</span>
+    </a>
+  </div>
+</section>
 
-			foreach ($filtered_posts as $post) {
+<!-- ============================================================
+     FEATURED PRODUCTS CATALOG
+     ============================================================ -->
+<section style="background:var(--sand);">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
+    <div>
+      <p class="section-label">Handpicked favorites</p>
+      <h2 class="section-title">Best Sellers This Season</h2>
+    </div>
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>" class="btn-ghost">View All Products ➔</a>
+  </div>
 
-				$post_title = $post->post_title;
-				$post_id = $post->ID;
-				$featured_Image_url = get_field('featured_image_url');
-				$Post_Excerpt = get_the_excerpt();
-				$Date_Of_Published = get_the_date('F j, Y', $post->ID);
-				$Permalinks = get_permalink($post->ID);
-				$isFull = strtolower(get_field('is_full_image')) == true;
-				$isDark = strtolower(get_field('is_dark')) == true;
-				?>
+  <div class="product-grid">
+    <?php
+    $home_products = new WP_Query(array(
+      'post_type' => 'product',
+      'posts_per_page' => 6,
+    ));
 
+    if ($home_products->have_posts()):
+      while ($home_products->have_posts()):
+        $home_products->the_post();
+        $hp_id = get_the_ID();
+        $hp_price = get_field('product_price');
+        $hp_offer = get_field('product_offer_price');
+        $hp_badge = get_field('discount_label');
+        $hp_thumb = get_the_post_thumbnail_url($hp_id, 'gbh-card');
+        if (!$hp_thumb)
+          $hp_thumb = get_field('product_image');
+        ?>
+        <div class="product-card" data-product-id="<?php echo esc_attr($hp_id); ?>">
+          <div class="product-img">
+            <?php if ($hp_thumb): ?>
+              <img src="<?php echo esc_url($hp_thumb); ?>" alt="<?php the_title(); ?>">
+            <?php else: ?>
+              🌱
+            <?php endif; ?>
 
-					<div class="resource-list">
+            <?php if ($hp_badge): ?>
+              <span class="badge-hot"><?php echo esc_html($hp_badge); ?></span>
+            <?php else: ?>
+              <span class="badge-jaipur">Jaipur Nursery</span>
+            <?php endif; ?>
+          </div>
 
-						<div class="resource">
-							<div class="date">
-								<p> <?php echo get_the_date(); ?> </p>
-								<div class="read-time">
-									<svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-										xmlns="http://www.w3.org/2000/svg">
-										<g clip-path="url(#clip0_640_2281)">
-											<path
-												d="M11.2366 2.64797L9.97703 1.38844C9.79396 1.20537 9.49717 1.20537 9.31413 1.38844C9.13108 1.57151 9.13105 1.8683 9.31413 2.05134L9.61244 2.34966L9.00067 2.96142C8.20431 2.29706 7.23602 1.896 6.20313 1.80265V0.9375H6.625C6.88389 0.9375 7.09375 0.727641 7.09375 0.46875C7.09375 0.209859 6.88389 0 6.625 0H4.84375C4.58486 0 4.375 0.209859 4.375 0.46875C4.375 0.727641 4.58486 0.9375 4.84375 0.9375H5.26563V1.80265C2.69397 2.03505 0.625 4.19456 0.625 6.89062C0.625 9.71442 2.91018 12 5.73438 12C8.55817 12 10.8438 9.71482 10.8438 6.89062C10.8438 5.68334 10.4276 4.54017 9.66358 3.62433L10.2753 3.01256L10.5737 3.31088C10.7567 3.49392 11.0535 3.49395 11.2366 3.31088C11.4196 3.12783 11.4196 2.83104 11.2366 2.64797ZM5.73438 11.0625C3.43401 11.0625 1.5625 9.19099 1.5625 6.89062C1.5625 4.59026 3.43401 2.71875 5.73438 2.71875C8.03474 2.71875 9.90625 4.59026 9.90625 6.89062C9.90625 9.19099 8.03477 11.0625 5.73438 11.0625ZM8.17007 6.89062C8.17007 7.14952 7.96021 7.35938 7.70132 7.35938H5.7344C5.47551 7.35938 5.26565 7.14952 5.26565 6.89062V4.13262C5.26565 3.87373 5.47551 3.66387 5.7344 3.66387C5.99329 3.66387 6.20315 3.87373 6.20315 4.13262V6.42188H7.70132C7.96021 6.42188 8.17007 6.63173 8.17007 6.89062Z"
-												fill="#212121" />
-										</g>
-										<defs>
-											<clipPath id="clip0_640_2281">
-												<rect width="12" height="12" fill="white" />
-											</clipPath>
-										</defs>
-									</svg>
-									Read Time : <span><?php echo get_field("read_time"); ?></span>
-								</div>
-							</div>
-							<div class="resource-img">
-								<img loading="lazy" width="1216" height="742" src="<?php echo get_field("banner_image"); ?>"
-									alt="Archive Blog Images">
-							</div>
-							<h5 class="resource-heading">
-								<?php the_title() ?>
-							</h5>
-							<div class="resource-content">
-								<p>
-									<?php echo get_the_excerpt(); ?>
-								</p>
-							</div>
-							<div class="resource-btn">
-								<a href="<?php echo $Permalinks ?>" class="anim-button"><b>Read</b>
-									<!-- This Empty Div Is For Animation -->
-									<div></div>
-								</a>
-							</div>
-						</div>
-					</div>
+          <div class="product-body">
+            <div class="product-category">Garden Essential</div>
+            <div class="product-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+            <div class="product-desc"><?php echo wp_trim_words(get_the_excerpt(), 10); ?></div>
+            <div class="product-footer">
+              <div class="product-price">
+                <?php if ($hp_offer): ?>
+                  ₹<?php echo esc_html($hp_offer); ?>
+                  <?php if ($hp_price): ?><del>₹<?php echo esc_html($hp_price); ?></del><?php endif; ?>
+                <?php else: ?>
+                  ₹<?php echo esc_html($hp_price ? $hp_price : '199'); ?>
+                <?php endif; ?>
+              </div>
+              <button class="add-btn" data-product-id="<?php echo esc_attr($hp_id); ?>">Add to bag</button>
+            </div>
+          </div>
+        </div>
+      <?php endwhile;
+      wp_reset_postdata(); ?>
 
+    <?php else: ?>
+      <!-- Static Demo Cards if DB empty -->
+      <div class="product-card">
+        <div class="product-img">🌱 <span class="badge-jaipur">Jaipur Only</span></div>
+        <div class="product-body">
+          <div class="product-category">Seedlings</div>
+          <div class="product-name"><a href="<?php echo esc_url(home_url('/shop/')); ?>">Tomato Seedling Tray</a></div>
+          <div class="product-desc">6 healthy seedlings, 3 weeks old. Same-day delivery in Jaipur.</div>
+          <div class="product-footer">
+            <div class="product-price">₹199</div><button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </div>
 
-			<?php } ?>
+      <div class="product-card">
+        <div class="product-img">🌿 <span class="badge-new">New</span></div>
+        <div class="product-body">
+          <div class="product-category">Seeds</div>
+          <div class="product-name"><a href="<?php echo esc_url(home_url('/shop/')); ?>">Monsoon Veg Seed Kit</a></div>
+          <div class="product-desc">8 heirloom varieties, perfect for monsoon planting.</div>
+          <div class="product-footer">
+            <div class="product-price">₹349</div><button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </div>
 
-		</section>
-	</main>
+      <div class="product-card">
+        <div class="product-img">🪴 <span class="badge-hot">Bestseller</span></div>
+        <div class="product-body">
+          <div class="product-category">Compost</div>
+          <div class="product-name"><a href="<?php echo esc_url(home_url('/shop/')); ?>">Organic Vermicompost 5kg</a>
+          </div>
+          <div class="product-desc">Premium quality, ideal for terrace & balcony gardens.</div>
+          <div class="product-footer">
+            <div class="product-price">₹299</div><button class="add-btn">Add to bag</button>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
+</section>
 
-	<?php get_footer(); ?>
+<!-- ============================================================
+     GARDENING REELS TEASER
+     ============================================================ -->
+<section>
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
+    <div>
+      <p class="section-label">Quick Video Guides</p>
+      <h2 class="section-title">Learn as you grow</h2>
+    </div>
+    <a href="<?php echo esc_url(home_url('/reels/')); ?>" class="btn-ghost">Watch All Reels ➔</a>
+  </div>
 
-	</body>
+  <div class="reels-grid">
+    <div class="reel-card r1">
+      <div class="play">▶️</div>
+      <div class="meta">
+        <h4>Monsoon gardening tips</h4><span>2.4K views</span>
+      </div>
+    </div>
+    <div class="reel-card r2">
+      <div class="play">▶️</div>
+      <div class="meta">
+        <h4>How to repot your plant</h4><span>3.1K views</span>
+      </div>
+    </div>
+    <div class="reel-card r3">
+      <div class="play">▶️</div>
+      <div class="meta">
+        <h4>Terracotta pots from Jaipur</h4><span>1.8K views</span>
+      </div>
+    </div>
+    <div class="reel-card r4">
+      <div class="play">▶️</div>
+      <div class="meta">
+        <h4>Seed saving 101</h4><span>5.2K views</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-</html>
+<?php get_footer(); ?>

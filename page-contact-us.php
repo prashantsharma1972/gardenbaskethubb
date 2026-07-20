@@ -1,115 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+/**
+ * Template Name: Contact Us
+ */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+get_header();
+?>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet">
+<!-- ============================================================
+     CONTACT HERO
+     ============================================================ -->
+<section class="page-hero">
+  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Contact</p>
+  <h1>Say <em>hello</em>.</h1>
+  <p>Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
+</section>
 
-    <link rel="stylesheet" href='/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css?a8'>
-    <script type="module" defer
-        src='/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.bundle.js?a8'></script>
+<!-- ============================================================
+     CONTACT LAYOUT
+     ============================================================ -->
+<section>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h2>Visit the garden</h2>
+      <p>Our nursery is open every day except Tuesdays. Come say hi, pet the shop cat, and pick your seedlings in
+        person.</p>
 
-    <?php
-    $homeUrl = get_home_url();
-    get_header();
-    ?>
+      <div class="contact-row">
+        <span class="ic">📍</span>
+        <div><strong>Nursery</strong><span>Jaipur, Rajasthan · 302001</span></div>
+      </div>
+      <div class="contact-row">
+        <span class="ic">💬</span>
+        <div><strong>WhatsApp</strong><span>+91 98765 43210</span></div>
+      </div>
+      <div class="contact-row">
+        <span class="ic">📧</span>
+        <div><strong>Email</strong><span>hello@gardenbaskethub.in</span></div>
+      </div>
+      <div class="contact-row">
+        <span class="ic">📷</span>
+        <div><strong>Instagram</strong><span>@gardenbaskethub</span></div>
+      </div>
+      <div class="contact-row">
+        <span class="ic">🕒</span>
+        <div><strong>Hours</strong><span>Wed – Mon · 9 AM to 7 PM</span></div>
+      </div>
+    </div>
 
-    <main class="main--container">
+    <form class="contact-form" action="#" method="POST">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="What should we call you?" required>
+      </div>
+      <div class="form-group">
+        <label>Email or WhatsApp</label>
+        <input type="text" placeholder="So we can reply" required>
+      </div>
+      <div class="form-group">
+        <label>Topic</label>
+        <select>
+          <option>Plant question</option>
+          <option>Order issue</option>
+          <option>Wholesale enquiry</option>
+          <option>Partnership / collab</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us about your garden..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width:100%;padding:16px;">Send Message</button>
+    </form>
+  </div>
+</section>
 
-        <section class="contact-banner">
-            <div class="banner-flex">
-                <div class="banner-text">
-                    <div class="upper-text">
-                        <h4>Start a Conversation!</h4>
-                        <p>Want to know more or have a quick chat?</p>
-                        <p class="small-text-bottom">Feel free to reach out here!</p>
-                    </div>
-                </div>
-                <div class="banner-image">
-                    <img src="https://gardenbaskethubb.com/wp-content/uploads/2025/01/contact-banner-img.webp"
-                        width="410" height="210" fetchpriority="high" alt="gardenbaskethubb">
-                </div>
-            </div>
-        </section>
-
-        <section class="contact-form">
-            <div class="form-container">
-                <form id="needform">
-                    <div class="full-name-container">
-                        <div class="form-group">
-                            <label for="form-firstname">NAME <span style="color: red;">*</span></label>
-                            <div class="input-container-inner">
-                                <div>
-                                    <input type="text" id="form-firstname" name="lfirstname" placeholder="First Name">
-                                </div>
-                                <div>
-                                    <input type="text" id="form-lastname" name="llastname" placeholder="Last Name">
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="full-name-container">
-                        <div class="form-group">
-                            <div class="input-container-outer">
-                                <div>
-                                    <label for="form-company">COMPANY /INSTITUTION <span
-                                            style="color: red;">*</span></label>
-                                    <input type="text" id="form-company" name="lcompany">
-                                </div>
-                                <div>
-                                    <label for="form-jobtitle">JOB ROLE<span style="color: red;">*</span></label>
-                                    <input type="text" id="form-jobtitle" name="ljobtitle">
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="form-group">
-                        <label for="form-email">EMAIL <span style="color: red;">*</span></label>
-                        <input type="email" id="form-email" name="lemail">
-                    </div>
-                    <div class="form-group">
-                        <label for="form-git-phonenumber">PHONE <span style="color: red;">*</span></label>
-                        <input type="tel" id="form-git-phonenumber" name="lphone">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="course">SUBJECT <span style="color: red;">*</span></label>
-                        <select name="preffered-subject" id="course">
-                            <option value="" disabled="" selected="">Select Preferred Subject of Contact </option>
-                            <option value="General Contact">General Contact </option>
-                            <option value="Book to Speak">Book to Speak </option>
-                            <option value="Press/Media Inquiry">Press/Media Inquiry </option>
-                            <option value="partnership">partnership </option>
-                            <option value="Looking for Job Opportunities">Looking for Job Opportunities</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="form-message">MESSAGE <span style="color: red;">*</span></label>
-                        <textarea id="form-message" name="Description"></textarea>
-                    </div>
-                    <div class="submit-btn-container">
-                        <button type="submit" class="button"><b>Submit</b></button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-    </main>
-
-    <?php get_footer(); ?>
-
-    </body>
-
-</html>
+<?php get_footer(); ?>
