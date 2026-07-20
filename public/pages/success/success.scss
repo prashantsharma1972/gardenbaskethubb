@@ -1,0 +1,63 @@
+@import '../../scss-utilities/global';
+@import '../../scss-utilities/header';
+@import '../../scss-utilities/breakpoints';
+@import '../../scss-utilities/footer';
+
+:root {
+    --text-color: black;
+    --color-dark-1: #282828;
+    --color-dark-2: #737373;
+}
+
+.notfound {
+    grid-column: center-start/center-end;
+    width: 100%;
+    margin: 0 auto;
+
+    .areaText {
+        margin-top: 3%;
+    }
+
+    .success .headingclass {
+        color: var(--color-dark-1);
+        font-size: 5rem !important;
+        font-weight: 500 !important;
+        font-family: 'Raleway' !important;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+    }
+
+    .success p {
+        font-size: 2.4rem;
+        line-height: 1.6;
+        color: var(--color-dark-2);
+    }
+
+    .thanks {
+        background-color: var(--text-color);
+        height: 100vh;
+        min-height: 300px;
+        padding-top: 140px;
+    }
+}
+
+@include tablet {
+    .thanks {
+        background-color: var(--text-color);
+        height: 100vh;
+        min-height: 300px;
+        padding-top: 360px;
+    }
+}
+
+@include mobile {
+    .thanks {
+        background-color: #181818;
+        height: 100vh;
+        min-height: 300px;
+        display: table-cell;
+        vertical-align: middle;
+        padding-top: 140px;
+    }
+}

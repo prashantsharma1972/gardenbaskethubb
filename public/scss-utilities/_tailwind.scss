@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 700;
+        font-family: Mulish;
+    }
+}
+
+.send-data svg {
+    display: block;
+}
+
+.send-data .form-content>* {
+    opacity: 0;
+    pointer-events: none;
+}
