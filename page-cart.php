@@ -21,128 +21,91 @@ $cart = gbh_get_cart_data();
      CART CONTENT & SUMMARY
      ============================================================ -->
 <section>
+  <?php if (!empty($cart['items'])): ?>
   <div class="cart-layout">
     <!-- Items Table -->
     <div class="cart-table">
-      <?php if (!empty($cart['items'])): ?>
-        <?php foreach ($cart['items'] as $item): ?>
-          <div class="cart-row" data-cart-key="<?php echo esc_attr($item['key']); ?>">
-            <div class="cart-thumb">
-              <?php if (!empty($item['image'])): ?>
-                <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title']); ?>">
-              <?php else: ?>
-                🌱
-              <?php endif; ?>
-            </div>
-
-            <div class="cart-info">
-              <h4><?php echo esc_html($item['title']); ?></h4>
-              <?php if (!empty($item['variant'])): ?>
-                <div class="meta"><?php echo esc_html($item['variant']); ?></div>
-              <?php else: ?>
-                <div class="meta">Jaipur Nursery · Pan-India Delivery</div>
-              <?php endif; ?>
-              <div class="price"><?php echo esc_html($item['price_formatted']); ?></div>
-            </div>
-
-            <div class="cart-actions">
-              <div class="qty-stepper">
-                <button>−</button>
-                <input type="text" value="<?php echo esc_attr($item['quantity']); ?>">
-                <button>+</button>
-              </div>
-              <button class="remove">Remove</button>
-            </div>
+      <?php foreach ($cart['items'] as $item): ?>
+        <div class="cart-row" data-cart-key="<?php echo esc_attr($item['key']); ?>">
+          <div class="cart-thumb">
+            <?php if (!empty($item['image'])): ?>
+              <img src="<?php echo esc_url($item['image']); ?>" alt="<?php echo esc_attr($item['title']); ?>">
+            <?php else: ?>
+              🌱
+            <?php endif; ?>
           </div>
-        <?php endforeach; ?>
 
-      <?php else: ?>
-        <!-- Demo Static Cart View if empty -->
-        <div class="cart-row" data-cart-key="demo-1">
-          <div class="cart-thumb">🌱</div>
           <div class="cart-info">
-            <h4>Tomato Seedling Tray</h4>
-            <div class="meta">Cherry · Tray of 6 · Jaipur Only</div>
-            <div class="price">₹199</div>
+            <h4><a href="<?php echo esc_url(get_permalink($item['product_id'])); ?>"><?php echo esc_html($item['title']); ?></a></h4>
+            <?php if (!empty($item['variant'])): ?>
+              <div class="meta"><?php echo esc_html($item['variant']); ?></div>
+            <?php else: ?>
+              <div class="meta">Jaipur Nursery · Pan-India Shipping</div>
+            <?php endif; ?>
+            <div class="price"><?php echo esc_html($item['price_formatted']); ?></div>
           </div>
+
           <div class="cart-actions">
             <div class="qty-stepper">
-              <button>−</button><input type="text" value="1"><button>+</button>
+              <button class="btn-qty-minus">−</button>
+              <input type="text" class="cart-qty-input" value="<?php echo esc_attr($item['quantity']); ?>">
+              <button class="btn-qty-plus">+</button>
             </div>
             <button class="remove">Remove</button>
           </div>
         </div>
-
-        <div class="cart-row" data-cart-key="demo-2">
-          <div class="cart-thumb">🌿</div>
-          <div class="cart-info">
-            <h4>Monsoon Veg Seed Kit</h4>
-            <div class="meta">8 Varieties · Pan India</div>
-            <div class="price">₹349</div>
-          </div>
-          <div class="cart-actions">
-            <div class="qty-stepper">
-              <button>−</button><input type="text" value="2"><button>+</button>
-            </div>
-            <button class="remove">Remove</button>
-          </div>
-        </div>
-
-        <div class="cart-row" data-cart-key="demo-3">
-          <div class="cart-thumb">🪴</div>
-          <div class="cart-info">
-            <h4>Organic Vermicompost</h4>
-            <div class="meta">5 kg pack · Jaipur Delivery</div>
-            <div class="price">₹299</div>
-          </div>
-          <div class="cart-actions">
-            <div class="qty-stepper">
-              <button>−</button><input type="text" value="1"><button>+</button>
-            </div>
-            <button class="remove">Remove</button>
-          </div>
-        </div>
-      <?php endif; ?>
+      <?php endforeach; ?>
     </div>
 
     <!-- Order Summary Sidebar -->
     <aside class="cart-summary">
       <h3>Order Summary</h3>
       <div class="row">
-        <span>Subtotal (<?php echo esc_html($cart['total_count'] > 0 ? $cart['total_count'] : 4); ?> items)</span>
-        <span><?php echo esc_html($cart['subtotal_formatted'] !== '₹0' ? $cart['subtotal_formatted'] : '₹1,196'); ?></span>
+        <span>Subtotal (<span class="summary-cart-count"><?php echo esc_html($cart['total_count']); ?></span> items)</span>
+        <span class="summary-subtotal"><?php echo esc_html($cart['subtotal_formatted']); ?></span>
       </div>
 
       <div class="row">
         <span>Delivery Charge</span>
-        <span><?php echo esc_html($cart['delivery_fee_formatted']); ?></span>
+        <span class="summary-delivery"><?php echo esc_html($cart['delivery_fee_formatted']); ?></span>
       </div>
 
       <?php if ($cart['discount'] > 0): ?>
         <div class="row">
           <span>Discount (Coupon Applied)</span>
-          <span style="color:var(--leaf);"><?php echo esc_html($cart['discount_formatted']); ?></span>
+          <span style="color:var(--leaf);" class="summary-discount"><?php echo esc_html($cart['discount_formatted']); ?></span>
         </div>
       <?php endif; ?>
 
       <div class="coupon">
         <input type="text" placeholder="Coupon code (MONSOON10)">
-        <button type="button">Apply</button>
+        <button type="button" class="btn-apply-coupon">Apply</button>
       </div>
 
       <div class="row total">
-        <span>Total</span>
-        <span><?php echo esc_html($cart['total_formatted'] !== '₹0' ? $cart['total_formatted'] : '₹1,125'); ?></span>
+        <span>Total Amount</span>
+        <span class="summary-total"><?php echo esc_html($cart['total_formatted']); ?></span>
       </div>
 
       <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="btn-primary checkout-btn">
         Proceed to Checkout
       </a>
-      <p
-        style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-align:center;margin-top:16px;letter-spacing:0.06em;">
-        ✦ Free shipping pan India above ₹799</p>
+      <p style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-align:center;margin-top:16px;letter-spacing:0.06em;">
+        ✦ Free shipping pan India above ₹799
+      </p>
     </aside>
   </div>
+  <?php else: ?>
+  <div class="empty-cart-view" style="text-align:center;padding:60px 20px;max-width:540px;margin:0 auto;">
+    <div style="font-size:4rem;margin-bottom:16px;">🛒 🌿</div>
+    <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:12px;font-size:2rem;">Your garden bag is empty</h2>
+    <p style="color:var(--clay);margin-bottom:28px;line-height:1.6;">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>" class="btn-primary" style="padding:14px 32px;">
+      Explore Nursery Shop ➔
+    </a>
+  </div>
+  <?php endif; ?>
 </section>
+
 
 <?php get_footer(); ?>

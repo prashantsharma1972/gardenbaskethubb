@@ -21,6 +21,7 @@ $cart = gbh_get_cart_data();
      CHECKOUT FORM & ORDER SUMMARY
      ============================================================ -->
 <section>
+  <?php if (!empty($cart['items'])): ?>
   <div class="checkout-layout">
     <form id="gbh-checkout-form" class="checkout-form" method="POST">
       <input type="hidden" id="payment_method_input" name="payment_method" value="UPI / Razorpay">
@@ -109,25 +110,19 @@ $cart = gbh_get_cart_data();
       </div>
 
       <button type="submit" class="btn-primary btn-place-order" style="width:100%;text-align:center;padding:18px;">
-        Place Order · <?php echo esc_html($cart['total_formatted'] !== '₹0' ? $cart['total_formatted'] : '₹1,125'); ?>
+        Place Order · <?php echo esc_html($cart['total_formatted']); ?>
       </button>
     </form>
 
     <!-- Order Summary Sidebar -->
     <aside class="cart-summary">
       <h3>Your Order</h3>
-      <?php if (!empty($cart['items'])): ?>
-        <?php foreach ($cart['items'] as $item): ?>
-          <div class="row">
-            <span><?php echo esc_html($item['title']); ?> × <?php echo esc_html($item['quantity']); ?></span>
-            <span><?php echo esc_html($item['line_total_formatted']); ?></span>
-          </div>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <div class="row"><span>Tomato Seedling Tray × 1</span><span>₹199</span></div>
-        <div class="row"><span>Monsoon Veg Seed Kit × 2</span><span>₹698</span></div>
-        <div class="row"><span>Vermicompost 5kg × 1</span><span>₹299</span></div>
-      <?php endif; ?>
+      <?php foreach ($cart['items'] as $item): ?>
+        <div class="row">
+          <span><?php echo esc_html($item['title']); ?> × <?php echo esc_html($item['quantity']); ?></span>
+          <span><?php echo esc_html($item['line_total_formatted']); ?></span>
+        </div>
+      <?php endforeach; ?>
 
       <div class="row" style="margin-top:12px;border-top:1px solid rgba(44,26,14,0.1);padding-top:12px;">
         <span>Delivery Fee</span>
@@ -143,15 +138,25 @@ $cart = gbh_get_cart_data();
 
       <div class="row total">
         <span>Total Amount</span>
-        <span><?php echo esc_html($cart['total_formatted'] !== '₹0' ? $cart['total_formatted'] : '₹1,125'); ?></span>
+        <span><?php echo esc_html($cart['total_formatted']); ?></span>
       </div>
 
-      <p
-        style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);margin-top:16px;letter-spacing:0.06em;text-align:center;">
+      <p style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);margin-top:16px;letter-spacing:0.06em;text-align:center;">
         🔒 256-Bit SSL Secure Checkout · 100% Satisfaction Guaranteed
       </p>
     </aside>
   </div>
+  <?php else: ?>
+  <div class="empty-cart-view" style="text-align:center;padding:60px 20px;max-width:540px;margin:0 auto;">
+    <div style="font-size:4rem;margin-bottom:16px;">🛒 🌿</div>
+    <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:12px;font-size:2rem;">Your bag is empty</h2>
+    <p style="color:var(--clay);margin-bottom:28px;line-height:1.6;">Add items to your shopping bag before proceeding to checkout.</p>
+    <a href="<?php echo esc_url(home_url('/shop/')); ?>" class="btn-primary" style="padding:14px 32px;">
+      Explore Nursery Shop ➔
+    </a>
+  </div>
+  <?php endif; ?>
 </section>
+
 
 <?php get_footer(); ?>

@@ -12,15 +12,22 @@ Version: 1.0
 :root {
   --soil: #2C1A0E;
   --clay: #8B4A2B;
-  --sand: #F0E6D3;
-  --leaf: #3A6B35;
-  --sprout: #7BBF6A;
+  --sand: #F7F2E8;
+  --sand-dark: #ECE1CC;
+  --leaf: #2D6A28;
+  --leaf-light: #EBF4EB;
+  --sprout: #4E8A48;
   --marigold: #E8942A;
-  --white: #FDFAF5;
+  --white: #FFFFFF;
+  --cream: #FDFAF5;
   --ink: #1A1008;
   --f-display: 'Playfair Display', serif;
   --f-body: 'DM Sans', sans-serif;
   --f-mono: 'DM Mono', monospace;
+  --card-radius: 8px;
+  --shadow-sm: 0 2px 8px rgba(44, 26, 14, 0.05);
+  --shadow-md: 0 8px 24px rgba(44, 26, 14, 0.08);
+  --shadow-lg: 0 16px 40px rgba(44, 26, 14, 0.12);
 }
 
 *, *::before, *::after {
@@ -34,7 +41,7 @@ html {
 }
 
 body {
-  background: var(--white);
+  background: var(--cream);
   color: var(--ink);
   font-family: var(--f-body);
   font-size: 16px;
@@ -109,12 +116,13 @@ nav.site-nav {
   background: var(--leaf);
   color: var(--white) !important;
   padding: 8px 20px;
-  border-radius: 2px;
-  transition: background 0.2s !important;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.1s !important;
 }
 
 .nav-cta:hover {
   background: var(--soil) !important;
+  transform: translateY(-1px);
 }
 
 .cart-count-badge {
@@ -126,11 +134,13 @@ nav.site-nav {
   font-family: var(--f-mono);
   font-size: 0.75rem;
   font-weight: 700;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   margin-left: 4px;
+  box-shadow: 0 2px 6px rgba(232, 148, 42, 0.4);
 }
+
 
 /* ============================================================
    TYPOGRAPHY & SECTION COMMON
@@ -1471,26 +1481,239 @@ footer {
 }
 
 /* ============================================================
+   REEL VIDEO MODAL LIGHTBOX
+   ============================================================ */
+.reel-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.reel-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reel-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 10, 5, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.reel-modal-content {
+  position: relative;
+  z-index: 1;
+  width: 420px;
+  max-width: 90vw;
+  height: 720px;
+  max-height: 85vh;
+  background: var(--soil);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+}
+
+.reel-modal-title {
+  padding: 16px 20px;
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  color: var(--sand);
+  border-bottom: 1px solid rgba(240, 230, 211, 0.1);
+  padding-right: 48px;
+}
+
+.reel-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--sand);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.reel-modal-body {
+  flex: 1;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ============================================================
    RESPONSIVE MOBILE BREAKPOINTS
+/* ============================================================
+   MOBILE NAVIGATION DRAWER & CONTROLS
+   ============================================================ */
+.mobile-nav-controls {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-cart-icon {
+  font-size: 1.2rem;
+  position: relative;
+  text-decoration: none;
+}
+
+.mobile-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--soil);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 85vw;
+  background: var(--white);
+  z-index: 10001;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 32px rgba(44, 26, 14, 0.15);
+  padding: 24px;
+}
+
+.mobile-drawer.active {
+  transform: translateX(0);
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 16, 8, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+}
+
+.mobile-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--soil);
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.mobile-nav-links a {
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  color: var(--soil);
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+
+.mobile-nav-links a:hover {
+  color: var(--leaf);
+}
+
+.mobile-drawer-footer {
+  padding-top: 20px;
+  border-top: 1px solid rgba(44, 26, 14, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-wa-btn {
+  background: var(--leaf);
+  color: var(--white);
+  text-align: center;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ============================================================ */
 @media (max-width: 900px) {
   nav.site-nav {
     padding: 16px 24px;
   }
-  .nav-links {
-    display: none;
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-controls {
+    display: flex;
   }
   section {
-    padding: 64px 24px;
+    padding: 60px 20px;
   }
   .page-hero {
-    padding: 120px 24px 56px;
+    padding: 120px 20px 48px;
+  }
+  .cat-grid-wrapper {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
   .product-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
   .shop-layout {
     grid-template-columns: 1fr;
+    gap: 28px;
   }
   .pdp {
     grid-template-columns: 1fr;
@@ -1503,15 +1726,23 @@ footer {
     grid-template-columns: 1fr;
   }
   .reels-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
   .about-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 32px;
   }
+  .about-story-cards {
+    grid-template-columns: 1fr !important;
+  }
+  .about-values-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
   .stats-strip {
     grid-template-columns: 1fr 1fr;
-    padding: 32px;
+    padding: 24px;
   }
   .contact-layout {
     grid-template-columns: 1fr;
@@ -1521,6 +1752,29 @@ footer {
     gap: 36px;
   }
   footer {
-    padding: 48px 24px 32px;
+    padding: 48px 20px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .cat-grid-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .about-values-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .reels-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
   }
 }

@@ -1,87 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+/**
+ * Blog Archive / Guides Catalog Template — Garden Basket Hub
+ */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href='/wp-content/themes/gardenbaskethubb/build/blogs/blogs.css?a8'>
-    <script type="module" defer src='/wp-content/themes/gardenbaskethubb/build/blogs/blogs.bundle.js?a8'></script>
+get_header();
+?>
+
+<!-- ============================================================
+     BLOG HERO SECTION
+     ============================================================ -->
+<section class="page-hero" style="padding:160px 80px 80px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);text-align:center;">
+  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Gardening Guides & Blog</p>
+  <h1 style="font-size:clamp(2.5rem, 4.5vw, 4rem);margin-bottom:20px;">Gardening <em>Guides</em> & Tips.</h1>
+  <p style="font-size:1.1rem;max-width:640px;margin:0 auto 32px;color:#5c4436;line-height:1.7;">
+    Expert potting mix ratios, monsoon plant care tips, seedling guides, and organic urban farming advice from our Jaipur nursery team.
+  </p>
+</section>
+
+<!-- ============================================================
+     BLOG POSTS CATALOG GRID
+     ============================================================ -->
+<section style="padding:60px 80px 100px;">
+  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:32px;" class="about-story-cards">
     <?php
-    $homeUrl = get_home_url();
-    get_header();
+    if (have_posts()) :
+      while (have_posts()) : the_post();
+        $b_id = get_the_ID();
+        $read_time = get_post_meta($b_id, 'read_time', true);
+        if (!$read_time && function_exists('get_field')) $read_time = get_field('read_time', $b_id);
+        if (!$read_time) $read_time = '5 min read';
+
+        $banner_img = get_the_post_thumbnail_url($b_id, 'large');
+        if (!$banner_img && function_exists('get_field')) $banner_img = get_field('banner_image', $b_id);
+        $categories = get_the_category($b_id);
+        $cat_name = (!empty($categories)) ? $categories[0]->name : 'Gardening';
     ?>
-
-    <main class="main--container">
-
-        <section class="blog-header-section">
-            <div class="blog-img-text-container">
-                <img src="https://gardenbaskethubb.com/wp-content/uploads/2025/01/home-banner-1.webp" alt="">
-                <div class="text-container">
-                    <p>I make it Simple,</p>
-                    <p> I make it Valuable,and</p>
-                    <p> I do it for the Long term.</p>
-                </div>
+        <article class="product-card" style="display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;" data-permalink="<?php the_permalink(); ?>">
+          <div>
+            <div class="product-img" style="height:200px;background:var(--sand);position:relative;">
+              <?php if ($banner_img): ?>
+                <img src="<?php echo esc_url($banner_img); ?>" alt="<?php the_title(); ?>" style="width:100%;height:100%;object-fit:cover;">
+              <?php else: ?>
+                📖
+              <?php endif; ?>
+              <span class="badge-new" style="position:absolute;top:14px;left:14px;background:var(--leaf);color:var(--white);"><?php echo esc_html($cat_name); ?></span>
             </div>
-        </section>
 
-        <section class="blogs">
-            <div class="resource-list">
-                <?php
-                while (have_posts()) {
-                    the_post();
-                    $Permalinks = get_permalink($post->ID);
-                    ?>
-                    <div class="resource">
-                        <div class="date">
-                            <p> <?php echo get_the_date(); ?>
-                            </p>
-                            <div class="read-time">
-                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_640_2281)">
-                                        <path
-                                            d="M11.2366 2.64797L9.97703 1.38844C9.79396 1.20537 9.49717 1.20537 9.31413 1.38844C9.13108 1.57151 9.13105 1.8683 9.31413 2.05134L9.61244 2.34966L9.00067 2.96142C8.20431 2.29706 7.23602 1.896 6.20313 1.80265V0.9375H6.625C6.88389 0.9375 7.09375 0.727641 7.09375 0.46875C7.09375 0.209859 6.88389 0 6.625 0H4.84375C4.58486 0 4.375 0.209859 4.375 0.46875C4.375 0.727641 4.58486 0.9375 4.84375 0.9375H5.26563V1.80265C2.69397 2.03505 0.625 4.19456 0.625 6.89062C0.625 9.71442 2.91018 12 5.73438 12C8.55817 12 10.8438 9.71482 10.8438 6.89062C10.8438 5.68334 10.4276 4.54017 9.66358 3.62433L10.2753 3.01256L10.5737 3.31088C10.7567 3.49392 11.0535 3.49395 11.2366 3.31088C11.4196 3.12783 11.4196 2.83104 11.2366 2.64797ZM5.73438 11.0625C3.43401 11.0625 1.5625 9.19099 1.5625 6.89062C1.5625 4.59026 3.43401 2.71875 5.73438 2.71875C8.03474 2.71875 9.90625 4.59026 9.90625 6.89062C9.90625 9.19099 8.03477 11.0625 5.73438 11.0625ZM8.17007 6.89062C8.17007 7.14952 7.96021 7.35938 7.70132 7.35938H5.7344C5.47551 7.35938 5.26565 7.14952 5.26565 6.89062V4.13262C5.26565 3.87373 5.47551 3.66387 5.7344 3.66387C5.99329 3.66387 6.20315 3.87373 6.20315 4.13262V6.42188H7.70132C7.96021 6.42188 8.17007 6.63173 8.17007 6.89062Z"
-                                            fill="#212121" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_640_2281">
-                                            <rect width="12" height="12" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                                Read Time : <span><?php echo get_field("read_time"); ?></span>
-                            </div>
-                        </div>
-                        <div class="resource-img">
-                            <img src="<?php echo get_field("banner_image"); ?>" alt="">
-                        </div>
-                        <h5 class="resource-heading">
-                            <?php the_title() ?>
-                        </h5>
-                        <div class="resource-content">
-                            <p>
-                                <?php echo get_the_excerpt(); ?>
-                            </p>
-                        </div>
-                        <div class="resource-btn">
-                            <a href="<?php echo $Permalinks ?>" class="anim-button"><b>Read</b>
-                                <div></div>
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
+            <div class="product-body" style="padding:24px;">
+              <div style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+                <span><?php echo get_the_date('M j, Y'); ?></span>
+                <span>⏱️ <?php echo esc_html($read_time); ?></span>
+              </div>
+
+              <h2 style="font-family:var(--f-display);font-size:1.25rem;color:var(--soil);margin-bottom:10px;line-height:1.3;">
+                <a href="<?php the_permalink(); ?>" style="color:inherit;text-decoration:none;"><?php the_title(); ?></a>
+              </h2>
+
+              <div style="font-size:0.9rem;color:#7a6050;line-height:1.6;margin-bottom:20px;">
+                <?php echo wp_trim_words(get_the_excerpt(), 18, '...'); ?>
+              </div>
             </div>
-        </section>
+          </div>
 
-    </main>
+          <div style="padding:0 24px 24px;">
+            <a href="<?php the_permalink(); ?>" class="btn-ghost" style="font-size:0.85rem;font-weight:500;color:var(--leaf);">
+              Read Full Article ➔
+            </a>
+          </div>
+        </article>
+      <?php endwhile; ?>
+    <?php else: ?>
+      <div style="grid-column:1/-1;text-align:center;padding:60px;">
+        <p style="font-size:1.2rem;color:var(--clay);">No blog posts found. Check back soon for fresh gardening guides!</p>
+      </div>
+    <?php endif; ?>
+  </div>
 
-    <?php get_footer(); ?>
+  <!-- Pagination -->
+  <div style="margin-top:56px;text-align:center;">
+    <?php the_posts_pagination(array(
+      'prev_text' => '← Previous',
+      'next_text' => 'Next →',
+    )); ?>
+  </div>
+</section>
 
-    </body>
-
-</html>
+<?php get_footer(); ?>

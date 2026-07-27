@@ -11,7 +11,9 @@ function gbh_init_session() {
 }
 add_action('init', 'gbh_init_session', 1);
 
-// 2. Disable unnecessary WordPress scripts/head bloat
+// 2. Disable WP Admin Bar & head bloat for pristine frontend view
+add_filter('show_admin_bar', '__return_false');
+
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
 remove_action('wp_head', 'wp_oembed_add_discovery_links');
@@ -24,9 +26,116 @@ remove_action('wp_head', 'wp_generator');
 remove_filter('wp_robots', 'wp_robots_max_image_preview_large');
 
 function remove_dashicons_styles() {
-    wp_deregister_style('dashicons');
+    if (!is_admin()) {
+        wp_deregister_style('dashicons');
+    }
 }
 add_action('wp_print_styles', 'remove_dashicons_styles', 100);
+
+// 2b. Guaranteed Page Auto-Creator & Dynamic URL Resolvers
+function gbh_create_required_wp_pages() {
+    $required_pages = array(
+        'shop'                 => array('title' => 'Shop', 'template' => 'archive-product.php'),
+        'reels'                => array('title' => 'Gardening Reels', 'template' => 'archive-reels.php'),
+        'about-us'             => array('title' => 'Our Story', 'template' => 'page-about-us.php'),
+        'contact-us'           => array('title' => 'Contact Us', 'template' => 'page-contact-us.php'),
+        'cart'                 => array('title' => 'Shopping Bag', 'template' => 'page-cart.php'),
+        'checkout'             => array('title' => 'Checkout', 'template' => 'page-checkout.php'),
+        'thank-you'            => array('title' => 'Thank You', 'template' => 'page-thank-you.php'),
+        'privacy-policy'       => array('title' => 'Privacy Policy', 'template' => 'privacy-policy.php'),
+        'terms-and-conditions' => array('title' => 'Terms & Conditions', 'template' => 'page-terms-and-conditions.php'),
+        'refund-policy'        => array('title' => 'Refund & Shipping Policy', 'template' => 'page-refund-policy.php'),
+    );
+
+    foreach ($required_pages as $slug => $data) {
+        $existing = get_page_by_path($slug);
+        if (!$existing) {
+            $page_id = wp_insert_post(array(
+                'post_type'   => 'page',
+                'post_title'  => $data['title'],
+                'post_name'   => $slug,
+                'post_status' => 'publish',
+                'post_content'=> '',
+            ));
+            if ($page_id && !is_wp_error($page_id)) {
+                update_post_meta($page_id, '_wp_page_template', $data['template']);
+            }
+        }
+    }
+}
+add_action('init', 'gbh_create_required_wp_pages', 5);
+
+/**
+ * Get dynamic page URL (works across plain and pretty permalinks)
+ */
+function gbh_get_page_url($slug) {
+    $page = get_page_by_path($slug);
+    if ($page) {
+        return get_permalink($page->ID);
+    }
+    if ($slug === 'shop') {
+        $archive = get_post_type_archive_link('product');
+        return $archive ? $archive : home_url('/?post_type=product');
+    }
+    if ($slug === 'reels') {
+        $archive = get_post_type_archive_link('reels');
+        return $archive ? $archive : home_url('/?post_type=reels');
+    }
+    return home_url('/' . $slug . '/');
+}
+
+// 2c. Guaranteed Template Redirect Guard for All Store Pages & Legal Policies
+function gbh_template_redirect_override($template) {
+    if (is_page('shop') || is_post_type_archive('product') || (isset($_GET['post_type']) && $_GET['post_type'] === 'product')) {
+        $new_template = get_theme_file_path('archive-product.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('reels') || is_post_type_archive('reels') || (isset($_GET['post_type']) && $_GET['post_type'] === 'reels')) {
+        $new_template = get_theme_file_path('archive-reels.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('blog') || is_post_type_archive('post') || (is_home() && !is_front_page())) {
+        $new_template = get_theme_file_path('archive-blog.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('about-us') || is_page('about') || is_page('our-story')) {
+        $new_template = get_theme_file_path('page-about-us.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('contact-us') || is_page('contact')) {
+        $new_template = get_theme_file_path('page-contact-us.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('cart') || is_page('bag')) {
+        $new_template = get_theme_file_path('page-cart.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('checkout')) {
+        $new_template = get_theme_file_path('page-checkout.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('thank-you') || is_page('order-complete')) {
+        $new_template = get_theme_file_path('page-thank-you.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('privacy-policy')) {
+        $new_template = get_theme_file_path('privacy-policy.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('terms-and-conditions') || is_page('terms')) {
+        $new_template = get_theme_file_path('page-terms-and-conditions.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    if (is_page('refund-policy') || is_page('shipping-policy')) {
+        $new_template = get_theme_file_path('page-refund-policy.php');
+        if (file_exists($new_template)) return $new_template;
+    }
+    return $template;
+}
+add_filter('template_include', 'gbh_template_redirect_override');
+
+
+
 
 // 3. Theme Setup & Supports
 function gbh_theme_setup() {
@@ -129,6 +238,235 @@ function gbh_register_cpts() {
 }
 add_action('init', 'gbh_register_cpts');
 
+/**
+ * Automatic Sample Content Seeder for Products & Reels
+ */
+function gbh_seed_sample_content() {
+    $prod_count = wp_count_posts('product');
+    if (isset($prod_count->publish) && intval($prod_count->publish) === 0) {
+        $sample_products = array(
+            array(
+                'title' => 'Tomato Seedling Tray',
+                'excerpt' => '6 healthy cherry tomato seedlings, 3 weeks old. Ready to plant in balcony pots with same-day delivery in Jaipur.',
+                'content' => 'Sow seeds directly in pots or grow bags at a depth of 2cm. Maintain spacing of 30cm between plants. Keep soil evenly moist during growth.',
+                'cat' => 'Seedlings',
+                'season' => 'Monsoon',
+                'price' => '249',
+                'offer_price' => '199',
+                'badge' => 'Jaipur Only',
+                'seeds' => '6 Saplings',
+                'type' => 'Hybrid Cherry',
+                'germ_temp' => '20-28°C',
+                'germ_time' => '7-10 Days',
+                'harvest' => '60-70 Days',
+                'pot_size' => '12 Inch Pot / Grow Bag',
+                'level' => 'Beginner Friendly'
+            ),
+            array(
+                'title' => 'Monsoon Veg Seed Kit',
+                'excerpt' => '8 heirloom organic vegetable varieties including Okra, Ridge Gourd, Bitter Gourd & Spinach.',
+                'content' => 'Complete organic seed kit packaged for monsoon sowing in Indian climate conditions.',
+                'cat' => 'Seeds',
+                'season' => 'Monsoon',
+                'price' => '499',
+                'offer_price' => '349',
+                'badge' => 'Bestseller',
+                'seeds' => '120+ Seeds (8 Packs)',
+                'type' => 'Heirloom Organic',
+                'germ_temp' => '25-32°C',
+                'germ_time' => '5-8 Days',
+                'harvest' => '45-60 Days',
+                'pot_size' => 'Balcony & Terrace Pots',
+                'level' => 'Easy to Grow'
+            ),
+            array(
+                'title' => 'Organic Vermicompost 5kg',
+                'excerpt' => 'Premium quality 100% organic earthworm castings processed at Jaipur nursery for rich soil nutrition.',
+                'content' => 'Enrich your pot soil with nitrogen, phosphorus, and potassium. Ideal for flowering plants, vegetables, and fruit trees.',
+                'cat' => 'Compost & Soil',
+                'season' => 'All Year',
+                'price' => '399',
+                'offer_price' => '299',
+                'badge' => '100% Organic',
+                'seeds' => '5 kg Pack',
+                'type' => 'Organic Vermicompost',
+                'germ_temp' => 'N/A',
+                'germ_time' => 'N/A',
+                'harvest' => 'Continuous Supply',
+                'pot_size' => 'Mix 20-30% with pot soil',
+                'level' => 'Essential Care'
+            ),
+            array(
+                'title' => 'Marigold Sapling Pack',
+                'excerpt' => 'Pack of 4 fresh blooming saplings (Orange & Yellow varieties), ready to transplant.',
+                'content' => 'Marigolds repel garden pests and bring vibrant festive colors to your home garden.',
+                'cat' => 'Seedlings',
+                'season' => 'Winter',
+                'price' => '199',
+                'offer_price' => '149',
+                'badge' => 'Jaipur Only',
+                'seeds' => 'Pack of 4',
+                'type' => 'French Marigold',
+                'germ_temp' => '18-25°C',
+                'germ_time' => '4-7 Days',
+                'harvest' => '30-40 Days',
+                'pot_size' => '8-10 Inch Pot',
+                'level' => 'Beginner Friendly'
+            ),
+            array(
+                'title' => 'Essential Gardening Tool Set',
+                'excerpt' => '5-piece heavy duty steel kit: trowel, transplanter, hand fork, bypass pruner & protective gloves.',
+                'content' => 'High carbon steel tools with ergonomic wooden handles built for balcony and home gardens.',
+                'cat' => 'Tools',
+                'season' => 'All Year',
+                'price' => '799',
+                'offer_price' => '599',
+                'badge' => 'Top Rated',
+                'seeds' => '5 Tool Set',
+                'type' => 'Carbon Steel & Wood',
+                'germ_temp' => 'N/A',
+                'germ_time' => 'N/A',
+                'harvest' => 'Multi-Season Durable',
+                'pot_size' => 'All Pots & Gardens',
+                'level' => 'All Gardeners'
+            ),
+            array(
+                'title' => 'Monsoon Starter Kit',
+                'excerpt' => 'Seeds + vermicompost + seedling tray + organic neem spray — everything to start gardening today.',
+                'content' => 'All-in-one gardening starter bundle curated by Jaipur nursery experts.',
+                'cat' => 'Seeds',
+                'season' => 'Monsoon',
+                'price' => '999',
+                'offer_price' => '799',
+                'badge' => 'Complete Kit',
+                'seeds' => 'Full Starter Pack',
+                'type' => 'Complete Bundle',
+                'germ_temp' => '22-30°C',
+                'germ_time' => '5-10 Days',
+                'harvest' => '45-60 Days',
+                'pot_size' => 'Includes 12-Cell Tray',
+                'level' => 'Perfect Gift'
+            )
+        );
+
+        foreach ($sample_products as $sp) {
+            $post_id = wp_insert_post(array(
+                'post_type' => 'product',
+                'post_title' => $sp['title'],
+                'post_excerpt' => $sp['excerpt'],
+                'post_content' => $sp['content'],
+                'post_status' => 'publish',
+            ));
+
+            if ($post_id && !is_wp_error($post_id)) {
+                update_post_meta($post_id, 'product_price', $sp['price']);
+                update_post_meta($post_id, 'product_offer_price', $sp['offer_price']);
+                update_post_meta($post_id, 'discount_label', $sp['badge']);
+                update_post_meta($post_id, 'number_of_seeds', $sp['seeds']);
+                update_post_meta($post_id, 'seed_type', $sp['type']);
+                update_post_meta($post_id, 'sowing_season', $sp['season']);
+                update_post_meta($post_id, 'germination_temperature', $sp['germ_temp']);
+                update_post_meta($post_id, 'germination_time', $sp['germ_time']);
+                update_post_meta($post_id, 'first_harvest', $sp['harvest']);
+                update_post_meta($post_id, 'container_pot_size', $sp['pot_size']);
+                update_post_meta($post_id, 'growing_level', $sp['level']);
+                wp_set_object_terms($post_id, $sp['cat'], 'product_cat');
+                wp_set_object_terms($post_id, $sp['season'], 'product_season');
+            }
+        }
+    }
+
+    $reel_count = wp_count_posts('reels');
+    if (isset($reel_count->publish) && intval($reel_count->publish) === 0) {
+        $sample_reels = array(
+            array(
+                'title' => 'Monsoon Gardening Tips',
+                'views' => '2.4K views',
+                'video' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'excerpt' => 'Learn how to protect young seedlings during heavy monsoon rains in Jaipur.'
+            ),
+            array(
+                'title' => 'How to Repot Your Plant',
+                'views' => '3.1K views',
+                'video' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'excerpt' => 'Step-by-step guide to transplanting saplings into clay pots without root shock.'
+            ),
+            array(
+                'title' => 'Terracotta Pots from Jaipur',
+                'views' => '1.8K views',
+                'video' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'excerpt' => 'Behind the scenes at our local pottery workshop crafting handmade eco pots.'
+            ),
+            array(
+                'title' => 'Seed Saving 101',
+                'views' => '5.2K views',
+                'video' => 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                'excerpt' => 'Harvesting, drying, and preserving heirloom seeds for your next garden cycle.'
+            )
+        );
+
+        foreach ($sample_reels as $sr) {
+            $r_id = wp_insert_post(array(
+                'post_type' => 'reels',
+                'post_title' => $sr['title'],
+                'post_excerpt' => $sr['excerpt'],
+                'post_status' => 'publish',
+            ));
+
+            if ($r_id && !is_wp_error($r_id)) {
+                update_post_meta($r_id, 'reel_view_count', $sr['views']);
+                update_post_meta($r_id, 'reel_video_url', $sr['video']);
+            }
+        }
+    }
+
+    // Seed Blog Posts if empty
+    $post_count = wp_count_posts('post');
+    if (isset($post_count->publish) && intval($post_count->publish) === 0) {
+        $sample_blogs = array(
+            array(
+                'title' => 'Monsoon Gardening 101: How to Prevent Root Rot in Jaipur Rain',
+                'excerpt' => 'Learn essential tips for draining excess water, preventing fungal root rot, and protecting delicate balcony vegetable saplings during monsoon storms.',
+                'content' => 'Monsoon brings lush greenery but also heavy downpours that can waterlog container plants. In this guide, our Jaipur nursery experts share drainage pot techniques, neem oil sprays, and organic soil mixes to keep your garden thriving through rainy months.',
+                'read_time' => '5 min read',
+                'cat' => 'Monsoon Care'
+            ),
+            array(
+                'title' => 'Top 10 Heirloom Organic Seeds for Urban Balcony Gardens',
+                'excerpt' => 'Discover fast-growing vegetable and herb varieties that thrive in Indian climate conditions with minimal balcony space.',
+                'content' => 'Growing your own organic vegetables doesn’t require acres of land. Learn how to grow Cherry Tomatoes, Spinach, Coriander, Chillies, and Basil in 10-inch pots with 100% organic heirloom seeds.',
+                'read_time' => '7 min read',
+                'cat' => 'Seeds & Sowing'
+            ),
+            array(
+                'title' => 'The Secret to Rich Soil: Perfect Vermicompost Potting Mix Ratios',
+                'excerpt' => 'Master the 3-part potting mix formula using organic earthworm castings, cocopeat, and neem cake for healthy root growth.',
+                'content' => 'Soil quality determines plant health. Discover why 30% organic vermicompost combined with cocopeat and red soil creates the perfect aeration and nutrient retention balance for pots.',
+                'read_time' => '4 min read',
+                'cat' => 'Soil & Nutrition'
+            )
+        );
+
+        foreach ($sample_blogs as $sb) {
+            $b_id = wp_insert_post(array(
+                'post_type' => 'post',
+                'post_title' => $sb['title'],
+                'post_excerpt' => $sb['excerpt'],
+                'post_content' => $sb['content'],
+                'post_status' => 'publish',
+            ));
+
+            if ($b_id && !is_wp_error($b_id)) {
+                update_post_meta($b_id, 'read_time', $sb['read_time']);
+                wp_set_object_terms($b_id, $sb['cat'], 'category');
+            }
+        }
+    }
+}
+add_action('init', 'gbh_seed_sample_content', 20);
+
+
+
 // 5. Enqueue Styles & Scripts
 function gbh_enqueue_assets() {
     // Fonts
@@ -149,13 +487,39 @@ function gbh_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'gbh_enqueue_assets');
 
-// 6. E-Commerce Cart Engine (AJAX Handlers)
+// 6. E-Commerce Cart Engine (AJAX Handlers & Multi-Layer Persistence)
+
+/**
+ * Save cart data to both Session and HTTP Cookie (30 days persistence)
+ */
+function gbh_save_cart($cart_array) {
+    if (!session_id() && !headers_sent()) {
+        session_start();
+    }
+    $_SESSION['gbh_cart'] = $cart_array;
+    $encoded = json_encode($cart_array);
+    if (!headers_sent()) {
+        setcookie('gbh_cart_cookie', $encoded, time() + (86400 * 30), COOKIEPATH ? COOKIEPATH : '/', COOKIE_DOMAIN, is_ssl(), false);
+    }
+}
 
 /**
  * Get Cart Data helper function
  */
 function gbh_get_cart_data() {
-    if (!isset($_SESSION['gbh_cart'])) {
+    if (!session_id() && !headers_sent()) {
+        session_start();
+    }
+
+    // 1. Restore from cookie if session is missing
+    if (empty($_SESSION['gbh_cart']) && !empty($_COOKIE['gbh_cart_cookie'])) {
+        $cookie_cart = json_decode(stripslashes($_COOKIE['gbh_cart_cookie']), true);
+        if (is_array($cookie_cart)) {
+            $_SESSION['gbh_cart'] = $cookie_cart;
+        }
+    }
+
+    if (!isset($_SESSION['gbh_cart']) || !is_array($_SESSION['gbh_cart'])) {
         $_SESSION['gbh_cart'] = array();
     }
     
@@ -172,13 +536,20 @@ function gbh_get_cart_data() {
         $title = get_the_title($product_id);
         if (!$title) continue;
 
-        // Fetch price from ACF or post meta
-        $price = get_field('product_offer_price', $product_id);
+        // Fetch price with backward compatible fallbacks
+        $price = get_post_meta($product_id, 'product_offer_price', true);
+        if (!$price && function_exists('get_field')) {
+            $price = get_field('product_offer_price', $product_id);
+        }
         if (!$price) {
+            $price = get_post_meta($product_id, 'product_price', true);
+        }
+        if (!$price && function_exists('get_field')) {
             $price = get_field('product_price', $product_id);
         }
-        $price = floatval(preg_replace('/[^0-9.]/', '', $price));
-        if ($price <= 0) $price = 199; // Fallback price
+        
+        $price = floatval(preg_replace('/[^0-9.]/', '', strval($price)));
+        if ($price <= 0) $price = 199; // Default price fallback
 
         $line_total = $price * $qty;
         $subtotal += $line_total;
@@ -186,9 +557,11 @@ function gbh_get_cart_data() {
 
         // Image
         $img_url = get_the_post_thumbnail_url($product_id, 'gbh-thumb');
+        if (!$img_url && function_exists('get_field')) {
+            $img_url = get_field('product_image', $product_id);
+        }
         if (!$img_url) {
-            $img_field = get_field('product_image', $product_id);
-            $img_url = $img_field ? $img_field : '';
+            $img_url = get_post_meta($product_id, 'product_image', true);
         }
 
         $items[] = array(
@@ -235,7 +608,7 @@ function gbh_ajax_add_to_cart() {
         wp_send_json_error(array('message' => 'Invalid product ID'));
     }
 
-    if (!isset($_SESSION['gbh_cart'])) {
+    if (!isset($_SESSION['gbh_cart']) || !is_array($_SESSION['gbh_cart'])) {
         $_SESSION['gbh_cart'] = array();
     }
 
@@ -251,12 +624,15 @@ function gbh_ajax_add_to_cart() {
         );
     }
 
+    gbh_save_cart($_SESSION['gbh_cart']);
     $cart_data = gbh_get_cart_data();
+
     wp_send_json_success(array(
         'message' => get_the_title($product_id) . ' added to bag!',
         'cart' => $cart_data
     ));
 }
+
 add_action('wp_ajax_gbh_add_to_cart', 'gbh_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_gbh_add_to_cart', 'gbh_ajax_add_to_cart');
 
@@ -281,11 +657,13 @@ function gbh_ajax_update_cart() {
         } else {
             $_SESSION['gbh_cart'][$key]['quantity'] = $quantity;
         }
+        gbh_save_cart($_SESSION['gbh_cart']);
     }
 
     $cart_data = gbh_get_cart_data();
     wp_send_json_success($cart_data);
 }
+
 add_action('wp_ajax_gbh_update_cart', 'gbh_ajax_update_cart');
 add_action('wp_ajax_nopriv_gbh_update_cart', 'gbh_ajax_update_cart');
 
@@ -419,3 +797,136 @@ function track_post_views() {
     }
 }
 add_action('wp', 'track_post_views');
+
+// 8. AJAX Product Catalog Filter & Sorting Handler
+function gbh_ajax_filter_products() {
+    $cats = isset($_POST['cats']) && is_array($_POST['cats']) ? array_map('sanitize_text_field', $_POST['cats']) : array();
+    $seasons = isset($_POST['seasons']) && is_array($_POST['seasons']) ? array_map('sanitize_text_field', $_POST['seasons']) : array();
+    $min_price = isset($_POST['min_price']) ? floatval($_POST['min_price']) : 0;
+    $max_price = isset($_POST['max_price']) ? floatval($_POST['max_price']) : 0;
+    $sort = isset($_POST['sort']) ? sanitize_text_field($_POST['sort']) : 'featured';
+
+    $args = array(
+        'post_type' => 'product',
+        'posts_per_page' => 24,
+        'post_status' => 'publish',
+    );
+
+    $tax_query = array('relation' => 'AND');
+
+    if (!empty($cats)) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $cats,
+        );
+    }
+
+    if (!empty($seasons)) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_season',
+            'field'    => 'slug',
+            'terms'    => $seasons,
+        );
+    }
+
+    if (count($tax_query) > 1) {
+        $args['tax_query'] = $tax_query;
+    }
+
+    if ($sort === 'low-high') {
+        $args['meta_key'] = 'product_offer_price';
+        $args['orderby'] = 'meta_value_num';
+        $args['order'] = 'ASC';
+    } elseif ($sort === 'high-low') {
+        $args['meta_key'] = 'product_offer_price';
+        $args['orderby'] = 'meta_value_num';
+        $args['order'] = 'DESC';
+    } elseif ($sort === 'newest') {
+        $args['orderby'] = 'date';
+        $args['order'] = 'DESC';
+    }
+
+    $query = new WP_Query($args);
+
+    ob_start();
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $p_id = get_the_ID();
+            $price = get_post_meta($p_id, 'product_price', true);
+            if (!$price && function_exists('get_field')) $price = get_field('product_price', $p_id);
+            
+            $offer_price = get_post_meta($p_id, 'product_offer_price', true);
+            if (!$offer_price && function_exists('get_field')) $offer_price = get_field('product_offer_price', $p_id);
+            
+            $discount_label = get_post_meta($p_id, 'discount_label', true);
+            if (!$discount_label && function_exists('get_field')) $discount_label = get_field('discount_label', $p_id);
+
+            $thumb_url = get_the_post_thumbnail_url($p_id, 'gbh-card');
+            if (!$thumb_url && function_exists('get_field')) $thumb_url = get_field('product_image', $p_id);
+            if (!$thumb_url) $thumb_url = get_post_meta($p_id, 'product_image', true);
+            ?>
+            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>">
+              <div class="product-img">
+                <?php if ($thumb_url): ?>
+                  <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
+                <?php else: ?>
+                  🌱
+                <?php endif; ?>
+
+                <?php if ($discount_label): ?>
+                  <span class="badge-hot"><?php echo esc_html($discount_label); ?></span>
+                <?php else: ?>
+                  <span class="badge-jaipur">Jaipur Special</span>
+                <?php endif; ?>
+              </div>
+
+              <div class="product-body">
+                <div class="product-category">
+                  <?php
+                  $terms = get_the_terms($p_id, 'product_cat');
+                  echo ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Gardening';
+                  ?>
+                </div>
+
+                <div class="product-name">
+                  <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                </div>
+
+                <div class="product-desc">
+                  <?php echo wp_trim_words(get_the_excerpt(), 10, '...'); ?>
+                </div>
+
+                <div class="product-footer">
+                  <div class="product-price">
+                    <?php if ($offer_price): ?>
+                      ₹<?php echo esc_html($offer_price); ?>
+                      <?php if ($price): ?><del>₹<?php echo esc_html($price); ?></del><?php endif; ?>
+                    <?php else: ?>
+                      ₹<?php echo esc_html($price ? $price : '199'); ?>
+                    <?php endif; ?>
+                  </div>
+
+                  <button class="add-btn" data-product-id="<?php echo esc_attr($p_id); ?>">
+                    Add to bag
+                  </button>
+                </div>
+              </div>
+            </div>
+            <?php
+        }
+        wp_reset_postdata();
+    } else {
+        echo '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;"><div style="font-size:3rem;margin-bottom:12px;">🌱🔍</div><h3 style="font-family:var(--f-display);color:var(--soil);">No products match your selection</h3><p style="color:var(--clay);margin-top:8px;">Try clearing filters or selecting another category.</p></div>';
+    }
+
+    $html = ob_get_clean();
+
+    wp_send_json_success(array(
+        'html' => $html,
+        'count' => $query->found_posts
+    ));
+}
+add_action('wp_ajax_gbh_filter_products', 'gbh_ajax_filter_products');
+add_action('wp_ajax_nopriv_gbh_filter_products', 'gbh_ajax_filter_products');

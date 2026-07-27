@@ -9,28 +9,62 @@ get_header();
 <?php while (have_posts()) : the_post(); 
     $product_id = get_the_ID();
     
-    // Fetch ACF Fields
-    $title = get_field('product_title') ? get_field('product_title') : get_the_title();
-    $price = get_field('product_price');
-    $offer_price = get_field('product_offer_price');
-    $discount_label = get_field('discount_label');
-    
-    $number_of_seeds = get_field('number_of_seeds');
-    $seed_type = get_field('seed_type');
-    $sowing_season = get_field('sowing_season');
-    $germ_temp = get_field('germination_temperature');
-    $germ_time = get_field('germination_time');
-    $germ_rate = get_field('germination_rate');
-    $first_harvest = get_field('first_harvest');
-    $container_size = get_field('container__pot_size');
-    $growing_level = get_field('growing_level');
-    $sku = get_field('sku') ? get_field('sku') : 'GBH-SEEDS-' . $product_id;
+    // Fetch Normalized Meta & ACF Fields
+    $title = get_the_title();
+    $price = get_post_meta($product_id, 'product_price', true);
+    if (!$price && function_exists('get_field')) $price = get_field('product_price');
+
+    $offer_price = get_post_meta($product_id, 'product_offer_price', true);
+    if (!$offer_price && function_exists('get_field')) $offer_price = get_field('product_offer_price');
+
+    $discount_label = get_post_meta($product_id, 'discount_label', true);
+    if (!$discount_label && function_exists('get_field')) $discount_label = get_field('discount_label');
+
+    $number_of_seeds = get_post_meta($product_id, 'number_of_seeds', true);
+    if (!$number_of_seeds && function_exists('get_field')) $number_of_seeds = get_field('number_of_seeds');
+
+    $seed_type = get_post_meta($product_id, 'seed_type', true);
+    if (!$seed_type && function_exists('get_field')) $seed_type = get_field('seed_type');
+
+    $sowing_season = get_post_meta($product_id, 'sowing_season', true);
+    if (!$sowing_season && function_exists('get_field')) $sowing_season = get_field('sowing_season');
+
+    $germ_temp = get_post_meta($product_id, 'germination_temperature', true);
+    if (!$germ_temp && function_exists('get_field')) $germ_temp = get_field('germination_temperature');
+
+    $germ_time = get_post_meta($product_id, 'germination_time', true);
+    if (!$germ_time && function_exists('get_field')) $germ_time = get_field('germination_time');
+
+    $germ_rate = get_post_meta($product_id, 'germination_rate', true);
+    if (!$germ_rate && function_exists('get_field')) $germ_rate = get_field('germination_rate');
+
+    $first_harvest = get_post_meta($product_id, 'first_harvest', true);
+    if (!$first_harvest && function_exists('get_field')) $first_harvest = get_field('first_harvest');
+
+    $container_size = get_post_meta($product_id, 'container_pot_size', true);
+    if (!$container_size && function_exists('get_field')) $container_size = get_field('container_pot_size');
+    if (!$container_size && function_exists('get_field')) $container_size = get_field('container__pot_size');
+
+    $growing_level = get_post_meta($product_id, 'growing_level', true);
+    if (!$growing_level && function_exists('get_field')) $growing_level = get_field('growing_level');
+
+    $sku = get_post_meta($product_id, 'sku', true);
+    if (!$sku && function_exists('get_field')) $sku = get_field('sku');
+    if (!$sku) $sku = 'GBH-SEEDS-' . $product_id;
 
     // Additional Care & Guide Fields
-    $care_tips = get_field('plant_care_tips');
-    $how_to_grow = get_field('how_to_grow');
-    $pests_diseases = get_field('pests_and_diseases');
-    $harvesting_guide = get_field('harvesting_guide');
+    $care_tips = get_post_meta($product_id, 'plant_care_tips', true);
+    if (!$care_tips && function_exists('get_field')) $care_tips = get_field('plant_care_tips');
+
+    $how_to_grow = get_post_meta($product_id, 'how_to_grow', true);
+    if (!$how_to_grow && function_exists('get_field')) $how_to_grow = get_field('how_to_grow');
+
+    $pests_diseases = get_post_meta($product_id, 'pests_and_diseases', true);
+    if (!$pests_diseases && function_exists('get_field')) $pests_diseases = get_field('pests_and_diseases');
+
+    $harvesting_guide = get_post_meta($product_id, 'harvesting_guide', true);
+    if (!$harvesting_guide && function_exists('get_field')) $harvesting_guide = get_field('harvesting_guide');
+
 
     // Images
     $main_img = get_the_post_thumbnail_url($product_id, 'large');
@@ -184,10 +218,11 @@ get_header();
         <button class="btn-primary add-btn" data-product-id="<?php echo esc_attr($product_id); ?>">
           Add to Bag
         </button>
-        <a href="<?php echo esc_url(home_url('/checkout/')); ?>" class="btn-secondary">
+        <button class="btn-secondary btn-buy-now" data-product-id="<?php echo esc_attr($product_id); ?>">
           Buy Now
-        </a>
+        </button>
       </div>
+
 
       <!-- Pincode Check Widget -->
       <div class="pincode-check">

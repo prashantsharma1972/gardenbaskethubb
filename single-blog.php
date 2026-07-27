@@ -1,120 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+/**
+ * Single Blog Post View — Garden Basket Hub
+ */
 
-<head>
+get_header();
+?>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href='/wp-content/themes/gardenbaskethubb/build/blog/blog.css?a8'>
-    <script type="module" defer src='/wp-content/themes/gardenbaskethubb/build/blog/blog.bundle.js?a8'></script>
+<?php while (have_posts()) : the_post();
+  $b_id = get_the_ID();
+  $read_time = get_post_meta($b_id, 'read_time', true);
+  if (!$read_time && function_exists('get_field')) $read_time = get_field('read_time', $b_id);
+  if (!$read_time) $read_time = '5 min read';
 
-    <?php
-    $homeUrl = get_home_url();
-    get_header();
-    ?>
+  $banner_img = get_the_post_thumbnail_url($b_id, 'large');
+  if (!$banner_img && function_exists('get_field')) $banner_img = get_field('banner_image', $b_id);
+  $categories = get_the_category($b_id);
+  $cat_name = (!empty($categories)) ? $categories[0]->name : 'Gardening Guide';
+?>
 
-    <main class="main--container">
+<!-- ============================================================
+     BLOG POST HERO
+     ============================================================ -->
+<article>
+  <header class="page-hero" style="padding:160px 80px 60px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);text-align:center;">
+    <p class="breadcrumb">
+      <a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · 
+      <a href="<?php echo esc_url(gbh_get_page_url('blog')); ?>">Blog</a> · 
+      <?php echo esc_html($cat_name); ?>
+    </p>
 
-        <section class="hero-section">
-            <div class="heading-content">
-                <h4>
-                    <?php the_title(); ?>
-                </h4>
-                <div class="blog-info-container">
-                    <div class="blog-detail-author-date">
-                        <div class="author-icon">
-                            <img src="https://gardenbaskethubb.com/wp-content/uploads/2025/01/author-img.webp"
-                                width="45" height="46" alt="gardenbaskethubb">
-                        </div>
-                        <div class="date-view-container">
-                            <p class="author-name">gardenbaskethubb</p>
-                            <span class="date">
-                                <?php echo get_the_date(); ?>
-                            </span>
+    <h1 style="font-size:clamp(2.2rem, 4vw, 3.5rem);max-width:860px;margin:0 auto 20px;line-height:1.2;"><?php the_title(); ?></h1>
 
-                        </div>
-                    </div>
-                    <div class="share-post">
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;font-family:var(--f-mono);font-size:0.8rem;color:var(--clay);letter-spacing:0.06em;flex-wrap:wrap;">
+      <span>📅 <?php echo get_the_date('F j, Y'); ?></span>
+      <span>⏱️ <?php echo esc_html($read_time); ?></span>
+      <span>✍️ Garden Basket Hub Nursery Team</span>
+    </div>
+  </header>
 
-                        <a data-link="<?php echo get_permalink(); ?>" id="copylink" class="copylink">
-                            <div class="copied_text">
-                                <p class="link_copied">Copied</p>
-                            </div>
-                            Share this post
-                        </a>
+  <!-- ============================================================
+       FEATURED BANNER IMAGE & ARTICLE CONTENT
+       ============================================================ -->
+  <section style="padding:0 80px 80px;">
+    <?php if ($banner_img): ?>
+      <div style="max-width:900px;margin:0 auto 48px;border-radius:12px;overflow:hidden;box-shadow:0 12px 32px rgba(44,26,14,0.08);">
+        <img src="<?php echo esc_url($banner_img); ?>" alt="<?php the_title(); ?>" style="width:100%;max-height:500px;object-fit:cover;display:block;">
+      </div>
+    <?php endif; ?>
 
-                    </div>
-                </div>
-                <div class="audio-heading">
-                    <p>Listen to the content</p>
-                </div>
-                <div class="audio-container">
+    <div style="max-width:760px;margin:0 auto;line-height:1.8;font-size:1.05rem;color:#4a382c;" class="blog-article-content">
+      <?php the_content(); ?>
+    </div>
 
-                    <div class="progress-bar">
-                        <div class="progress-bar-fill"></div>
-                    </div>
-                    <button class="play-pause-btn" aria-label="Play-Pause">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M12 1C5.925 1 1 5.925 1 12C1 18.075 5.925 23 12 23C18.075 23 23 18.075 23 12C23 5.925 18.075 1 12 1ZM17.183 13.415L10.4505 17.302C10.1945 17.4495 9.914 17.5235 9.6335 17.5235C9.353 17.5235 9.0725 17.4495 8.8165 17.302C8.305 17.0065 7.9995 16.478 7.9995 15.887V8.113C7.9995 7.5225 8.305 6.9935 8.8165 6.698C9.328 6.4025 9.9385 6.4025 10.45 6.698L17.1825 10.585C17.694 10.8805 17.9995 11.409 17.9995 12C17.9995 12.591 17.6945 13.1195 17.183 13.415Z"
-                                fill="white" />
-                        </svg>
-                    </button>
-                    <button class="control-btn mute-btn" aria-label="Mute">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M18.3596 19.3599C18.1026 19.3599 17.8456 19.2609 17.6506 19.0649C17.2606 18.6729 17.2626 18.0399 17.6546 17.6499C19.1666 16.1479 19.9996 14.1419 19.9996 11.9999C19.9996 9.8579 19.1666 7.8519 17.6546 6.3499C17.2626 5.9599 17.2606 5.3279 17.6506 4.9349C18.0396 4.5429 18.6716 4.5409 19.0646 4.9309C20.9576 6.8119 21.9996 9.3219 21.9996 11.9999C21.9996 14.6779 20.9576 17.1879 19.0646 19.0689C18.8696 19.2629 18.6146 19.3599 18.3596 19.3599Z"
-                                fill="white" />
-                            <path
-                                d="M15.5296 16.53C15.2716 16.53 15.0136 16.431 14.8186 16.233C14.4296 15.84 14.4336 15.207 14.8266 14.819C15.5716 14.082 15.9996 13.054 15.9996 12C15.9996 10.946 15.5716 9.91798 14.8266 9.18098C14.4336 8.79298 14.4306 8.15998 14.8186 7.76698C15.2066 7.37498 15.8396 7.37098 16.2326 7.75898C17.3556 8.86898 17.9996 10.415 17.9996 12C17.9996 13.585 17.3556 15.131 16.2326 16.241C16.0376 16.434 15.7836 16.53 15.5296 16.53Z"
-                                fill="white" />
-                            <path
-                                d="M12 21.9999C11.74 21.9999 11.484 21.8979 11.293 21.7069L6.586 16.9999H4C2.897 16.9999 2 16.1029 2 14.9999V8.99992C2 7.89692 2.897 6.99992 4 6.99992H6.586L11.293 2.29292C11.579 2.00592 12.009 1.92092 12.383 2.07592C12.757 2.23092 13 2.59592 13 2.99992V20.9999C13 21.4039 12.757 21.7689 12.383 21.9239C12.259 21.9749 12.129 21.9999 12 21.9999Z"
-                                fill="white" />
-                        </svg>
-                    </button>
-                </div>
+    <!-- Author & Social Share Footer -->
+    <div style="max-width:760px;margin:56px auto 0;padding-top:32px;border-top:1px solid rgba(44,26,14,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--leaf);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🌿</div>
+        <div>
+          <strong style="display:block;font-family:var(--f-display);color:var(--soil);font-size:1.05rem;">Garden Basket Hub Team</strong>
+          <span style="font-size:0.85rem;color:var(--clay);">Jaipur Nursery & Urban Farming Experts</span>
+        </div>
+      </div>
 
-                <audio id="audio" src="<?php echo get_field('audio'); ?>"></audio>
-            </div>
-            <div class="banner-image">
-                <div>
-                    <img fetchpriority="high" width="1216" height="742" src="<?php echo get_field('banner_image'); ?>"
-                        alt="<?php echo get_field('banner_alt_text'); ?>">
-                </div>
-            </div>
-        </section>
+      <a href="https://wa.me/919876543210?text=<?php echo urlencode('Check out this article: ' . get_permalink()); ?>" target="_blank" class="btn-primary" style="padding:10px 20px;font-size:0.85rem;">
+        💬 Share on WhatsApp
+      </a>
+    </div>
+  </section>
+</article>
 
-        <section class="main-blog">
+<!-- ============================================================
+     RELATED BLOG POSTS
+     ============================================================ -->
+<section style="background:var(--sand);padding:80px;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:40px;">
+      <div>
+        <p class="section-label">More Planting Advice</p>
+        <h2 class="section-title">Related Gardening Articles</h2>
+      </div>
+      <a href="<?php echo esc_url(gbh_get_page_url('blog')); ?>" class="btn-ghost">View All Guides ➔</a>
+    </div>
 
-            <div class="blog-details">
-                <?php the_content(); ?>
-            </div>
+    <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:28px;" class="about-story-cards">
+      <?php
+      $related_query = new WP_Query(array(
+        'post_type' => 'post',
+        'posts_per_page' => 2,
+        'post__not_in' => array($b_id),
+      ));
 
-        </section>
+      if ($related_query->have_posts()):
+        while ($related_query->have_posts()): $related_query->the_post();
+          $rel_thumb = get_the_post_thumbnail_url(get_the_ID(), 'medium');
+      ?>
+          <div style="background:var(--white);padding:28px;border-radius:8px;border:1px solid rgba(44,26,14,0.08);cursor:pointer;" class="product-card" data-permalink="<?php the_permalink(); ?>">
+            <span style="font-family:var(--f-mono);font-size:0.7rem;color:var(--leaf);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:8px;"><?php echo get_the_date('M j, Y'); ?></span>
+            <h3 style="font-family:var(--f-display);font-size:1.2rem;color:var(--soil);margin-bottom:10px;"><a href="<?php the_permalink(); ?>" style="color:inherit;text-decoration:none;"><?php the_title(); ?></a></h3>
+            <p style="font-size:0.88rem;color:#7a6050;line-height:1.6;margin-bottom:16px;"><?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?></p>
+            <a href="<?php the_permalink(); ?>" class="btn-ghost" style="font-size:0.85rem;color:var(--leaf);">Read Guide ➔</a>
+          </div>
+      <?php endwhile; wp_reset_postdata(); endif; ?>
+    </div>
+  </div>
+</section>
 
-        <section class="newsletter-subscribe">
-            <p class="form-top-heading">SIGN UP FOR NEWSLETTER</p>
-            <h2>Let my journey save a mile for you!</h2>
-            <p>Entrepreneurship doesn't come with a manual; the lessons I picked up along my way might help.</p>
-            <form class="subscribe-form" id="cta-subscribe-form">
-                <div class="subscribe-btn">
-                    <div class="field-box">
-                        <input type="email" name="lemail" id="form-email" placeholder="Enter your Email Address">
-                    </div>
-                    <button type="submit" class="button"><b>SUBSCRIBE</b></button>
-                </div>
-            </form>
-        </section>
+<?php endwhile; ?>
 
-    </main>
-
-    <?php get_footer(); ?>
-
-    <?php echo get_field('schema_code'); ?>
-
-    </body>
-
-</html>
+<?php get_footer(); ?>
