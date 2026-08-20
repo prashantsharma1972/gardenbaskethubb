@@ -1,10 +1,19 @@
 <?php
 /**
- * Gardening Reels Gallery Archive Template
+ * Reels Archive Template — Garden Basket Hub
  */
-
-get_header();
 ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/reels/reels.css">
+    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/reels/reels.css">
+    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/reels/reels.bundle.js"></script>
+
+    <?php get_header(); ?>
 
 <!-- ============================================================
      REELS HERO

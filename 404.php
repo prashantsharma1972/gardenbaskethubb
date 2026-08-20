@@ -1,23 +1,19 @@
+<?php
+/**
+ * 404 Page Not Found Template
+ */
+?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html <?php language_attributes(); ?>>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.css">
+    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.css">
+    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.bundle.js"></script>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=Roboto:wght@400;500&display=swap"
-        rel="stylesheet">
-
-    <link rel="stylesheet" href=<?php echo get_theme_file_uri('/build/notFound/notFound.css?a8'); ?>>
-    <script type="module" defer src=<?php echo get_theme_file_uri('/build/notFound/notFound.bundle.js?a8'); ?>></script>
-
-    <?php
-    get_header();
-    ?>
+    <?php get_header(); ?>
 
     <main class="main--container">
         <section class="notfound">

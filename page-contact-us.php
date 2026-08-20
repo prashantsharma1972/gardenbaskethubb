@@ -2,9 +2,18 @@
 /**
  * Template Name: Contact Us
  */
-
-get_header();
 ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/contactUs/contactUs.css">
+    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/contactUs/contactUs.css">
+    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/contactUs/contactUs.bundle.js"></script>
+
+    <?php get_header(); ?>
 
 <!-- ============================================================
      CONTACT HERO

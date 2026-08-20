@@ -2,10 +2,20 @@
 /**
  * Template Name: Checkout Page
  */
+?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-get_header();
+    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/checkout/checkout.css">
+    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/checkout/checkout.css">
+    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/checkout/checkout.bundle.js"></script>
 
-$cart = gbh_get_cart_data();
+    <?php get_header(); ?>
+<?php
+$cart = GBH_Cart_API::get_cart_data();
 ?>
 
 <!-- ============================================================

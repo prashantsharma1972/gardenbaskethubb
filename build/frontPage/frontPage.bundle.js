@@ -191,9 +191,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_utilities_header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../src-utilities/header */ "../src-utilities/header.js");
 /* harmony import */ var _src_utilities_footer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../src-utilities/footer */ "../src-utilities/footer.js");
 /* harmony import */ var _src_utilities_footer__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_src_utilities_footer__WEBPACK_IMPORTED_MODULE_2__);
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './../../src-utilities/ecommerce'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 
+
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './../../src-utilities/ecommerce'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())();
 })();
 
 /******/ })()

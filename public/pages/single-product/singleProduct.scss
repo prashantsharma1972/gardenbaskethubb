@@ -1,0 +1,11 @@
+@import '../../scss-utilities/breakpoints';
+@import '../../scss-utilities/global';
+@import '../../scss-utilities/header';
+@import '../../scss-utilities/footer';
+
+/* Product Details Page */
+.pdp-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}

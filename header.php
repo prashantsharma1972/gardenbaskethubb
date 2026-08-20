@@ -1,18 +1,28 @@
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <?php wp_head(); ?>
+<?php
+// Calculate current cart count
+$cart_data = GBH_Cart_API::get_cart_data();
+$cart_count = $cart_data['total_count'];
+?>
+<title> <?php wp_title(''); ?> </title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script>
+    function loadJS(FILE_URL, defer = true) {
+        let scriptEle = document.createElement("script");
+        scriptEle.setAttribute("src", FILE_URL);
+        scriptEle.setAttribute("type", "text/javascript");
+        scriptEle.setAttribute("defer", defer);
+        document.head.appendChild(scriptEle);
+    }
+</script>
+
+<?php wp_head(); ?>
+
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-
-<?php
-// Calculate current cart count
-$cart_data = gbh_get_cart_data();
-$cart_count = $cart_data['total_count'];
-?>
 
 <!-- ============================================================
      SITE NAVIGATION BAR

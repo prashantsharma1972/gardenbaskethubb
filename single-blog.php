@@ -1,19 +1,19 @@
+<?php
+/**
+ * Single Blog Template
+ */
+?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html <?php language_attributes(); ?>>
 <head>
-
-    <meta charset="UTF-8">
+    <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href='/wp-content/themes/gardenbaskethubb/build/blog/blog.css?a8'>
-    <script type="module" defer src='/wp-content/themes/gardenbaskethubb/build/blog/blog.bundle.js?a8'></script>
 
-    <?php
-    $homeUrl = get_home_url();
-    get_header();
-    ?>
+    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/blog/blog.css">
+    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/blog/blog.css">
+    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/blog/blog.bundle.js"></script>
+
+    <?php get_header(); ?>
 
     <main class="main--container">
 
