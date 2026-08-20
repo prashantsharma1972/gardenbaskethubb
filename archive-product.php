@@ -62,22 +62,22 @@
         <?php
         $products_query = new WP_Query(array(
           'post_type' => 'product',
-          'posts_per_page' => 12,
+          'posts_per_page' => 24,
         ));
         $count = $products_query->found_posts;
         ?>
-        <span class="results">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?> products</span>
+        <span class="results" id="gbh-results-count">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?> products</span>
 
         <select id="gbh-sort-products">
           <option value="featured">Sort: Featured</option>
           <option value="low-high">Price: Low to High</option>
           <option value="high-low">Price: High to Low</option>
           <option value="newest">Newest First</option>
-          <option value="popular">Best Sellers</option>
         </select>
       </div>
 
-      <div class="product-grid">
+      <div class="product-grid" id="gbh-product-grid">
+
         <?php if ($products_query->have_posts()): ?>
           <?php while ($products_query->have_posts()):
             $products_query->the_post();
@@ -89,13 +89,16 @@
             if (!$thumb_url)
               $thumb_url = get_field('product_image');
             ?>
-            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>">
+            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>" data-permalink="<?php the_permalink(); ?>">
               <div class="product-img">
-                <?php if ($thumb_url): ?>
-                  <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
-                <?php else: ?>
-                  🌱
-                <?php endif; ?>
+                <a href="<?php the_permalink(); ?>" style="display:block;width:100%;height:100%;text-decoration:none;color:inherit;">
+                  <?php if ($thumb_url): ?>
+                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
+                  <?php else: ?>
+                    🌱
+                  <?php endif; ?>
+                </a>
+
 
                 <?php if ($discount_label): ?>
                   <span class="badge-hot"><?php echo esc_html($discount_label); ?></span>

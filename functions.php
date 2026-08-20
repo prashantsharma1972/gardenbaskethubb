@@ -1,71 +1,109 @@
 <?php
 /**
- * Garden Basket Hub — Theme Functions & E-Commerce Engine
+ * Garden Basket Hub — Main Theme Functions
+ *
+ * All specialized subsystems are cleanly organized in the /inc/ directory.
  */
 
-// 1. Session Management
-function gbh_init_session() {
-    if (!session_id() && !headers_sent()) {
-        session_start();
-    }
-}
-add_action('init', 'gbh_init_session', 1);
+if (!defined('ABSPATH')) exit;
 
-// 2. Disable unnecessary WordPress scripts/head bloat
-remove_action('wp_head', 'print_emoji_detection_script', 7);
-remove_action('wp_print_styles', 'print_emoji_styles');
-remove_action('wp_head', 'wp_oembed_add_discovery_links');
-remove_action('wp_head', 'wp_oembed_add_host_js');
-remove_action('wp_head', 'rest_output_link_wp_head');
-remove_action('wp_head', 'rel_canonical');
-remove_action('wp_head', 'wp_shortlink_wp_head', 10);
-remove_action('wp_head', 'rsd_link');
-remove_action('wp_head', 'wp_generator');
-remove_filter('wp_robots', 'wp_robots_max_image_preview_large');
+define('GBH_THEME_DIR', get_template_directory());
+define('GBH_THEME_URI', get_template_directory_uri());
 
-function remove_dashicons_styles() {
-    wp_deregister_style('dashicons');
-}
-add_action('wp_print_styles', 'remove_dashicons_styles', 100);
+/* ============================================================
+   1. API & CREDENTIALS CONFIGURATION
+   ============================================================ */
+// Razorpay Credentials (Plug keys directly here when received)
+if (!defined('GBH_RAZORPAY_KEY_ID')) define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_YOUR_KEY_ID_HERE'));
+if (!defined('GBH_RAZORPAY_KEY_SECRET')) define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'YOUR_SECRET_HERE'));
 
-// 3. Theme Setup & Supports
+// Shiprocket Credentials
+if (!defined('GBH_SHIPROCKET_EMAIL')) define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant753@gmail.com'));
+if (!defined('GBH_SHIPROCKET_PASSWORD')) define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@123'));
+if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION')) define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Jaipur_Nursery_Main'));
+
+/* ============================================================
+   2. LOAD MODULAR SUBSYSTEMS (/inc/ & /helpers/)
+   ============================================================ */
+require_once GBH_THEME_DIR . '/inc/cpt-taxonomies.php';
+require_once GBH_THEME_DIR . '/inc/cart-engine.php';
+require_once GBH_THEME_DIR . '/inc/razorpay-integration.php';
+require_once GBH_THEME_DIR . '/inc/shiprocket-integration.php';
+require_once GBH_THEME_DIR . '/inc/checkout-orders.php';
+require_once GBH_THEME_DIR . '/inc/email-notifications.php';
+
+// New Helpers
+require_once GBH_THEME_DIR . '/helpers/CartAPI.php';
+require_once GBH_THEME_DIR . '/helpers/PaymentGateway.php';
+require_once GBH_THEME_DIR . '/helpers/ShippingManager.php';
+// SEO and Sitemap Modules
+require_once GBH_THEME_DIR . '/inc/seo-engine.php';
+require_once GBH_THEME_DIR . '/inc/sitemap-robots.php';
+
+/* ============================================================
+   3. THEME SETUP & FEATURES SUPPORT
+   ============================================================ */
 function gbh_theme_setup() {
     add_theme_support('title-tag');
-    add_theme_support('post-thumbnails', array('post', 'page', 'product', 'reels', 'blog'));
+    add_theme_support('post-thumbnails');
+    add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption'));
+    add_theme_support('custom-logo');
+
+    // Register Image Sizes
     add_image_size('gbh-card', 600, 600, true);
+    add_image_size('gbh-hero', 1200, 800, true);
     add_image_size('gbh-thumb', 200, 200, true);
 }
 add_action('after_setup_theme', 'gbh_theme_setup');
 
+// Disable WordPress Admin Bar for clean storefront design
+add_filter('show_admin_bar', '__return_false');
 
-
-// 5. Enqueue Styles & Scripts
+/* ============================================================
+   4. ENQUEUE SCRIPTS & STYLES
+   ============================================================ */
 function gbh_enqueue_assets() {
-    // Fonts
-    wp_enqueue_style('gbh-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400&display=swap', array(), null);
-    
-    // Main Stylesheet
-    wp_enqueue_style('gbh-style', get_stylesheet_uri(), array('gbh-fonts'), '1.0.0');
+    // 1. Google Fonts
+    wp_enqueue_style(
+        'gbh-google-fonts',
+        'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap',
+        array(),
+        null
+    );
 
-    // Global settings for Webpack JS
+    // 2. Master Theme Stylesheet
+    wp_enqueue_style(
+        'gbh-main-style',
+        get_stylesheet_uri(),
+        array('gbh-google-fonts'),
+        filemtime(GBH_THEME_DIR . '/style.css')
+    );
+
+    // 3. jQuery
+    wp_enqueue_script('jquery');
+
+    // 4. Razorpay Checkout Script
+    wp_enqueue_script('razorpay-checkout', 'https://checkout.razorpay.com/v1/checkout.js', array(), null, true);
+
+    // 5. Global settings for Webpack JS
     wp_add_inline_script('jquery', '
         window.gbh_ajax_obj = {
             ajax_url: "' . admin_url('admin-ajax.php') . '",
             nonce: "' . wp_create_nonce('gbh_cart_nonce') . '",
+            home_url: "' . home_url('/') . '",
             cart_url: "' . home_url('/cart/') . '",
-            checkout_url: "' . home_url('/checkout/') . '"
+            checkout_url: "' . home_url('/checkout/') . '",
+            shop_url: "' . home_url('/shop/') . '",
+            razorpay_key_id: "' . ((GBH_RAZORPAY_KEY_ID && GBH_RAZORPAY_KEY_ID !== 'rzp_live_YOUR_KEY_ID_HERE') ? GBH_RAZORPAY_KEY_ID : 'rzp_test_GBH_SIMULATED') . '"
         };
     ', 'before');
 }
 add_action('wp_enqueue_scripts', 'gbh_enqueue_assets');
 
-// 6. Load Professional Helpers
-require_once GBH_THEME_DIR . '/helpers/CartAPI.php';
-require_once GBH_THEME_DIR . '/helpers/PaymentGateway.php';
-require_once GBH_THEME_DIR . '/helpers/ShippingManager.php';
-require_once GBH_THEME_DIR . '/helpers/SEOManager.php';
 
-// 7. Utility function: Increase Post Views
+/* ============================================================
+   5. POST VIEWS TRACKER
+   ============================================================ */
 function increase_post_views($post_id) {
     $views = get_post_meta($post_id, 'view_count', true);
     if (!$views) $views = 0;
@@ -82,3 +120,11 @@ function track_post_views() {
     }
 }
 add_action('wp', 'track_post_views');
+
+// One-time flush rewrite rules to fix 404 errors on Custom Post Types
+add_action('init', function() {
+    if (!get_option('gbh_rules_flushed_v4')) {
+        flush_rewrite_rules();
+        update_option('gbh_rules_flushed_v4', 1);
+    }
+}, 99);

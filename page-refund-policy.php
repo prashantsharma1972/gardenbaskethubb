@@ -1,0 +1,42 @@
+<?php
+/**
+ * Template Name: Refund & Shipping Policy
+ */
+
+get_header();
+?>
+
+<!-- ============================================================
+     REFUND POLICY HERO
+     ============================================================ -->
+<section class="page-hero">
+  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Legal</p>
+  <h1>Refund & <em>Shipping Policy</em></h1>
+  <p>Our plant guarantee, Jaipur same-day shipping rules, and replacement policy.</p>
+</section>
+
+<!-- ============================================================
+     REFUND POLICY CONTENT
+     ============================================================ -->
+<section>
+  <div style="max-width:800px;margin:0 auto;line-height:1.8;color:#5c4436;">
+    <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:16px;font-size:1.8rem;">1. Fresh Plant Guarantee</h2>
+    <p style="margin-bottom:20px;">
+      We take extreme care in nurturing and packing live saplings at our Jaipur nursery. If your seedlings arrive damaged or unhealthy due to transit, notify us on WhatsApp (+91 98765 43210) within 24 hours of delivery with a photo, and we will send a free replacement or issue a full refund immediately.
+    </p>
+
+    <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:16px;font-size:1.8rem;margin-top:40px;">2. Shipping Timelines & Charges</h2>
+    <p style="margin-bottom:20px;">
+      <strong>Jaipur Local Orders:</strong> Delivered same-day in designated morning or evening time slots.<br>
+      <strong>Pan-India Shipping:</strong> Orders are dispatched within 24 hours and delivered in 3–5 business days.<br>
+      <strong>Free Shipping:</strong> All orders above ₹799 qualify for free shipping pan-India. A flat ₹49 delivery charge applies to orders under ₹799.
+    </p>
+
+    <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:16px;font-size:1.8rem;margin-top:40px;">3. Order Cancellations</h2>
+    <p style="margin-bottom:20px;">
+      You can cancel your order before it leaves our nursery by reaching out to support on WhatsApp or email. Once a same-day Jaipur rider has been dispatched, local seedling orders cannot be cancelled.
+    </p>
+  </div>
+</section>
+
+<?php get_footer(); ?>
