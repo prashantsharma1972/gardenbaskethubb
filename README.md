@@ -20,13 +20,25 @@
 
 ```
 gardenbaskethubb/
-├── functions.php                   # Core theme setup, CPT registration, Auto Seeder, Page Creator, AJAX Endpoints
+├── functions.php                   # Master Theme Loader, API Constants & Asset Enqueue
 ├── style.css                       # Design System CSS Tokens, Global Component Styles & Media Queries
 ├── header.php                      # Site Header, Desktop Nav, Mobile Drawer Overlay & Toggle Button
 ├── footer.php                      # Shared Footer, Legal Policy Links & Crisp Vector SVGs (Instagram, WA, YT)
+├── sitemap.xml                     # Physical XML Sitemap fallback
+├── robots.txt                      # Physical Robots.txt crawler directives
 ├── index.php                       # Fallback Main WordPress Loop Template
 ├── front-page.php                  # Homepage (Hero, Categories, Best Sellers, Reels, Trust Grid, Calendar, Blogs)
 ├── 404.php                         # Custom 404 Page Not Found Template
+│
+├── inc/                            # Modular Backend Subsystems
+│   ├── cpt-taxonomies.php          # CPTs (product, reels, gbh_order), Taxonomies & Auto Seeder
+│   ├── cart-engine.php             # Session/Cookie Cart Engine, Subtotals & AJAX Filters
+│   ├── razorpay-integration.php    # Razorpay REST API Order Creator & Payment Verification
+│   ├── shiprocket-integration.php  # Shiprocket JWT Auth & Auto-Shipping Order Dispatch
+│   ├── checkout-orders.php         # Checkout AJAX Order Placement & Post Meta Storage
+│   ├── email-notifications.php     # Transactional HTML Email Receipts & Store Alerts
+│   ├── seo-engine.php              # Dynamic Titles, Meta Tags, Open Graph & Schema.org JSON-LD
+│   └── sitemap-robots.php          # Virtual /sitemap.xml Rewrite & Robots.txt Filter
 │
 ├── archive-product.php             # Shop Catalog Page (Live AJAX Category, Season & Price Filter Grid)
 ├── single-product.php              # Single Product Detail Page (PDP) with Image Gallery, Specs, Care Tabs, Buy Now
@@ -43,6 +55,7 @@ gardenbaskethubb/
 ├── page-contact-us.php             # Contact Us Page (Jaipur Nursery Details, Hours, Form with Toast Handler)
 │
 ├── privacy-policy.php              # Privacy Policy Legal Page
+
 ├── page-terms-and-conditions.php   # Terms & Conditions Legal Page
 ├── page-refund-policy.php          # Refund & Shipping Policy Legal Page (Live Plant Guarantee, Jaipur Shipping)
 │

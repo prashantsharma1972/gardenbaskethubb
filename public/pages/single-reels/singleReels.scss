@@ -1,0 +1,10 @@
+@import '../../scss-utilities/breakpoints';
+@import '../../scss-utilities/global';
+@import '../../scss-utilities/header';
+@import '../../scss-utilities/footer';
+
+.single-reel-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}

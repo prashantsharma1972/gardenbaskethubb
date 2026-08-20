@@ -44,9 +44,15 @@ Last Updated: 2026-07-27
 - [x] **Gardening Blog System (`archive-blog.php`, `single-blog.php`)**: Built blog guides catalog archive, single post article view, and Top 3 Featured Blogs homepage section.
 - [x] **Cart & Checkout Engine (`page-cart.php`, `page-checkout.php`)**: Built dynamic shopping bag page and 3-step checkout form with Jaipur slot delivery options.
 - [x] **Order Completion Page (`page-thank-you.php`)**: Built Thank You page with order ID badge, customer slot summary, and WhatsApp order tracking button.
-- [x] **About Us & Contact Pages (`page-about-us.php`, `page-contact-us.php`)**: Built nursery story page (3-column story cards, values grid, stats counter) and contact page.
-- [x] **Legal Policy Pages (`privacy-policy.php`, `page-terms-and-conditions.php`, `page-refund-policy.php`)**: Built Privacy Policy, Terms & Conditions, and Refund & Shipping Policy pages.
+- [x] **Razorpay Payment Gateway Engine**: Added frontend Razorpay JS modal trigger in `page-checkout.php` & `assets/js/main.js` and AJAX endpoints `gbh_create_razorpay_order` in `functions.php`.
+- [x] **Shiprocket Logistics Auto-Shipping Engine**: Implemented `gbh_shiprocket_get_token` (JWT authentication token transient caching) and `gbh_shiprocket_create_order` in `functions.php` mapping order details to Shiprocket adhoc API.
+- [x] **Order HTML Email Sender**: Implemented `gbh_send_order_confirmation_email` in `functions.php` sending HTML confirmation receipts to customers and notifications to store admin.
+- [x] **Automated Technical SEO & OpenGraph Meta Engine**: Implemented `gbh_render_seo_meta_tags()` in `functions.php` dynamically injecting optimized titles, meta descriptions, canonical URLs, Open Graph (OG) tags, and Twitter Cards across every page.
+- [x] **Schema.org Structured Data (JSON-LD)**: Integrated dynamic JSON-LD microdata for Product Schema (`single-product.php`), Article Schema (`single-blog.php`), and LocalBusiness Nursery Schema (Front page).
+- [x] **Dynamic XML Sitemap & Robots.txt Engine**: Implemented virtual XML sitemap endpoint `/sitemap.xml` in `functions.php` (plus physical `sitemap.xml` fallback) and `robots.txt` filter blocking admin/cart/checkout crawling.
 - [x] **PHP Syntax & Quality Verification**: All 21 PHP template files validated via `php -l` with 0 syntax errors.
+
+
 
 ---
 

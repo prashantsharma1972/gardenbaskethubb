@@ -7,6 +7,8 @@ get_header();
 
 $cart = gbh_get_cart_data();
 ?>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 
 <!-- ============================================================
      CHECKOUT HERO
