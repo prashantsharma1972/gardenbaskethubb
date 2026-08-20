@@ -105,16 +105,16 @@ export function initEcommerce() {
         });
 
         // 2. Cart Quantity Stepper (+ / -) & Item Removal
-        $(document).on('click', '.cart-qty-btn', function(e) {
+        $(document).on('click', '.btn-qty-plus, .btn-qty-minus', function(e) {
             e.preventDefault();
             const $btn = $(this);
-            const $row = $btn.closest('.cart-item-row');
-            const key = $row.data('item-key');
-            let currentQty = parseInt($row.find('.cart-qty-num').text()) || 1;
+            const $row = $btn.closest('.cart-row');
+            const key = $row.data('cart-key');
+            let currentQty = parseInt($row.find('.cart-qty-input').val()) || 1;
 
-            if ($btn.hasClass('qty-plus')) {
+            if ($btn.hasClass('btn-qty-plus')) {
                 currentQty++;
-            } else if ($btn.hasClass('qty-minus')) {
+            } else if ($btn.hasClass('btn-qty-minus')) {
                 currentQty--;
             }
 
@@ -133,7 +133,7 @@ export function initEcommerce() {
                             $row.fadeOut(300, function() { $(this).remove(); });
                             showToast('Item removed from bag.');
                         } else {
-                            $row.find('.cart-qty-num').text(currentQty);
+                            $row.find('.cart-qty-input').val(currentQty);
                         }
                         if (res.data) updateCartDOM(res.data);
                     }
@@ -141,10 +141,10 @@ export function initEcommerce() {
             });
         });
 
-        $(document).on('click', '.cart-remove-item', function(e) {
+        $(document).on('click', '.remove', function(e) {
             e.preventDefault();
-            const $row = $(this).closest('.cart-item-row');
-            const key = $row.data('item-key');
+            const $row = $(this).closest('.cart-row');
+            const key = $row.data('cart-key');
 
             $.ajax({
                 url: ajaxUrl,

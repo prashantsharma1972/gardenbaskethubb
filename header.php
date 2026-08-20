@@ -1,6 +1,6 @@
 <?php
 // Calculate current cart count
-$cart_data = GBH_Cart_API::get_cart_data();
+$cart_data = gbh_get_cart_data();
 $cart_count = $cart_data['total_count'];
 ?>
 <!DOCTYPE html>

@@ -2,20 +2,10 @@
 /**
  * Template Name: Shopping Bag / Cart Page
  */
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/cart/cart.css">
-    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/cart/cart.css">
-    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/cart/cart.bundle.js"></script>
+get_header();
 
-    <?php get_header(); ?>
-<?php
-$cart = GBH_Cart_API::get_cart_data();
+$cart = gbh_get_cart_data();
 ?>
 
 <!-- ============================================================

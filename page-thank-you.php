@@ -1,19 +1,9 @@
 <?php
 /**
- * Template Name: Order Success
+ * Template Name: Thank You / Order Success
  */
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/thankYou/thankYou.css">
-    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/thankYou/thankYou.css">
-    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/thankYou/thankYou.bundle.js"></script>
-
-    <?php get_header(); ?>
+get_header(); ?>
 <?php
 $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 $order_num = isset($_GET['order_num']) ? sanitize_text_field($_GET['order_num']) : 'GBH-89214';

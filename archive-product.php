@@ -2,18 +2,8 @@
 /**
  * Shop Archive Template — Garden Basket Hub
  */
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/shop/shop.css">
-    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/shop/shop.css">
-    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/shop/shop.bundle.js"></script>
-
-    <?php get_header(); ?>
+get_header(); ?>
 
 <!-- ============================================================
      PAGE HERO

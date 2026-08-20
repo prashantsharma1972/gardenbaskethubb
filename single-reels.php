@@ -4,9 +4,8 @@
  */
 
 get_header();
-?>
 
-<?php while (have_posts()) : the_post();
+while (have_posts()) : the_post();
     $r_id = get_the_ID();
     $video_url = get_post_meta($r_id, 'reel_video_url', true);
     if (!$video_url && function_exists('get_field')) $video_url = get_field('reel_video_url');

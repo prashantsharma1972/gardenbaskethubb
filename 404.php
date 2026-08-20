@@ -1,19 +1,9 @@
 <?php
 /**
- * 404 Page Not Found Template
+ * 404 Template
  */
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.css">
-    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.css">
-    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/notFound/notFound.bundle.js"></script>
-
-    <?php get_header(); ?>
+get_header(); ?>
 
     <main class="main--container">
         <section class="notfound">

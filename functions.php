@@ -33,7 +33,6 @@ require_once GBH_THEME_DIR . '/inc/checkout-orders.php';
 require_once GBH_THEME_DIR . '/inc/email-notifications.php';
 
 // New Helpers
-require_once GBH_THEME_DIR . '/helpers/CartAPI.php';
 require_once GBH_THEME_DIR . '/helpers/PaymentGateway.php';
 require_once GBH_THEME_DIR . '/helpers/ShippingManager.php';
 // SEO and Sitemap Modules
@@ -99,6 +98,55 @@ function gbh_enqueue_assets() {
     ', 'before');
 }
 add_action('wp_enqueue_scripts', 'gbh_enqueue_assets');
+
+// 4.5 Auto-Load Page Bundles (CSS/JS)
+function gbh_enqueue_page_bundles() {
+    $bundle = '';
+    
+    if (is_front_page()) {
+        $bundle = 'frontPage';
+    } elseif (is_page('cart')) {
+        $bundle = 'cart';
+    } elseif (is_page('checkout')) {
+        $bundle = 'checkout';
+    } elseif (is_page('thank-you') || is_page_template('page-thank-you.php')) {
+        $bundle = 'thankYou';
+    } elseif (is_page('about-us')) {
+        $bundle = 'aboutUs';
+    } elseif (is_page('contact-us')) {
+        $bundle = 'contactUs';
+    } elseif (is_page('success')) {
+        $bundle = 'success';
+    } elseif (is_singular('product')) {
+        $bundle = 'singleProduct';
+    } elseif (is_post_type_archive('product') || is_page('shop')) {
+        $bundle = 'shop';
+    } elseif (is_post_type_archive('reels')) {
+        $bundle = 'reels';
+    } elseif (is_singular('reels')) {
+        $bundle = 'singleReels';
+    } elseif (is_singular('post')) {
+        $bundle = 'blog';
+    } elseif (is_home() || is_category() || is_tag()) {
+        $bundle = 'blogs'; 
+    } elseif (is_404()) {
+        $bundle = 'notFound';
+    }
+
+    if ($bundle) {
+        wp_enqueue_style('gbh-' . $bundle, GBH_THEME_URI . '/build/' . $bundle . '/' . $bundle . '.css', array(), null);
+        wp_enqueue_script('gbh-' . $bundle . '-js', GBH_THEME_URI . '/build/' . $bundle . '/' . $bundle . '.bundle.js', array('jquery'), null, true);
+    }
+}
+add_action('wp_enqueue_scripts', 'gbh_enqueue_page_bundles', 20);
+
+// Add type="module" to all Webpack JS bundles
+add_filter('script_loader_tag', function($tag, $handle, $src) {
+    if (strpos($handle, 'gbh-') === 0 && strpos($handle, '-js') !== false) {
+        return '<script type="module" defer fetchpriority="low" src="' . esc_url($src) . '"></script>' . "\n";
+    }
+    return $tag;
+}, 10, 3);
 
 
 /* ============================================================

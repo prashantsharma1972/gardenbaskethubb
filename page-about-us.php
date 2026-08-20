@@ -1,19 +1,9 @@
 <?php
 /**
- * Template Name: About Us / Our Story
+ * Template Name: About Us
  */
-?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-    <meta charset="<?php bloginfo('charset'); ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="preload" as="style" href="<?php echo GBH_THEME_URI; ?>/build/aboutUs/aboutUs.css">
-    <link rel="stylesheet" href="<?php echo GBH_THEME_URI; ?>/build/aboutUs/aboutUs.css">
-    <script type="module" defer fetchpriority="low" src="<?php echo GBH_THEME_URI; ?>/build/aboutUs/aboutUs.bundle.js"></script>
-
-    <?php get_header(); ?>
+get_header(); ?>
 
 <!-- ============================================================
      ABOUT HERO SECTION
