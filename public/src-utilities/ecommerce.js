@@ -104,6 +104,60 @@ export function initEcommerce() {
             });
         });
 
+        // 2. Single Product Quantity Stepper
+        $(document).on('click', '.qty-stepper button', function(e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const $input = $btn.siblings('input');
+            let currentQty = parseInt($input.val()) || 1;
+            
+            if ($btn.hasClass('qty-plus')) {
+                currentQty++;
+            } else if ($btn.hasClass('qty-minus')) {
+                if (currentQty > 1) currentQty--;
+            }
+            $input.val(currentQty);
+        });
+
+        // Buy Now Logic
+        $(document).on('click', '.btn-buy-now', function(e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const productId = $btn.data('product-id');
+            const stepperInput = $('.qty-stepper input');
+            const qty = stepperInput.length ? (parseInt(stepperInput.val()) || 1) : 1;
+            const variant = $('.variant-pill.active').text().trim() || '';
+            
+            if (!productId) return;
+            
+            const originalText = $btn.html();
+            $btn.prop('disabled', true).html('Redirecting... ⏳');
+            
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'gbh_add_to_cart',
+                    nonce: nonce,
+                    product_id: productId,
+                    quantity: qty,
+                    variant: variant
+                },
+                success: function(res) {
+                    if (res.success) {
+                        window.location.href = '/checkout/';
+                    } else {
+                        $btn.prop('disabled', false).html(originalText);
+                        showToast(res.data.message || 'Error processing checkout.', 'error');
+                    }
+                },
+                error: function() {
+                    $btn.prop('disabled', false).html(originalText);
+                    showToast('Connection error.', 'error');
+                }
+            });
+        });
+
         // 2. Cart Quantity Stepper (+ / -) & Item Removal
         $(document).on('click', '.btn-qty-plus, .btn-qty-minus', function(e) {
             e.preventDefault();

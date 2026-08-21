@@ -11,7 +11,7 @@
 - **Tech Stack**:
   - **CMS**: WordPress (Custom Light Theme — WooCommerce Not Required)
   - **Styles**: Vanilla CSS Design System with CSS Variables (`style.css`)
-  - **Scripts**: jQuery + Native JS AJAX Cart & Filter Engine (`assets/js/main.js`)
+  - **Scripts**: Modular JS bundled via Webpack (`public/` -> `build/`)
   - **Fonts**: `Playfair Display` (Serif Headings), `DM Sans` (Body Text), `DM Mono` (Accents & Badges)
 
 ---
@@ -30,15 +30,16 @@ gardenbaskethubb/
 ├── front-page.php                  # Homepage (Hero, Categories, Best Sellers, Reels, Trust Grid, Calendar, Blogs)
 ├── 404.php                         # Custom 404 Page Not Found Template
 │
-├── inc/                            # Modular Backend Subsystems
-│   ├── cpt-taxonomies.php          # CPTs (product, reels, gbh_order), Taxonomies & Auto Seeder
-│   ├── cart-engine.php             # Session/Cookie Cart Engine, Subtotals & AJAX Filters
-│   ├── razorpay-integration.php    # Razorpay REST API Order Creator & Payment Verification
-│   ├── shiprocket-integration.php  # Shiprocket JWT Auth & Auto-Shipping Order Dispatch
-│   ├── checkout-orders.php         # Checkout AJAX Order Placement & Post Meta Storage
-│   ├── email-notifications.php     # Transactional HTML Email Receipts & Store Alerts
-│   ├── seo-engine.php              # Dynamic Titles, Meta Tags, Open Graph & Schema.org JSON-LD
-│   └── sitemap-robots.php          # Virtual /sitemap.xml Rewrite & Robots.txt Filter
+├── public/                         # Frontend Source Code (Webpack Entrypoints)
+│   ├── pages/                      # Page-specific JS/SCSS (shop, single-product, cart, etc.)
+│   └── src-utilities/              # Global Utilities (ecommerce.js, header.js, reels.js)
+│
+├── build/                          # Compiled Webpack Output (DO NOT EDIT DIRECTLY)
+│   ├── frontPage.js, shop.js, etc. # Minified Bundles
+│   └── *.css                       # Compiled Styles
+│
+├── package.json                    # NPM Dependencies & Scripts (`npm run build`)
+├── webpack.config.js               # Webpack Bundler Configuration
 │
 ├── archive-product.php             # Shop Catalog Page (Live AJAX Category, Season & Price Filter Grid)
 ├── single-product.php              # Single Product Detail Page (PDP) with Image Gallery, Specs, Care Tabs, Buy Now
@@ -59,10 +60,7 @@ gardenbaskethubb/
 ├── page-terms-and-conditions.php   # Terms & Conditions Legal Page
 ├── page-refund-policy.php          # Refund & Shipping Policy Legal Page (Live Plant Guarantee, Jaipur Shipping)
 │
-├── assets/
-│   ├── js/main.js                  # Cart AJAX Handlers, Filter Triggers, Lightbox Player, Toast Notifications
-│   └── css/                        # Additional asset stylesheets if applicable
-└── sample-code.php                 # Client reference design specification document
+├── sample-code.php                 # Client reference design specification document
 ```
 
 ---
@@ -147,7 +145,7 @@ Use `gbh_get_page_url('shop')` or `gbh_get_page_url('cart')` across templates. I
 
 ## 🤖 Guidelines for AI Assistants & Developers
 
-1. **Maintain Dynamic DOM Updates**: Never use `location.reload()` in JavaScript for cart updates. Always call `updateCartDOM(data)` in `assets/js/main.js`.
+1. **Maintain Dynamic DOM Updates**: Never use `location.reload()` in JavaScript for cart updates. Always call `updateCartDOM(data)` in `public/src-utilities/ecommerce.js` or related modules.
 2. **Obey Design System Tokens**: Use CSS variables defined in `:root` (`var(--soil)`, `var(--clay)`, `var(--leaf)`, `var(--sand)`, `var(--sprout)`, `var(--marigold)`, `var(--white)`, `var(--ink)`).
 3. **Product Card Navigation**: Always give `.product-card` containers `data-permalink="<?php the_permalink(); ?>"` and wrap product title and thumbnail in `<a href="<?php the_permalink(); ?>">`.
 4. **PHP Code Linting**: Always verify syntax with `php -l <filename>` before pushing changes.

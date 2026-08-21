@@ -1,6 +1,6 @@
 # Garden Basket Hub — Project Development Progress Tracker
 
-Last Updated: 2026-07-27
+Last Updated: 2026-08-21
 
 ---
 
@@ -33,7 +33,15 @@ Last Updated: 2026-07-27
   - Implemented Automatic CPT Sample Content Seeder (`gbh_seed_sample_content`) for 6 starter products, 4 reels, and 3 blog guides.
   - Implemented Automatic Page Auto-Creator (`gbh_create_required_wp_pages`) and Dynamic URL Resolver (`gbh_get_page_url`).
   - Implemented Template Redirect Guard (`gbh_template_redirect_override`) for `/shop/`, `/reels/`, `/blog/`, `/about-us/`, `/contact-us/`, `/cart/`, `/checkout/`, `/thank-you/`, `/privacy-policy/`, `/terms-and-conditions/`, `/refund-policy/`.
-- [x] **Frontend JS Engine (`assets/js/main.js`)**: Built AJAX handlers for add-to-bag, quantity steppers, cart DOM updates without page reloads, coupon discounts, pincode checker, plant care tabs, reel video modal player, contact form toast notification, and product card PDP click navigation.
+- [x] **UI & UX Refinement (Patch v1.1.0)**:
+  - Fixed "Chota Chota" UI scaling issue: Removed max-width constraints to enable a full-width fluid layout across all pages (Shop, Contact, Home) matching the exact proportions of the Archive Blog page.
+  - Increased global base font size, heading clamps, and product card typography for enhanced readability.
+  - Refactored Contact Us layout to a responsive Grid layout, eliminating overlapping CSS conflicts.
+  - Patched JS crash (`querySelectorAll` null reference) in `header.js` for pages missing the mobile nav elements.
+  - Rewrote Single Product QTY Stepper logic in `ecommerce.js` utilizing explicit CSS classes for reliable state updates.
+  - Implemented missing "Buy Now" instant-checkout redirect flow on Single Product pages.
+  - Added video modal player click handlers and iframe injection logic to `reels.js` for Archive Reels page.
+- [x] **Frontend JS Engine (Webpack Modules)**: Built AJAX handlers for add-to-bag, quantity steppers, cart DOM updates without page reloads, coupon discounts, pincode checker, plant care tabs, reel video modal player, contact form toast notification, and product card PDP click navigation.
 - [x] **Header & Footer Templates Sync (`header.php`, `footer.php`)**:
   - Site navigation bar with dynamic cart count badge `🛒`, mobile drawer overlay toggle, and links for Shop, Reels, Blog, About Us, and Contact Us.
   - Footer with Information & Legal links, WhatsApp CTA, and crisp inline vector SVGs (Instagram, WhatsApp, YouTube).
@@ -44,7 +52,7 @@ Last Updated: 2026-07-27
 - [x] **Gardening Blog System (`archive-blog.php`, `single-blog.php`)**: Built blog guides catalog archive, single post article view, and Top 3 Featured Blogs homepage section.
 - [x] **Cart & Checkout Engine (`page-cart.php`, `page-checkout.php`)**: Built dynamic shopping bag page and 3-step checkout form with Jaipur slot delivery options.
 - [x] **Order Completion Page (`page-thank-you.php`)**: Built Thank You page with order ID badge, customer slot summary, and WhatsApp order tracking button.
-- [x] **Razorpay Payment Gateway Engine**: Added frontend Razorpay JS modal trigger in `page-checkout.php` & `assets/js/main.js` and AJAX endpoints `gbh_create_razorpay_order` in `functions.php`.
+- [x] **Razorpay Payment Gateway Engine**: Added frontend Razorpay JS modal trigger in `page-checkout.php` & `public/pages/checkout/checkout.js` and AJAX endpoints `gbh_create_razorpay_order` in `functions.php`.
 - [x] **Shiprocket Logistics Auto-Shipping Engine**: Implemented `gbh_shiprocket_get_token` (JWT authentication token transient caching) and `gbh_shiprocket_create_order` in `functions.php` mapping order details to Shiprocket adhoc API.
 - [x] **Order HTML Email Sender**: Implemented `gbh_send_order_confirmation_email` in `functions.php` sending HTML confirmation receipts to customers and notifications to store admin.
 - [x] **Automated Technical SEO & OpenGraph Meta Engine**: Implemented `gbh_render_seo_meta_tags()` in `functions.php` dynamically injecting optimized titles, meta descriptions, canonical URLs, Open Graph (OG) tags, and Twitter Cards across every page.

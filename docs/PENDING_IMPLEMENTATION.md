@@ -25,7 +25,7 @@
 - **Coverage**: Handles **BOTH** Pan-India courier shipping AND **Jaipur Same-City / Same-Day Delivery**.
 - **Subscription Plan Strategy**: Start on Shiprocket Lite / Standard plan (Monthly 5+ advisory orders tier) and scale to ₹200 plan as order volume grows.
 
-### API Integration Technical Workflow (`functions.php` & `assets/js/main.js`)
+### API Integration Technical Workflow (`functions.php` & `public/src-utilities/ecommerce.js`)
 
 1. **Authentication Token Generation**:
    - Endpoint: `POST https://apiv2.shiprocket.in/v1/external/auth/login`
@@ -61,7 +61,7 @@
 
 ## 💳 3. Razorpay Payment Gateway Integration Architecture
 
-### Technical Implementation Workflow (`page-checkout.php` & `assets/js/main.js`)
+### Technical Implementation Workflow (`page-checkout.php` & `public/pages/checkout/checkout.js`)
 
 1. **Frontend Razorpay Modal Trigger**:
    - Enqueue Razorpay JS SDK: `https://checkout.razorpay.com/v1/checkout.js`.

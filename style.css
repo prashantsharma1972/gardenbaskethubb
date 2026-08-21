@@ -44,7 +44,7 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--f-body);
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -146,7 +146,7 @@ nav.site-nav {
    TYPOGRAPHY & SECTION COMMON
    ============================================================ */
 section {
-  padding: 100px 80px;
+  padding: 60px 5vw;
 }
 
 .section-label {
@@ -217,7 +217,7 @@ section {
    PAGE HERO
    ============================================================ */
 .page-hero {
-  padding: 160px 80px 80px;
+  padding: 130px 4vw 60px; max-width: 1300px; margin: 0 auto;
   background: var(--sand);
   text-align: center;
 }
@@ -1366,7 +1366,7 @@ section {
 footer {
   background: var(--ink);
   color: var(--sand);
-  padding: 64px 80px 40px;
+  padding: 64px 4vw 40px;
 }
 
 .footer-top {
@@ -1778,3 +1778,14 @@ footer {
     text-align: center;
   }
 }
+/* Custom fixes for Contact Layout */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--white);
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}
+.contact-form .form-group { margin-bottom: 0; }

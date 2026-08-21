@@ -10,7 +10,7 @@ get_header();
      HOMEPAGE HERO SECTION
      ============================================================ -->
   <section class="page-hero"
-    style="padding:180px 80px 100px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);">
+    style="padding: 130px 4vw 60px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);">
     <p class="section-label">🌿 Rooted in Jaipur · Same-Day Delivery</p>
     <h1 style="font-size:clamp(2.8rem, 5vw, 4.5rem);">Growing happiness, <em>one seed</em> at a time.</h1>
     <p style="font-size:1.15rem;max-width:620px;margin:20px auto 36px;">

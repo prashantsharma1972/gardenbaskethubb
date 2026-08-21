@@ -205,9 +205,9 @@ get_header(); ?>
         <div class="qty-row">
           <label style="font-family:var(--f-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);">Qty</label>
           <div class="qty-stepper">
-            <button>−</button>
-            <input type="text" value="1">
-            <button>+</button>
+              <button class="qty-minus">–</button>
+              <input type="text" value="1" class="qty-input">
+              <button class="qty-plus">+</button>
           </div>
         </div>
       </div>
