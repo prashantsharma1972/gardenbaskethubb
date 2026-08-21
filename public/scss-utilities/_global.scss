@@ -180,9 +180,193 @@ abbr {
 }
 
 /* clears the ‘X’ from Chrome */
+// Resetting CSS
+
+@import './breakpoints';
+
+:root {
+    --body-background: #FFFFFF;
+}
+
+::selection {
+    background-color: #3c0b42a5;
+    color: #EFEAF1;
+}
+
+:focus {
+    outline: none;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    vertical-align: center;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: value;
+    -moz-appearance: value;
+    appearance: value;
+}
+
+a,
+button,
+img a,
+input {
+    transition: all ease-in 0.3s;
+}
+
+// Global Size Setting
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-size: 10px;
+
+    // Below 1500px
+    @include desktop {
+        font-size: 9px;
+    }
+
+    // Below 1050px
+    @include tablet {
+        font-size: 8px;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    -webkit-text-size-adjust: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--body-background);
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    -webkit-font-smoothing: inherit;
+    letter-spacing: inherit;
+    font: inherit;
+    border: none;
+    font-size: 1.4rem;
+    background-color: transparent;
+    padding-left: 7px;
+}
+
+select {
+    appearance: none;
+    cursor: pointer;
+    padding: 1rem 2rem 0.2rem 0;
+    padding-left: 7px;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #2A2828;
+}
+
+/* Remove default padding */
+ul[class],
+ol[class] {
+    padding: 0;
+}
+
+.main--container {
+    display: grid;
+    align-items: start;
+    justify-items: start;
+    row-gap: 60px;
+    width: 100vw;
+    margin: 0 0 100px 0;
+    grid-template-columns:
+        [full-start] minmax(16rem, 1fr) [center-start] repeat(10,
+            [col-start] minmax(min-content, 12.8rem) [col-end]) [center-end] minmax(16rem, 1fr) [full-end];
+
+    @include desktop {
+        row-gap: 55px;
+        margin: 0 0 80px 0;
+        grid-template-columns:
+            [full-start] minmax(80px, 1fr) [center-start] repeat(10,
+                [col-start] minmax(min-content, 12.8rem) [col-end]) [center-end] minmax(80px, 1fr) [full-end];
+    }
+
+    @include tablet {
+        row-gap: 50px;
+        margin: 0 0 60px 0;
+        grid-template-columns:
+            [full-start] minmax(40px, 1fr) [center-start] repeat(10,
+                [col-start] minmax(min-content, 12.8rem) [col-end]) [center-end] minmax(40px, 1fr) [full-end];
+    }
+
+    @include mobile {
+        row-gap: 50px;
+        margin: 0 0 40px 0;
+        grid-template-columns:
+            [full-start] minmax(20px, 1fr) [center-start] repeat(10,
+                [col-start] minmax(min-content, 12.8rem) [col-end]) [center-end] minmax(20px, 1fr) [full-end];
+    }
+}
+
+/* clears the ‘X’ from Internet Explorer */
+input[type='search']::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+input[type='search']::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+abbr {
+    text-decoration: none;
+}
+
+/* clears the ‘X’ from Chrome */
 input[type='search']::-webkit-search-decoration,
 input[type='search']::-webkit-search-cancel-button,
 input[type='search']::-webkit-search-results-button,
 input[type='search']::-webkit-search-results-decoration {
     display: none;
 }
+@import './garden-global';
+@import './extracted-inline';

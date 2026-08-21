@@ -1,15 +1,19 @@
-<?php
-/**
- * Template Name: Contact Us
- */
-
-get_header(); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
+    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
+    <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.bundle.js"></script>
+    <?php get_header(); ?>
+<main class="main--container">
 
 <!-- ============================================================
      CONTACT HERO
      ============================================================ -->
 <section class="page-hero">
-  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Contact</p>
+  <p class="breadcrumb"><a href="/">Home</a> · Contact</p>
   <h1>Say <em>hello</em>.</h1>
   <p>Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
 </section>
@@ -74,4 +78,5 @@ get_header(); ?>
   </div>
 </section>
 
+</main>
 <?php get_footer(); ?>

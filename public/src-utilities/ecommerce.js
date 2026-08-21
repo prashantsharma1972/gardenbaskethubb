@@ -57,203 +57,208 @@ export function updateCartDOM(cart) {
 }
 
 export function initEcommerce() {
-    $(document).ready(function() {
-        const ajaxUrl = (window.gbh_ajax_obj && window.gbh_ajax_obj.ajax_url) ? window.gbh_ajax_obj.ajax_url : '/wp-admin/admin-ajax.php';
-        const nonce = (window.gbh_ajax_obj && window.gbh_ajax_obj.nonce) ? window.gbh_ajax_obj.nonce : '';
+    const $ = window.jQuery;
+    if (!$) {
+        console.error('jQuery is not loaded! E-Commerce functions require jQuery.');
+        return;
+    }
 
-        // 1. Add To Cart Button Handler
-        $(document).on('click', '.add-btn, .btn-add-to-bag', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+    const ajaxUrl = (window.gbh_ajax_obj && window.gbh_ajax_obj.ajax_url) ? window.gbh_ajax_obj.ajax_url : '/wp-admin/admin-ajax.php';
+    const nonce = (window.gbh_ajax_obj && window.gbh_ajax_obj.nonce) ? window.gbh_ajax_obj.nonce : '';
 
-            const $btn = $(this);
-            const productId = $btn.data('product-id');
-            const qty = parseInt($('#product-qty-val').text()) || 1;
-            const variant = $('.variant-pill.active').text().trim() || '';
+    // 1. Add To Cart Button Handler
+    $(document).on('click', '.add-btn, .btn-add-to-bag', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
 
-            if (!productId) return;
+        const $btn = $(this);
+        const productId = $btn.data('product-id');
+        const qty = parseInt($('#product-qty-val').text()) || 1;
+        const variant = $('.variant-pill.active').text().trim() || '';
 
-            const originalText = $btn.html();
-            $btn.prop('disabled', true).html('Adding... 🌱');
+        if (!productId) return;
 
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'gbh_add_to_cart',
-                    nonce: nonce,
-                    product_id: productId,
-                    quantity: qty,
-                    variant: variant
-                },
-                success: function(res) {
-                    $btn.prop('disabled', false).html(originalText);
-                    if (res.success) {
-                        showToast(res.data.message || 'Added to your bag! 🌱');
-                        if (res.data.cart) {
-                            updateCartDOM(res.data.cart);
-                        }
-                    } else {
-                        showToast(res.data.message || 'Could not add item.', 'error');
+        const originalText = $btn.html();
+        $btn.prop('disabled', true).html('Adding... 🌱');
+
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'gbh_add_to_cart',
+                nonce: nonce,
+                product_id: productId,
+                quantity: qty,
+                variant: variant
+            },
+            success: function(res) {
+                $btn.prop('disabled', false).html(originalText);
+                if (res.success) {
+                    showToast(res.data.message || 'Added to your bag! 🌱');
+                    if (res.data.cart) {
+                        updateCartDOM(res.data.cart);
                     }
-                },
-                error: function() {
-                    $btn.prop('disabled', false).html(originalText);
-                    showToast('Connection error. Please try again.', 'error');
+                } else {
+                    showToast(res.data.message || 'Could not add item.', 'error');
                 }
-            });
-        });
-
-        // 2. Single Product Quantity Stepper
-        $(document).on('click', '.qty-stepper button', function(e) {
-            e.preventDefault();
-            const $btn = $(this);
-            const $input = $btn.siblings('input');
-            let currentQty = parseInt($input.val()) || 1;
-            
-            if ($btn.hasClass('qty-plus')) {
-                currentQty++;
-            } else if ($btn.hasClass('qty-minus')) {
-                if (currentQty > 1) currentQty--;
+            },
+            error: function() {
+                $btn.prop('disabled', false).html(originalText);
+                showToast('Connection error. Please try again.', 'error');
             }
-            $input.val(currentQty);
         });
+    });
 
-        // Buy Now Logic
-        $(document).on('click', '.btn-buy-now', function(e) {
-            e.preventDefault();
-            const $btn = $(this);
-            const productId = $btn.data('product-id');
-            const stepperInput = $('.qty-stepper input');
-            const qty = stepperInput.length ? (parseInt(stepperInput.val()) || 1) : 1;
-            const variant = $('.variant-pill.active').text().trim() || '';
-            
-            if (!productId) return;
-            
-            const originalText = $btn.html();
-            $btn.prop('disabled', true).html('Redirecting... ⏳');
-            
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'gbh_add_to_cart',
-                    nonce: nonce,
-                    product_id: productId,
-                    quantity: qty,
-                    variant: variant
-                },
-                success: function(res) {
-                    if (res.success) {
-                        window.location.href = '/checkout/';
-                    } else {
-                        $btn.prop('disabled', false).html(originalText);
-                        showToast(res.data.message || 'Error processing checkout.', 'error');
-                    }
-                },
-                error: function() {
+    // 2. Single Product Quantity Stepper
+    $(document).on('click', '.qty-stepper button', function(e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const $input = $btn.siblings('input');
+        let currentQty = parseInt($input.val()) || 1;
+        
+        if ($btn.hasClass('qty-plus')) {
+            currentQty++;
+        } else if ($btn.hasClass('qty-minus')) {
+            if (currentQty > 1) currentQty--;
+        }
+        $input.val(currentQty);
+    });
+
+    // Buy Now Logic
+    $(document).on('click', '.btn-buy-now', function(e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const productId = $btn.data('product-id');
+        const stepperInput = $('.qty-stepper input');
+        const qty = stepperInput.length ? (parseInt(stepperInput.val()) || 1) : 1;
+        const variant = $('.variant-pill.active').text().trim() || '';
+        
+        if (!productId) return;
+        
+        const originalText = $btn.html();
+        $btn.prop('disabled', true).html('Redirecting... ⏳');
+        
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'gbh_add_to_cart',
+                nonce: nonce,
+                product_id: productId,
+                quantity: qty,
+                variant: variant
+            },
+            success: function(res) {
+                if (res.success) {
+                    window.location.href = '/checkout/';
+                } else {
                     $btn.prop('disabled', false).html(originalText);
-                    showToast('Connection error.', 'error');
+                    showToast(res.data.message || 'Error processing checkout.', 'error');
                 }
-            });
-        });
-
-        // 2. Cart Quantity Stepper (+ / -) & Item Removal
-        $(document).on('click', '.btn-qty-plus, .btn-qty-minus', function(e) {
-            e.preventDefault();
-            const $btn = $(this);
-            const $row = $btn.closest('.cart-row');
-            const key = $row.data('cart-key');
-            let currentQty = parseInt($row.find('.cart-qty-input').val()) || 1;
-
-            if ($btn.hasClass('btn-qty-plus')) {
-                currentQty++;
-            } else if ($btn.hasClass('btn-qty-minus')) {
-                currentQty--;
+            },
+            error: function() {
+                $btn.prop('disabled', false).html(originalText);
+                showToast('Connection error.', 'error');
             }
-
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'gbh_update_cart',
-                    nonce: nonce,
-                    key: key,
-                    quantity: currentQty
-                },
-                success: function(res) {
-                    if (res.success) {
-                        if (currentQty <= 0) {
-                            $row.fadeOut(300, function() { $(this).remove(); });
-                            showToast('Item removed from bag.');
-                        } else {
-                            $row.find('.cart-qty-input').val(currentQty);
-                        }
-                        if (res.data) updateCartDOM(res.data);
-                    }
-                }
-            });
         });
+    });
 
-        $(document).on('click', '.remove', function(e) {
-            e.preventDefault();
-            const $row = $(this).closest('.cart-row');
-            const key = $row.data('cart-key');
+    // 2. Cart Quantity Stepper (+ / -) & Item Removal
+    $(document).on('click', '.btn-qty-plus, .btn-qty-minus', function(e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const $row = $btn.closest('.cart-row');
+        const key = $row.data('cart-key');
+        let currentQty = parseInt($row.find('.cart-qty-input').val()) || 1;
 
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'gbh_update_cart',
-                    nonce: nonce,
-                    key: key,
-                    quantity: 0
-                },
-                success: function(res) {
-                    if (res.success) {
+        if ($btn.hasClass('btn-qty-plus')) {
+            currentQty++;
+        } else if ($btn.hasClass('btn-qty-minus')) {
+            currentQty--;
+        }
+
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'gbh_update_cart',
+                nonce: nonce,
+                key: key,
+                quantity: currentQty
+            },
+            success: function(res) {
+                if (res.success) {
+                    if (currentQty <= 0) {
                         $row.fadeOut(300, function() { $(this).remove(); });
                         showToast('Item removed from bag.');
-                        if (res.data) updateCartDOM(res.data);
-                    }
-                }
-            });
-        });
-
-        // 3. Apply Coupon Code
-        $(document).on('click', '#apply-coupon-btn', function(e) {
-            e.preventDefault();
-            const coupon = $('#coupon-input').val().trim();
-            if (!coupon) {
-                showToast('Please enter a coupon code.', 'error');
-                return;
-            }
-
-            const $btn = $(this);
-            $btn.prop('disabled', true).text('Applying...');
-
-            $.ajax({
-                url: ajaxUrl,
-                type: 'POST',
-                data: {
-                    action: 'gbh_apply_coupon',
-                    nonce: nonce,
-                    coupon: coupon
-                },
-                success: function(res) {
-                    $btn.prop('disabled', false).text('Apply');
-                    if (res.success) {
-                        showToast(res.data.message);
-                        if (res.data.cart) updateCartDOM(res.data.cart);
                     } else {
-                        showToast(res.data.message || 'Invalid coupon code.', 'error');
+                        $row.find('.cart-qty-input').val(currentQty);
                     }
-                },
-                error: function() {
-                    $btn.prop('disabled', false).text('Apply');
-                    showToast('Coupon check failed.', 'error');
+                    if (res.data) updateCartDOM(res.data);
                 }
-            });
+            }
         });
+    });
+
+    $(document).on('click', '.remove', function(e) {
+        e.preventDefault();
+        const $row = $(this).closest('.cart-row');
+        const key = $row.data('cart-key');
+
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'gbh_update_cart',
+                nonce: nonce,
+                key: key,
+                quantity: 0
+            },
+            success: function(res) {
+                if (res.success) {
+                    $row.fadeOut(300, function() { $(this).remove(); });
+                    showToast('Item removed from bag.');
+                    if (res.data) updateCartDOM(res.data);
+                }
+            }
+        });
+    });
+
+    // 3. Apply Coupon Code
+    $(document).on('click', '#apply-coupon-btn', function(e) {
+        e.preventDefault();
+        const coupon = $('#coupon-input').val().trim();
+        if (!coupon) {
+            showToast('Please enter a coupon code.', 'error');
+            return;
+        }
+
+        const $btn = $(this);
+        $btn.prop('disabled', true).text('Applying...');
+
+        $.ajax({
+            url: ajaxUrl,
+            type: 'POST',
+            data: {
+                action: 'gbh_apply_coupon',
+                nonce: nonce,
+                coupon: coupon
+            },
+            success: function(res) {
+                $btn.prop('disabled', false).text('Apply');
+                if (res.success) {
+                    showToast(res.data.message);
+                    if (res.data.cart) updateCartDOM(res.data.cart);
+                } else {
+                    showToast(res.data.message || 'Invalid coupon code.', 'error');
+                }
+            },
+            error: function() {
+                $btn.prop('disabled', false).text('Apply');
+                showToast('Coupon check failed.', 'error');
+            }
+        });
+    });
 
         // 4. Pincode Availability Checker
         $(document).on('click', '#check-pincode-btn', function(e) {
@@ -411,7 +416,7 @@ export function initEcommerce() {
             const minPrice = parseFloat($('#filter-min-price').val()) || 0;
             const maxPrice = parseFloat($('#filter-max-price').val()) || 0;
 
-            const $grid = $('#shop-products-grid');
+            const $grid = $('#gbh-product-grid');
             $grid.css('opacity', '0.4');
 
             $.ajax({
@@ -430,7 +435,7 @@ export function initEcommerce() {
                     $grid.css('opacity', '1');
                     if (res.success) {
                         $grid.html(res.data.html);
-                        $('.shop-results-count').text(res.data.count + ' Products Found');
+                        $('#gbh-results-count').text('Showing ' + res.data.count + ' products');
                     }
                 },
                 error: function() {
@@ -442,5 +447,4 @@ export function initEcommerce() {
         $(document).on('change', '.filter-cat-checkbox, .filter-season-checkbox, #shop-sort-select', function() {
             triggerProductFilter();
         });
-    });
 }

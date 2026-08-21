@@ -1,15 +1,19 @@
-<?php
-/**
- * Shop Archive Template — Garden Basket Hub
- */
-
-get_header(); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
+    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
+    <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/shop/shop.bundle.js"></script>
+    <?php get_header(); ?>
+<main class="main--container">
 
 <!-- ============================================================
      PAGE HERO
      ============================================================ -->
 <section class="page-hero">
-  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Shop</p>
+  <p class="breadcrumb"><a href="/">Home</a> · Shop</p>
   <h1>The whole <em>garden</em>, in one place.</h1>
   <p>Filter by category, season, or what you're growing. Fresh seedlings ship same-day in Jaipur.</p>
 </section>
@@ -22,22 +26,22 @@ get_header(); ?>
     <!-- Filter Sidebar -->
     <aside class="filter-sidebar">
       <h4>Category</h4>
-      <label><input type="checkbox" name="cat" value="seeds" checked> Seeds</label>
-      <label><input type="checkbox" name="cat" value="seedlings"> Seedlings (Jaipur)</label>
-      <label><input type="checkbox" name="cat" value="compost"> Compost & Soil</label>
-      <label><input type="checkbox" name="cat" value="tools"> Tools & Accessories</label>
-      <label><input type="checkbox" name="cat" value="pots"> Pots & Planters</label>
+      <label><input type="checkbox" name="cat" value="seeds" class="filter-cat-checkbox" checked> Seeds</label>
+      <label><input type="checkbox" name="cat" value="seedlings" class="filter-cat-checkbox"> Seedlings (Jaipur)</label>
+      <label><input type="checkbox" name="cat" value="compost" class="filter-cat-checkbox"> Compost & Soil</label>
+      <label><input type="checkbox" name="cat" value="tools" class="filter-cat-checkbox"> Tools & Accessories</label>
+      <label><input type="checkbox" name="cat" value="pots" class="filter-cat-checkbox"> Pots & Planters</label>
 
       <h4>Season</h4>
-      <label><input type="checkbox" name="season" value="monsoon"> Monsoon</label>
-      <label><input type="checkbox" name="season" value="winter"> Winter</label>
-      <label><input type="checkbox" name="season" value="summer"> Summer</label>
-      <label><input type="checkbox" name="season" value="all"> All Year</label>
+      <label><input type="checkbox" name="season" value="monsoon" class="filter-season-checkbox"> Monsoon</label>
+      <label><input type="checkbox" name="season" value="winter" class="filter-season-checkbox"> Winter</label>
+      <label><input type="checkbox" name="season" value="summer" class="filter-season-checkbox"> Summer</label>
+      <label><input type="checkbox" name="season" value="all" class="filter-season-checkbox"> All Year</label>
 
       <h4>Price Range</h4>
       <div class="price-input">
-        <input type="number" placeholder="Min ₹" min="0">
-        <input type="number" placeholder="Max ₹" min="0">
+        <input type="number" id="filter-min-price" placeholder="Min ₹" min="0">
+        <input type="number" id="filter-max-price" placeholder="Max ₹" min="0">
       </div>
 
       <h4>Delivery Option</h4>
@@ -56,9 +60,10 @@ get_header(); ?>
         ));
         $count = $products_query->found_posts;
         ?>
-        <span class="results" id="gbh-results-count">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?> products</span>
+        <span class="results" id="gbh-results-count">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?>
+          products</span>
 
-        <select id="gbh-sort-products">
+        <select id="shop-sort-select">
           <option value="featured">Sort: Featured</option>
           <option value="low-high">Price: Low to High</option>
           <option value="high-low">Price: High to Low</option>
@@ -79,9 +84,10 @@ get_header(); ?>
             if (!$thumb_url)
               $thumb_url = get_field('product_image');
             ?>
-            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>" data-permalink="<?php the_permalink(); ?>">
+            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>"
+              data-permalink="<?php the_permalink(); ?>">
               <div class="product-img">
-                <a href="<?php the_permalink(); ?>" style="display:block;width:100%;height:100%;text-decoration:none;color:inherit;">
+                <a href="<?php the_permalink(); ?>" class="product-img-link">
                   <?php if ($thumb_url): ?>
                     <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
                   <?php else: ?>
@@ -217,4 +223,5 @@ get_header(); ?>
   </div>
 </section>
 
+</main>
 <?php get_footer(); ?>

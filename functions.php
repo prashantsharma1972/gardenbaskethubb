@@ -5,7 +5,8 @@
  * All specialized subsystems are cleanly organized in the /inc/ directory.
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 define('GBH_THEME_DIR', get_template_directory());
 define('GBH_THEME_URI', get_template_directory_uri());
@@ -14,13 +15,18 @@ define('GBH_THEME_URI', get_template_directory_uri());
    1. API & CREDENTIALS CONFIGURATION
    ============================================================ */
 // Razorpay Credentials (Plug keys directly here when received)
-if (!defined('GBH_RAZORPAY_KEY_ID')) define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_YOUR_KEY_ID_HERE'));
-if (!defined('GBH_RAZORPAY_KEY_SECRET')) define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'YOUR_SECRET_HERE'));
+if (!defined('GBH_RAZORPAY_KEY_ID'))
+    define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_YOUR_KEY_ID_HERE'));
+if (!defined('GBH_RAZORPAY_KEY_SECRET'))
+    define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'YOUR_SECRET_HERE'));
 
 // Shiprocket Credentials
-if (!defined('GBH_SHIPROCKET_EMAIL')) define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant753@gmail.com'));
-if (!defined('GBH_SHIPROCKET_PASSWORD')) define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@123'));
-if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION')) define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Jaipur_Nursery_Main'));
+if (!defined('GBH_SHIPROCKET_EMAIL'))
+    define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant753@gmail.com'));
+if (!defined('GBH_SHIPROCKET_PASSWORD'))
+    define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@123'));
+if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION'))
+    define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Jaipur_Nursery_Main'));
 
 /* ============================================================
    2. LOAD MODULAR SUBSYSTEMS (/inc/ & /helpers/)
@@ -42,7 +48,8 @@ require_once GBH_THEME_DIR . '/inc/sitemap-robots.php';
 /* ============================================================
    3. THEME SETUP & FEATURES SUPPORT
    ============================================================ */
-function gbh_theme_setup() {
+function gbh_theme_setup()
+{
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption'));
@@ -61,7 +68,8 @@ add_filter('show_admin_bar', '__return_false');
 /* ============================================================
    4. ENQUEUE SCRIPTS & STYLES
    ============================================================ */
-function gbh_enqueue_assets() {
+function gbh_enqueue_assets()
+{
     // 1. Google Fonts
     wp_enqueue_style(
         'gbh-google-fonts',
@@ -99,67 +107,22 @@ function gbh_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'gbh_enqueue_assets');
 
-// 4.5 Auto-Load Page Bundles (CSS/JS)
-function gbh_enqueue_page_bundles() {
-    $bundle = '';
-    
-    if (is_front_page()) {
-        $bundle = 'frontPage';
-    } elseif (is_page('cart')) {
-        $bundle = 'cart';
-    } elseif (is_page('checkout')) {
-        $bundle = 'checkout';
-    } elseif (is_page('thank-you') || is_page_template('page-thank-you.php')) {
-        $bundle = 'thankYou';
-    } elseif (is_page('about-us')) {
-        $bundle = 'aboutUs';
-    } elseif (is_page('contact-us')) {
-        $bundle = 'contactUs';
-    } elseif (is_page('success')) {
-        $bundle = 'success';
-    } elseif (is_singular('product')) {
-        $bundle = 'singleProduct';
-    } elseif (is_post_type_archive('product') || is_page('shop')) {
-        $bundle = 'shop';
-    } elseif (is_post_type_archive('reels')) {
-        $bundle = 'reels';
-    } elseif (is_singular('reels')) {
-        $bundle = 'singleReels';
-    } elseif (is_singular('post')) {
-        $bundle = 'blog';
-    } elseif (is_home() || is_category() || is_tag()) {
-        $bundle = 'blogs'; 
-    } elseif (is_404()) {
-        $bundle = 'notFound';
-    }
-
-    if ($bundle) {
-        wp_enqueue_style('gbh-' . $bundle, GBH_THEME_URI . '/build/' . $bundle . '/' . $bundle . '.css', array(), null);
-        wp_enqueue_script('gbh-' . $bundle . '-js', GBH_THEME_URI . '/build/' . $bundle . '/' . $bundle . '.bundle.js', array('jquery'), null, true);
-    }
-}
-add_action('wp_enqueue_scripts', 'gbh_enqueue_page_bundles', 20);
-
-// Add type="module" to all Webpack JS bundles
-add_filter('script_loader_tag', function($tag, $handle, $src) {
-    if (strpos($handle, 'gbh-') === 0 && strpos($handle, '-js') !== false) {
-        return '<script type="module" defer fetchpriority="low" src="' . esc_url($src) . '"></script>' . "\n";
-    }
-    return $tag;
-}, 10, 3);
 
 
 /* ============================================================
    5. POST VIEWS TRACKER
    ============================================================ */
-function increase_post_views($post_id) {
+function increase_post_views($post_id)
+{
     $views = get_post_meta($post_id, 'view_count', true);
-    if (!$views) $views = 0;
+    if (!$views)
+        $views = 0;
     $views++;
     update_post_meta($post_id, 'view_count', $views);
 }
 
-function track_post_views() {
+function track_post_views()
+{
     if (is_single()) {
         $post_id = get_the_ID();
         if (!current_user_can('edit_posts')) {
@@ -170,7 +133,7 @@ function track_post_views() {
 add_action('wp', 'track_post_views');
 
 // One-time flush rewrite rules to fix 404 errors on Custom Post Types
-add_action('init', function() {
+add_action('init', function () {
     if (!get_option('gbh_rules_flushed_v4')) {
         flush_rewrite_rules();
         update_option('gbh_rules_flushed_v4', 1);

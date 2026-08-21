@@ -1,99 +1,110 @@
-<?php
-/**
- * Blog Archive / Guides Catalog Template — Garden Basket Hub
- */
-
-get_header();
-?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/blogs/blogs.css">
+    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/blogs/blogs.css">
+    <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/blogs/blogs.bundle.js"></script>
+    <?php get_header(); ?>
+<main class="main--container">
 
 <!-- ============================================================
      BLOG HERO SECTION
      ============================================================ -->
-<section class="page-hero" style="padding:160px 80px 80px;background:linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);text-align:center;">
-  <p class="breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a> · Gardening Guides & Blog</p>
-  <h1 style="font-size:clamp(2.5rem, 4.5vw, 4rem);margin-bottom:20px;">Gardening <em>Guides</em> & Tips.</h1>
-  <p style="font-size:1.1rem;max-width:640px;margin:0 auto 32px;color:#5c4436;line-height:1.7;">
-    Expert potting mix ratios, monsoon plant care tips, seedling guides, and organic urban farming advice from our Jaipur nursery team.
+<section class="page-hero doc-hero doc-hero-center">
+  <p class="breadcrumb"><a href="/">Home</a> · Gardening Guides & Blog</p>
+  <h1 class="hero-title">Gardening <em>Guides</em> & Tips.</h1>
+  <p class="hero-desc">
+    Expert potting mix ratios, monsoon plant care tips, seedling guides, and organic urban farming advice from our
+    Jaipur nursery team.
   </p>
 </section>
 
 <!-- ============================================================
      BLOG POSTS CATALOG GRID
      ============================================================ -->
-<section style="padding:60px 80px 100px;">
-  <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:32px;" class="about-story-cards">
+<section>
+  <div class="about-story-cards">
     <?php
     // Custom query to fetch posts (blog entries) if not using default loop
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $blog_query = new WP_Query(array(
-        'post_type' => 'post',
-        'posts_per_page' => 9,
-        'paged' => $paged
+      'post_type' => 'post',
+      'posts_per_page' => 9,
+      'paged' => $paged
     ));
 
-    if ($blog_query->have_posts()) :
-      while ($blog_query->have_posts()) : $blog_query->the_post();
+    if ($blog_query->have_posts()):
+      while ($blog_query->have_posts()):
+        $blog_query->the_post();
         $b_id = get_the_ID();
         $read_time = get_post_meta($b_id, 'read_time', true);
-        if (!$read_time && function_exists('get_field')) $read_time = get_field('read_time', $b_id);
-        if (!$read_time) $read_time = '5 min read';
+        if (!$read_time && function_exists('get_field'))
+          $read_time = get_field('read_time', $b_id);
+        if (!$read_time)
+          $read_time = '5 min read';
 
         $banner_img = get_the_post_thumbnail_url($b_id, 'large');
-        if (!$banner_img && function_exists('get_field')) $banner_img = get_field('banner_image', $b_id);
+        if (!$banner_img && function_exists('get_field'))
+          $banner_img = get_field('banner_image', $b_id);
         $categories = get_the_category($b_id);
         $cat_name = (!empty($categories)) ? $categories[0]->name : 'Gardening';
-    ?>
-        <article class="product-card" style="display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;" data-permalink="<?php the_permalink(); ?>" onclick="window.location.href='<?php the_permalink(); ?>';">
+        ?>
+        <article class="product-card featured-blog-card" data-permalink="<?php the_permalink(); ?>"
+          onclick="window.location.href='<?php the_permalink(); ?>';">
           <div>
-            <div class="product-img" style="height:200px;background:var(--sand);position:relative;">
+            <div class="product-img blog-img-wrap">
               <?php if ($banner_img): ?>
-                <img src="<?php echo esc_url($banner_img); ?>" alt="<?php the_title(); ?>" style="width:100%;height:100%;object-fit:cover;">
+                <img src="<?php echo esc_url($banner_img); ?>" alt="<?php the_title(); ?>" class="blog-img">
               <?php else: ?>
-                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem;">📖</div>
+                <div class="blog-img-fallback">📖</div>
               <?php endif; ?>
-              <span class="badge-new" style="position:absolute;top:14px;left:14px;background:var(--leaf);color:var(--white);"><?php echo esc_html($cat_name); ?></span>
+              <span class="badge-new badge-cat"><?php echo esc_html($cat_name); ?></span>
             </div>
 
-            <div class="product-body" style="padding:24px;">
-              <div style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+            <div class="product-body blog-card-body">
+              <div class="blog-meta-header">
                 <span><?php echo get_the_date('M j, Y'); ?></span>
                 <span>⏱️ <?php echo esc_html($read_time); ?></span>
               </div>
 
-              <h2 style="font-family:var(--f-display);font-size:1.25rem;color:var(--soil);margin-bottom:10px;line-height:1.3;">
-                <a href="<?php the_permalink(); ?>" style="color:inherit;text-decoration:none;"><?php the_title(); ?></a>
+              <h2 class="blog-title">
+                <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
               </h2>
 
-              <div style="font-size:0.9rem;color:#7a6050;line-height:1.6;margin-bottom:20px;">
+              <div class="blog-excerpt">
                 <?php echo wp_trim_words(get_the_excerpt(), 18, '...'); ?>
               </div>
             </div>
           </div>
 
-          <div style="padding:0 24px 24px;">
-            <a href="<?php the_permalink(); ?>" class="btn-ghost" style="font-size:0.85rem;font-weight:500;color:var(--leaf);">
+          <div class="blog-card-footer">
+            <a href="<?php the_permalink(); ?>" class="btn-ghost btn-ghost-small">
               Read Full Article ➔
             </a>
           </div>
         </article>
       <?php endwhile; ?>
     <?php else: ?>
-      <div style="grid-column:1/-1;text-align:center;padding:60px;">
-        <p style="font-size:1.2rem;color:var(--clay);">No blog posts found. Check back soon for fresh gardening guides!</p>
+      <div class="blog-not-found">
+        <p>No blog posts found. Check back soon for fresh gardening guides!</p>
       </div>
-    <?php endif; wp_reset_postdata(); ?>
+    <?php endif;
+    wp_reset_postdata(); ?>
   </div>
 
   <!-- Pagination -->
-  <div style="margin-top:56px;text-align:center;">
-    <?php 
+  <div class="pagination-wrapper">
+    <?php
     echo paginate_links(array(
-        'total' => $blog_query->max_num_pages,
-        'prev_text' => '← Previous',
-        'next_text' => 'Next →',
-    )); 
+      'total' => $blog_query->max_num_pages,
+      'prev_text' => '← Previous',
+      'next_text' => 'Next →',
+    ));
     ?>
   </div>
 </section>
 
+</main>
 <?php get_footer(); ?>

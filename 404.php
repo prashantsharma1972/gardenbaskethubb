@@ -1,9 +1,14 @@
-<?php
-/**
- * 404 Template
- */
+<!DOCTYPE html>
+<html lang="en">
 
-get_header(); ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/notFound/notFound.css">
+    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/notFound/notFound.css">
+    <script type="module" defer fetchpriority="low"
+        src="/wp-content/themes/gardenbaskethubb/build/notFound/notFound.bundle.js"></script>
+    <?php get_header(); ?>
 
     <main class="main--container">
         <section class="notfound">

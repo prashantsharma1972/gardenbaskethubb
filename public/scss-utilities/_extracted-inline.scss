@@ -1,0 +1,346 @@
+/* =========================================
+   EXTRACTED INLINE STYLES (FROM TEMPLATES)
+   ========================================= */
+
+/* --- Document / Policy Pages --- */
+.doc-hero {
+  background: linear-gradient(180deg, var(--sand) 0%, var(--white) 100%);
+  padding: 120px 20px 60px;
+}
+.doc-hero-center {
+  text-align: center;
+}
+.section-label {
+  font-family: var(--f-mono);
+  font-size: 0.8rem;
+  color: var(--clay);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+.doc-content {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.8;
+  color: #5c4436;
+}
+.doc-heading {
+  font-family: var(--f-display);
+  color: var(--soil);
+  margin-bottom: 16px;
+  font-size: 1.8rem;
+  margin-top: 40px;
+}
+.doc-heading:first-child {
+  margin-top: 0;
+}
+.doc-text {
+  margin-bottom: 20px;
+}
+
+/* --- About Us Page --- */
+.about-story-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+.story-card {
+  padding: 40px 32px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(44,26,14,0.04);
+  transition: transform 0.3s;
+}
+.story-card:hover {
+  transform: translateY(-4px);
+}
+.card-white {
+  background: var(--white);
+  border: 1px solid rgba(44,26,14,0.08);
+}
+.card-sand {
+  background: var(--sand);
+  border: 1px solid rgba(44,26,14,0.1);
+}
+.color-clay { color: var(--clay); }
+.color-leaf { color: var(--leaf); }
+
+.stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+  background: var(--soil);
+  color: var(--sand);
+  padding: 48px 32px;
+  border-radius: 8px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--f-display);
+  font-size: 2.5rem;
+  color: var(--sprout);
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,230,211,0.7);
+}
+
+.section-cta {
+  text-align: center;
+}
+.cta-banner {
+  background: var(--sand);
+  padding: 64px;
+  border-radius: 12px;
+  border: 1px solid rgba(44,26,14,0.1);
+}
+.cta-title {
+  font-family: var(--f-display);
+  font-size: 2.4rem;
+  color: var(--soil);
+  margin-bottom: 16px;
+}
+.cta-desc {
+  font-size: 1.05rem;
+  color: #5c4436;
+  max-width: 540px;
+  margin: 0 auto 32px;
+}
+
+/* --- Archive Blog --- */
+.featured-blog-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid rgba(44,26,14,0.08);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.featured-blog-card:hover {
+  transform: translateY(-4px);
+}
+.blog-img-wrap {
+  height: 200px;
+  background: var(--sand);
+  position: relative;
+}
+.blog-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.blog-img-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.badge-cat {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--leaf);
+  color: var(--white);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.blog-card-body {
+  padding: 24px;
+}
+.blog-card-footer {
+  padding: 0 24px 24px;
+}
+.blog-not-found {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px;
+}
+.blog-not-found p {
+  font-size: 1.2rem;
+  color: var(--clay);
+}
+.pagination-wrapper {
+  margin-top: 56px;
+  text-align: center;
+}
+
+/* --- Single Blog Post --- */
+.blog-hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-family: var(--f-mono);
+  font-size: 0.8rem;
+  color: var(--clay);
+  letter-spacing: 0.06em;
+  flex-wrap: wrap;
+}
+.blog-banner-wrap {
+  max-width: 900px;
+  margin: 0 auto 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(44,26,14,0.08);
+}
+.blog-banner-img {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  display: block;
+}
+.blog-article-content {
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  color: #4a382c;
+}
+.blog-article-content img {
+    margin: 30px auto;
+    border-radius: 8px;
+}
+.blog-author-footer {
+  max-width: 760px;
+  margin: 56px auto 0;
+  padding-top: 32px;
+  border-top: 1px solid rgba(44,26,14,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.blog-author-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.blog-author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--leaf);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+.blog-author-name {
+  display: block;
+  font-family: var(--f-display);
+  color: var(--soil);
+  font-size: 1.05rem;
+}
+.blog-author-title {
+  font-size: 0.85rem;
+  color: var(--clay);
+}
+.share-btn {
+  padding: 10px 20px;
+  font-size: 0.85rem;
+}
+.related-blogs-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.related-blogs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+}
+.related-blog-card {
+  background: var(--white);
+  padding: 28px;
+  border-radius: 8px;
+  border: 1px solid rgba(44,26,14,0.08);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.related-blog-card:hover {
+  transform: translateY(-4px);
+}
+.related-blog-date {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  color: var(--leaf);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+.related-blog-title {
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  color: var(--soil);
+  margin-bottom: 10px;
+}
+.related-blog-title a {
+  color: inherit;
+  text-decoration: none;
+}
+.related-blog-excerpt {
+  font-size: 0.88rem;
+  color: #7a6050;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.related-blog-link {
+  font-size: 0.85rem;
+  color: var(--leaf);
+}
+
+/* --- Cart Page --- */
+.shipping-notice {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  color: var(--clay);
+  text-align: center;
+  margin-top: 16px;
+  letter-spacing: 0.06em;
+}
+.empty-cart-view {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+}
+.empty-title {
+  font-family: var(--f-display);
+  color: var(--soil);
+  margin-bottom: 12px;
+  font-size: 2rem;
+}
+.empty-desc {
+  color: var(--clay);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+.empty-btn {
+  padding: 14px 32px;
+}
+
+/* --- Archive Product --- */
+.product-img-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
