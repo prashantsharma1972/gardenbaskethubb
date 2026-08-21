@@ -19,3 +19,111 @@ $mobile: 31.25em; //500px
 		@content;
 	}
 }
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
+   ============================================================ */
+@media (max-width: 900px) {
+  nav.site-nav {
+    padding: 16px 24px;
+  }
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-controls {
+    display: flex;
+  }
+  section {
+    padding: 60px 20px;
+  }
+  .page-hero {
+    padding: 120px 20px 48px;
+  }
+  .cat-grid-wrapper {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .shop-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .pdp {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+  .checkout-layout {
+    grid-template-columns: 1fr;
+  }
+  .reels-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px;
+  }
+  .about-story-cards {
+    grid-template-columns: 1fr !important;
+  }
+  .about-values-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .stats-strip {
+    grid-template-columns: 1fr 1fr;
+    padding: 24px;
+  }
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+  footer {
+    padding: 48px 20px 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  .cat-grid-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+  .about-values-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .reels-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+/* Custom fixes for Contact Layout */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--white);
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}
+.contact-form .form-group { margin-bottom: 0; }
+
+
+section { grid-column: full-start / full-end; }
