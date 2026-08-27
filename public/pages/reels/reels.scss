@@ -1,4 +1,4 @@
-@import '../../scss-utilities/breakpoints';
+﻿@import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/global';
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/footer';
@@ -10,3 +10,7 @@
     gap: 24px;
     margin-top: 32px;
 }
+
+.reel-card { background-size: cover; background-position: center; }
+
+

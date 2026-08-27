@@ -1,4 +1,4 @@
-@import '../../scss-utilities/breakpoints';
+﻿@import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/global';
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/footer';
@@ -8,3 +8,10 @@
     margin: 40px auto;
     padding: 0 20px;
 }
+
+.policy-content { max-width: 800px; margin: 0 auto; line-height: 1.8; color: #5c4436; }
+.policy-heading { font-family: var(--f-display); color: var(--soil); margin-bottom: 16px; font-size: 1.8rem; }
+.policy-paragraph { margin-bottom: 20px; }
+.policy-heading-spaced { margin-top: 40px; }
+
+

@@ -117,7 +117,7 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-primary btn-place-order" style="width:100%;text-align:center;padding:18px;">
+            <button type="submit" class="btn-primary btn-place-order checkout-btn-full">
               Place Order · <?php echo esc_html($cart['total_formatted']); ?>
             </button>
           </form>
@@ -132,7 +132,7 @@
               </div>
             <?php endforeach; ?>
 
-            <div class="row" style="margin-top:12px;border-top:1px solid rgba(44,26,14,0.1);padding-top:12px;">
+            <div class="row summary-divider">
               <span>Delivery Fee</span>
               <span><?php echo esc_html($cart['delivery_fee_formatted']); ?></span>
             </div>
@@ -140,7 +140,7 @@
             <?php if ($cart['discount'] > 0): ?>
               <div class="row">
                 <span>Discount</span>
-                <span style="color:var(--leaf);"><?php echo esc_html($cart['discount_formatted']); ?></span>
+                <span class="color-leaf"><?php echo esc_html($cart['discount_formatted']); ?></span>
               </div>
             <?php endif; ?>
 
@@ -149,21 +149,17 @@
               <span><?php echo esc_html($cart['total_formatted']); ?></span>
             </div>
 
-            <p
-              style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);margin-top:16px;letter-spacing:0.06em;text-align:center;">
+            <p class="secure-checkout-msg">
               🔒 256-Bit SSL Secure Checkout · 100% Satisfaction Guaranteed
             </p>
           </aside>
         </div>
       <?php else: ?>
-        <div class="empty-cart-view" style="text-align:center;padding:60px 20px;max-width:540px;margin:0 auto;">
-          <div style="font-size:4rem;margin-bottom:16px;">🛒 🌿</div>
-          <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:12px;font-size:2rem;">Your bag is empty
-          </h2>
-          <p style="color:var(--clay);margin-bottom:28px;line-height:1.6;">Add items to your shopping bag before
-            proceeding to
-            checkout.</p>
-          <a href="/shop/" class="btn-primary" style="padding:14px 32px;">
+        <div class="empty-cart-view-container">
+          <div class="empty-icon">🛒 🌿</div>
+          <h2 class="empty-title">Your bag is empty</h2>
+          <p class="empty-desc">Add items to your shopping bag before proceeding to checkout.</p>
+          <a href="/shop/" class="btn-primary empty-btn">
             Explore Nursery Shop ➔
           </a>
         </div>

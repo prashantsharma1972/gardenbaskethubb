@@ -49,7 +49,7 @@
         ?>
         <div class="reel-card" data-permalink="<?php the_permalink(); ?>"
           data-title="<?php echo esc_attr(get_the_title()); ?>" data-video="<?php echo esc_url($video_url); ?>"
-          style="<?php echo $cover_img ? "background-image:url('" . esc_url($cover_img) . "');background-size:cover;" : ''; ?>">
+          style="<?php echo $cover_img ? "background-image:url('" . esc_url($cover_img) . "');" : ''; ?>">
           <div class="play">▶️</div>
           <div class="meta">
             <h4><?php the_title(); ?></h4>

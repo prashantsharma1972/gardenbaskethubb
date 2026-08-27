@@ -920,3 +920,6 @@ nav.site-nav {
   text-decoration: none;
 }
 
+
+.header-spacer { height: var(--header-height, 80px); width: 100%; }
+.cart-btn-full { width: 100%; text-align: center; }

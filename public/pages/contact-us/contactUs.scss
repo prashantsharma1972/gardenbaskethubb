@@ -1,4 +1,4 @@
-@import '../../scss-utilities/global';
+﻿@import '../../scss-utilities/global';
 @import '../../scss-utilities/header';
 @import "../../scss-utilities/tailwind";
 @import '../../scss-utilities/breakpoints';
@@ -169,4 +169,8 @@
 		}
 	}
 }
+
+
+.contact-btn-full { width: 100%; padding: 16px; }
+
 

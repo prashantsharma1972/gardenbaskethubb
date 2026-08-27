@@ -16,15 +16,15 @@
 </section>
 
 <section>
-  <div class="container" style="max-width:960px;margin:0 auto;">
+  <div class="container index-container">
     <?php if (have_posts()): ?>
       <?php while (have_posts()):
         the_post(); ?>
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?> style="margin-bottom:40px;">
-          <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:12px;">
+        <article id="post-<?php the_ID(); ?>" <?php post_class('index-article'); ?>>
+          <h2 class="index-article-title">
             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
           </h2>
-          <div class="entry-content" style="color:#5c4436;line-height:1.8;">
+          <div class="entry-content index-article-content">
             <?php the_content(); ?>
           </div>
         </article>

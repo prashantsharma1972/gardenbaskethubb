@@ -74,7 +74,7 @@ $cart_count = $cart_data['total_count'];
 
         <div id="gbh-mobile-overlay" class="header-back-drop mobile-overlay"></div>
     </header>
-    <div style="height:var(--header-height, 80px);width:100%;"></div>
+    <div class="header-spacer"></div>
 
     <!-- Mobile Navigation Slide-out Drawer -->
     <div id="gbh-mobile-drawer" class="mobile-drawer">
@@ -95,8 +95,7 @@ $cart_count = $cart_data['total_count'];
         </ul>
 
         <div class="mobile-drawer-footer">
-            <a href="/cart/" class="btn-primary mobile-cart-btn"
-                style="width:100%;text-align:center;">
+            <a href="/cart/" class="btn-primary mobile-cart-btn cart-btn-full">
                 View Bag (<span class="cart-count-badge"><?php echo esc_html($cart_count); ?></span> Items)
             </a>
             <a href="https://wa.me/919876543210" target="_blank" class="mobile-wa-btn">

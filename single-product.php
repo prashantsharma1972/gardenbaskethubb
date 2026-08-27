@@ -121,123 +121,12 @@
   <!-- ============================================================
      PRODUCT DETAIL SECTION (PDP)
      ============================================================ -->
-  <section style="padding-top:140px;" data-product-id="<?php echo esc_attr($product_id); ?>">
+  <section class="pdp-section" data-product-id="<?php echo esc_attr($product_id); ?>">
     <div class="pdp">
       <!-- Gallery Column -->
       <div class="pdp-gallery">
         <div class="pdp-main-img">
           <?php if ($main_img): ?>
-            <img src="<?php echo esc_url($main_img); ?>" alt="<?php echo esc_attr($title); ?>">
-          <?php else: ?>
-            🌱
-          <?php endif; ?>
-
-          <?php if ($discount_label): ?>
-            <span class="badge-hot"
-              style="position:absolute;top:14px;left:14px;"><?php echo esc_html($discount_label); ?></span>
-          <?php else: ?>
-            <span class="badge-jaipur" style="position:absolute;top:14px;left:14px;">Jaipur Special · Same-Day</span>
-          <?php endif; ?>
-        </div>
-
-        <?php if (!empty($gallery_images) && count($gallery_images) > 1): ?>
-          <div class="pdp-thumbs">
-            <?php foreach ($gallery_images as $index => $thumb_url): ?>
-              <div class="pdp-thumb <?php echo $index === 0 ? 'active' : ''; ?>">
-                <img src="<?php echo esc_url($thumb_url); ?>" alt="Thumbnail">
-              </div>
-            <?php endforeach; ?>
-          </div>
-        <?php endif; ?>
-      </div>
-
-      <!-- Product Info Column -->
-      <div class="pdp-info">
-        <p class="breadcrumb">
-          <a href="/">Home</a> ·
-          <a href="/shop/">Shop</a> ·
-          <?php the_terms($product_id, 'product_cat', '', ', '); ?>
-        </p>
-
-        <h1><?php echo esc_html($title); ?></h1>
-
-        <div class="rating">★ ★ ★ ★ ★ <span>(128 verified reviews)</span></div>
-
-        <div class="price">
-          <?php if ($offer_price): ?>
-            ₹<?php echo esc_html($offer_price); ?>
-            <?php if ($price): ?><del>₹<?php echo esc_html($price); ?></del><?php endif; ?>
-          <?php elseif ($price): ?>
-            ₹<?php echo esc_html($price); ?>
-          <?php else: ?>
-            ₹199
-          <?php endif; ?>
-          <small>inclusive of all taxes</small>
-        </div>
-
-        <div class="desc">
-          <?php if (has_excerpt()): ?>
-            <?php the_excerpt(); ?>
-          <?php else: ?>
-            <?php the_content(); ?>
-          <?php endif; ?>
-        </div>
-
-        <!-- Quick Specs Grid -->
-        <div class="pdp-specs-grid">
-          <?php if ($number_of_seeds): ?>
-            <div class="pdp-spec-item"><strong>Seeds Quantity</strong> <?php echo esc_html($number_of_seeds); ?></div>
-          <?php endif; ?>
-
-          <?php if ($seed_type): ?>
-            <div class="pdp-spec-item"><strong>Seed Type</strong> <?php echo esc_html($seed_type); ?></div>
-          <?php endif; ?>
-
-          <?php if ($sowing_season): ?>
-            <div class="pdp-spec-item"><strong>Sowing Season</strong> <?php echo esc_html($sowing_season); ?></div>
-          <?php endif; ?>
-
-          <?php if ($germ_temp): ?>
-            <div class="pdp-spec-item"><strong>Germination Temp</strong> <?php echo esc_html($germ_temp); ?></div>
-          <?php endif; ?>
-
-          <?php if ($germ_time): ?>
-            <div class="pdp-spec-item"><strong>Germination Time</strong> <?php echo esc_html($germ_time); ?></div>
-          <?php endif; ?>
-
-          <?php if ($germ_rate): ?>
-            <div class="pdp-spec-item"><strong>Germination Rate</strong> <?php echo esc_html($germ_rate); ?></div>
-          <?php endif; ?>
-
-          <?php if ($first_harvest): ?>
-            <div class="pdp-spec-item"><strong>Harvest Time</strong> <?php echo esc_html($first_harvest); ?></div>
-          <?php endif; ?>
-
-          <?php if ($growing_level): ?>
-            <div class="pdp-spec-item"><strong>Difficulty Level</strong> <?php echo esc_html($growing_level); ?></div>
-          <?php endif; ?>
-        </div>
-
-        <!-- Purchase Options -->
-        <div class="pdp-options">
-          <?php if ($container_size): ?>
-            <div class="opt-row">
-              <label>Recommended Pot Size</label>
-              <div class="opt-pills">
-                <div class="opt-pill selected"><?php echo esc_html($container_size); ?></div>
-              </div>
-            </div>
-          <?php endif; ?>
-
-          <div class="qty-row">
-            <label
-              style="font-family:var(--f-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);">Qty</label>
-            <div class="qty-stepper">
-              <button class="qty-minus">–</button>
-              <input type="text" value="1" class="qty-input">
-              <button class="qty-plus">+</button>
-            </div>
-          </div>
         </div>
 
         <!-- Call to Action Buttons -->
@@ -333,7 +222,7 @@
   <!-- ============================================================
      RELATED PRODUCTS SECTION
      ============================================================ -->
-  <section style="background:var(--sand);">
+  <section class="bg-sand">
     <p class="section-label">More from our nursery</p>
     <h2 class="section-title">Related Gardening Essentials</h2>
 

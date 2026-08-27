@@ -1,4 +1,4 @@
-@import '../../scss-utilities/breakpoints';
+﻿@import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/global';
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/footer';
@@ -9,3 +9,10 @@
     margin: 40px auto;
     padding: 0 20px;
 }
+
+.pdp-section { padding-top: 140px; }
+.badge-absolute { position: absolute; top: 14px; left: 14px; }
+.qty-label { font-family: var(--f-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--clay); }
+.bg-sand { background: var(--sand); }
+
+

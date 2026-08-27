@@ -21,48 +21,44 @@ $address = $order_id ? get_post_meta($order_id, '_gbh_address', true) : 'Jaipur,
 <!-- ============================================================
      THANK YOU / ORDER CONFIRMATION
      ============================================================ -->
-<section style="padding-top:160px;min-height:70vh;display:flex;align-items:center;justify-content:center;">
+<section class="thankyou-section">
   <div class="thankyou-box">
-    <div style="font-size:4rem;margin-bottom:12px;">🌱 🎉</div>
+    <div class="thankyou-icon">🌱 🎉</div>
     <span class="order-id-badge">Order ID: <?php echo esc_html($order_num); ?></span>
 
-    <h1 style="font-family:var(--f-display);font-size:2.4rem;color:var(--soil);margin-bottom:12px;">
+    <h1 class="thankyou-heading">
       Thank You, <?php echo esc_html($customer_name); ?>!
     </h1>
 
-    <p style="font-size:1.05rem;color:var(--clay);line-height:1.7;margin-bottom:28px;">
+    <p class="thankyou-paragraph">
       Your garden order has been placed successfully. We are carefully packing your seeds & saplings at our Jaipur
       nursery.
     </p>
 
-    <div
-      style="background:var(--white);padding:24px;border-radius:4px;text-align:left;margin-bottom:32px;border:1px solid rgba(44,26,14,0.1);">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-        <span style="font-family:var(--f-mono);font-size:0.75rem;color:var(--clay);text-transform:uppercase;">Delivery
+    <div class="thankyou-details-card">
+      <div class="thankyou-details-row">
+        <span class="thankyou-details-label">Delivery
           Address</span>
-        <span style="font-size:0.9rem;color:var(--soil);"><?php echo esc_html($address); ?></span>
+        <span class="thankyou-details-val"><?php echo esc_html($address); ?></span>
       </div>
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-        <span style="font-family:var(--f-mono);font-size:0.75rem;color:var(--clay);text-transform:uppercase;">Scheduled
+      <div class="thankyou-details-row">
+        <span class="thankyou-details-label">Scheduled
           Slot</span>
-        <span
-          style="font-size:0.9rem;color:var(--leaf);font-weight:bold;"><?php echo esc_html($delivery_slot); ?></span>
+        <span class="thankyou-details-val-leaf"><?php echo esc_html($delivery_slot); ?></span>
       </div>
-      <div
-        style="display:flex;justify-content:space-between;border-top:1px solid rgba(44,26,14,0.08);padding-top:12px;">
-        <span style="font-family:var(--f-mono);font-size:0.75rem;color:var(--clay);text-transform:uppercase;">Total
+      <div class="thankyou-details-row total-row">
+        <span class="thankyou-details-label">Total
           Amount</span>
-        <span
-          style="font-family:var(--f-display);font-size:1.2rem;color:var(--soil);font-weight:bold;">₹<?php echo esc_html(number_format(floatval($total_amount), 0)); ?></span>
+        <span class="thankyou-details-val-total">₹<?php echo esc_html(number_format(floatval($total_amount), 0)); ?></span>
       </div>
     </div>
 
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+    <div class="thankyou-actions">
       <a href="/shop/" class="btn-primary">
         Continue Shopping
       </a>
       <a href="https://wa.me/919876543210?text=Hi%20Garden%20Basket%20Hub,%20I%20have%20a%20question%20about%20Order%20<?php echo urlencode($order_num); ?>"
-        target="_blank" class="btn-primary" style="background:var(--leaf);">
+        target="_blank" class="btn-primary btn-leaf">
         💬 Track on WhatsApp
       </a>
     </div>

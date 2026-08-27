@@ -14,3 +14,8 @@
         grid-template-columns: 1fr;
     }
 }
+
+.checkout-btn-full { width: 100%; text-align: center; padding: 18px; }
+.summary-divider { margin-top: 12px; border-top: 1px solid rgba(44,26,14,0.1); padding-top: 12px; }
+.color-leaf { color: var(--leaf); }
+.secure-checkout-msg { font-family: var(--f-mono); font-size: 0.7rem; color: var(--clay); margin-top: 16px; letter-spacing: 0.06em; text-align: center; }

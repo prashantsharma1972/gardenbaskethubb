@@ -73,7 +73,7 @@
         <label>Message</label>
         <textarea placeholder="Tell us about your garden..."></textarea>
       </div>
-      <button type="submit" class="btn-primary" style="width:100%;padding:16px;">Send Message</button>
+      <button type="submit" class="btn-primary contact-btn-full">Send Message</button>
     </form>
   </div>
 </section>

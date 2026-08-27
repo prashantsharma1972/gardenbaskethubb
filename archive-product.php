@@ -63,7 +63,7 @@
         <span class="results" id="gbh-results-count">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?>
           products</span>
 
-        <select id="shop-sort-select">
+        <select id="gbh-sort-products">
           <option value="featured">Sort: Featured</option>
           <option value="low-high">Price: Low to High</option>
           <option value="high-low">Price: High to Low</option>

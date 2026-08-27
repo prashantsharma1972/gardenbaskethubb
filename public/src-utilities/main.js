@@ -39,11 +39,11 @@
         if (cart.total_count === 0 && $('.cart-layout').length) {
             $('.cart-layout').fadeOut(300, function() {
                 $(this).replaceWith(`
-                    <div class="empty-cart-view" style="text-align:center;padding:60px 20px;max-width:540px;margin:0 auto;">
-                        <div style="font-size:4rem;margin-bottom:16px;">🛒 🌿</div>
-                        <h2 style="font-family:var(--f-display);color:var(--soil);margin-bottom:12px;font-size:2rem;">Your garden bag is empty</h2>
-                        <p style="color:var(--clay);margin-bottom:28px;line-height:1.6;">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
-                        <a href="${gbh_ajax_obj.cart_url.replace('/cart/', '/shop/')}" class="btn-primary" style="padding:14px 32px;">
+                    <div class="empty-cart-view-container">
+                        <div class="empty-icon">🛒 🌿</div>
+                        <h2 class="empty-title">Your garden bag is empty</h2>
+                        <p class="empty-desc">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
+                        <a href="${gbh_ajax_obj.cart_url.replace('/cart/', '/shop/')}" class="btn-primary empty-btn">
                             Explore Nursery Shop ➔
                         </a>
                     </div>

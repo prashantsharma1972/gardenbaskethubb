@@ -3,7 +3,7 @@
      ============================================================ -->
 <footer class="footer">
   <div class="logo-container">
-    <a href="/" class="nav-logo footer-logo__smartit" style="color:var(--sand)">
+    <a href="/" class="nav-logo footer-logo__smartit color-sand">
       Garden <span>Basket</span> Hub
     </a>
   </div>
