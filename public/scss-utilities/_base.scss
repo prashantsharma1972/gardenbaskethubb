@@ -40,20 +40,18 @@ input {
 
 // Global Size Setting
 html {
-    font-size: 62.5%;
     overflow-x: hidden;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    font-size: 10px;
 
     // Below 1500px
     @include desktop {
-        font-size: 9px;
+        // font-size: 9px;
     }
 
     // Below 1050px
     @include tablet {
-        font-size: 8px;
+        // font-size: 8px;
     }
 }
 

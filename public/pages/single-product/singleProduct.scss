@@ -1,33 +1,503 @@
-@import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/base';
 @import '../../scss-utilities/header';
+@import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/footer';
+@import '../../scss-utilities/variables';
 
-/* Product Details Page */
-.pdp-wrapper {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
+/* ============================================================
+   SINGLE PRODUCT PAGE — singleProduct.scss
+   ============================================================ */
 
-.pdp-section {
-    padding-top: 140px;
-}
+/* === BREADCRUMB BAR === */
+.pdp-breadcrumb-bar {
+  grid-column: full-start / full-end;
+  background: var(--sand);
+  border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+  padding: 12px 5vw;
 
-.badge-absolute {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-}
+  .pdp-breadcrumb-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-.qty-label {
-    font-family: var(--f-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  .breadcrumb-item {
+    font-size: 0.85rem;
     color: var(--clay);
+
+    a {
+      color: var(--clay);
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: var(--leaf);
+      }
+    }
+  }
+
+  .breadcrumb-sep {
+    color: var(--clay);
+    font-size: 1rem;
+  }
+
+  .breadcrumb-current {
+    color: var(--leaf);
+    font-weight: 500;
+  }
 }
 
-.bg-sand {
+/* === PDP MAIN LAYOUT === */
+.pdp-section {
+  grid-column: center-start / center-end;
+  width: 100%;
+  padding-top: 40px;
+
+  .pdp-inner {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    gap: 48px;
+    align-items: start;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+}
+
+/* === GALLERY === */
+.pdp-gallery {
+  .pdp-main-img {
+    img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  .pdp-thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+
+    .pdp-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      &.active,
+      &:hover {
+        border-color: var(--leaf);
+      }
+    }
+  }
+}
+
+/* === INFO COLUMN === */
+.pdp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 32px;
+}
+
+.pdp-title {
+  font-family: var(--f-display);
+  color: var(--soil);
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* === PRICE BLOCK === */
+.pdp-price-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .pdp-price-final {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--soil);
+  }
+
+  .pdp-price-strike {
+    font-size: 1.1rem;
+    color: var(--clay);
+    text-decoration: line-through;
+  }
+}
+
+/* === CTA BUTTONS === */
+.pdp-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .btn-pdp-primary {
+    background: var(--soil);
+    color: var(--white);
+    border: none;
+    padding: 14px 32px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    font-family: var(--f-body);
+    letter-spacing: 0.02em;
+
+    &:hover {
+      background: var(--leaf);
+      transform: translateY(-1px);
+    }
+  }
+
+  .btn-pdp-ghost {
+    background: transparent;
+    color: var(--soil);
+    border: 1.5px solid var(--soil);
+    padding: 13px 28px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: var(--f-body);
+
+    &:hover {
+      background: rgba(44, 26, 14, 0.05);
+    }
+  }
+}
+
+/* === PINCODE CHECK === */
+.pincode-check {
+  background: rgba(240, 230, 211, 0.4);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 420px;
+
+  .pincode-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--soil);
+    margin-bottom: 12px;
+  }
+
+  .pincode-row {
+    display: flex;
+    gap: 8px;
+
+    .pincode-input {
+      flex: 1;
+      border: 1px solid rgba(44, 26, 14, 0.2);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 0.875rem;
+      background: var(--white);
+      color: var(--soil);
+
+      &:focus {
+        outline: none;
+        border-color: var(--leaf);
+      }
+    }
+
+    .pincode-btn {
+      background: var(--soil);
+      color: var(--white);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+      font-family: var(--f-body);
+
+      &:hover {
+        background: var(--leaf);
+      }
+    }
+  }
+}
+
+/* === TRUST BADGES === */
+.pdp-trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  .pdp-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--clay);
+
+    span {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* === CARE TABS === */
+.pdp-care-tabs {
+  grid-column: center-start / center-end;
+  width: 100%;
+
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid rgba(44, 26, 14, 0.1);
+    flex-wrap: wrap;
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 14px 16px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--clay);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+      font-family: var(--f-body);
+      white-space: nowrap;
+
+      &:hover {
+        color: var(--soil);
+      }
+
+      &.active {
+        color: var(--leaf);
+        border-bottom-color: var(--leaf);
+      }
+    }
+  }
+
+  .tabs-body {
+    padding: 32px 0;
+
+    .tab-content {
+      display: none;
+
+      &.active {
+        display: block;
+      }
+
+      .tab-heading {
+        font-family: var(--f-display);
+        font-size: 1.4rem;
+        color: var(--soil);
+        margin-bottom: 16px;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: var(--clay);
+        line-height: 1.8;
+        margin-bottom: 12px;
+      }
+
+      ul, ol {
+        padding-left: 20px;
+        color: var(--clay);
+        font-size: 0.95rem;
+        line-height: 1.8;
+      }
+    }
+  }
+}
+
+/* === RELATED PRODUCTS === */
+.pdp-related-section {
+  grid-column: full-start / full-end;
+  background: var(--sand);
+  padding: 64px 5vw;
+  width: 100%;
+
+  .pdp-related-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .pdp-related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+
+    @include tablet {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.related-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+
+  .related-card-img {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
     background: var(--sand);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.04);
+    }
+  }
+
+  .related-card-img-cover {
+    width: 100%;
+    height: 192px;
+    object-fit: cover;
+  }
+
+  .related-card-img-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    background: var(--sand);
+  }
+
+  .related-card-body {
+    padding: 20px;
+
+    .related-card-label {
+      font-family: var(--f-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clay);
+      margin-bottom: 8px;
+    }
+
+    .related-card-title {
+      font-family: var(--f-display);
+      font-size: 1.05rem;
+      color: var(--soil);
+      margin-bottom: 8px;
+
+      a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: var(--leaf);
+        }
+      }
+    }
+
+    .related-card-date {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--clay);
+      margin-bottom: 8px;
+    }
+
+    .related-card-excerpt {
+      font-size: 0.875rem;
+      color: var(--clay);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .related-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .related-card-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--soil);
+    }
+
+    .related-card-add-btn {
+      background: none;
+      border: none;
+      color: var(--leaf);
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-family: var(--f-body);
+      padding: 0;
+      transition: gap 0.2s;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+/* Option Pill Selector (Variants) */
+.opt-pills-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .opt-pill {
+    border: 1.5px solid rgba(44, 26, 14, 0.2);
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--soil);
+    transition: border-color 0.2s, background 0.2s;
+    background: transparent;
+    font-family: var(--f-body);
+
+    &.selected,
+    &:hover {
+      border-color: var(--leaf);
+      background: rgba(78, 138, 72, 0.08);
+      color: var(--leaf);
+    }
+  }
 }
