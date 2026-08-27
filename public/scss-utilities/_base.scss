@@ -369,7 +369,7 @@ input[type='search']::-webkit-search-results-decoration {
     display: none;
 }
 
-@import './theme-vars';
+@import './variables';
 
 /* ============================================================
    TYPOGRAPHY & SECTION COMMON
@@ -470,77 +470,4 @@ section {
 .gbh-toast.show {
     transform: translateY(0);
     opacity: 1;
-}
-
-
-/* ============================================================
-   REEL VIDEO MODAL LIGHTBOX
-   ============================================================ */
-.reel-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 10002;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.reel-modal.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.reel-modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(15, 10, 5, 0.85);
-    backdrop-filter: blur(8px);
-}
-
-.reel-modal-content {
-    position: relative;
-    z-index: 1;
-    width: 420px;
-    max-width: 90vw;
-    height: 720px;
-    max-height: 85vh;
-    background: var(--soil);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
-}
-
-.reel-modal-title {
-    padding: 16px 20px;
-    font-family: var(--f-display);
-    font-size: 1.1rem;
-    color: var(--sand);
-    border-bottom: 1px solid rgba(240, 230, 211, 0.1);
-    padding-right: 48px;
-}
-
-.reel-modal-close {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    background: none;
-    border: none;
-    color: var(--sand);
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.reel-modal-body {
-    flex: 1;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }

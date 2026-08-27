@@ -1,5 +1,5 @@
 @import '../../scss-utilities/breakpoints';
-@import '../../scss-utilities/global';
+@import '../../scss-utilities/base';
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/footer';
 
@@ -13,4 +13,32 @@
     @include tablet {
         grid-template-columns: 1fr;
     }
+}
+.empty-cart-view-container {
+    text-align: center;
+    padding: 60px 20px;
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
+.empty-title {
+    font-family: var(--f-display);
+    color: var(--soil);
+    margin-bottom: 12px;
+    font-size: 2rem;
+}
+
+.empty-desc {
+    color: var(--clay);
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.empty-btn {
+    padding: 14px 32px;
 }
