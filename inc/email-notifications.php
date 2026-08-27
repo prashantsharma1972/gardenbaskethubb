@@ -4,27 +4,29 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Send Order Confirmation HTML Email to Customer & Store Admin
  */
-function gbh_send_order_confirmation_email($order_id) {
-    $customer_name  = get_post_meta($order_id, '_customer_name', true);
+function gbh_send_order_confirmation_email($order_id)
+{
+    $customer_name = get_post_meta($order_id, '_customer_name', true);
     $customer_email = get_post_meta($order_id, '_customer_email', true);
-    $items          = get_post_meta($order_id, '_order_items', true);
-    $total          = get_post_meta($order_id, '_order_total', true);
-    $delivery_slot  = get_post_meta($order_id, '_delivery_slot', true);
-    $pincode        = get_post_meta($order_id, '_shipping_pincode', true);
+    $items = get_post_meta($order_id, '_order_items', true);
+    $total = get_post_meta($order_id, '_order_total', true);
+    $delivery_slot = get_post_meta($order_id, '_delivery_slot', true);
+    $pincode = get_post_meta($order_id, '_shipping_pincode', true);
     $payment_method = get_post_meta($order_id, '_payment_method', true);
 
     $subject = '🌱 Order Confirmed! #' . $order_id . ' — Garden Basket Hub';
-    
+
     $items_html = '';
     if (is_array($items)) {
         foreach ($items as $it) {
             $name = isset($it['title']) ? $it['title'] : 'Product';
-            $qty  = isset($it['qty']) ? intval($it['qty']) : (isset($it['quantity']) ? intval($it['quantity']) : 1);
+            $qty = isset($it['qty']) ? intval($it['qty']) : (isset($it['quantity']) ? intval($it['quantity']) : 1);
             $price = isset($it['price']) ? floatval($it['price']) : 199.0;
             $items_html .= '<tr><td style="padding:10px;border-bottom:1px solid #eee;">' . esc_html($name) . ' x ' . $qty . '</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:right;">₹' . intval($price * $qty) . '</td></tr>';
         }
@@ -63,7 +65,7 @@ function gbh_send_order_confirmation_email($order_id) {
     if ($customer_email) {
         wp_mail($customer_email, $subject, $message, $headers);
     }
-    
+
     // Also notify store admin
     wp_mail(get_option('admin_email', 'hello@gardenbaskethubb.com'), '🔔 New Order Received #' . $order_id, $message, $headers);
 }

@@ -4,12 +4,14 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * AJAX: Place Order Handler
  */
-function gbh_ajax_place_order() {
+function gbh_ajax_place_order()
+{
     check_ajax_referer('gbh_cart_nonce', 'nonce');
 
     $cart_data = gbh_get_cart_data();
@@ -17,15 +19,15 @@ function gbh_ajax_place_order() {
         wp_send_json_error(array('message' => 'Your bag is empty!'));
     }
 
-    $email          = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
-    $phone          = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
-    $first_name     = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
-    $last_name      = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']) : '';
-    $address        = isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '';
-    $landmark       = isset($_POST['landmark']) ? sanitize_text_field($_POST['landmark']) : '';
-    $city           = isset($_POST['city']) ? sanitize_text_field($_POST['city']) : 'Jaipur';
-    $pincode        = isset($_POST['pincode']) ? sanitize_text_field($_POST['pincode']) : '';
-    $delivery_slot  = isset($_POST['delivery_slot']) ? sanitize_text_field($_POST['delivery_slot']) : '';
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+    $first_name = isset($_POST['first_name']) ? sanitize_text_field($_POST['first_name']) : '';
+    $last_name = isset($_POST['last_name']) ? sanitize_text_field($_POST['last_name']) : '';
+    $address = isset($_POST['address']) ? sanitize_text_field($_POST['address']) : '';
+    $landmark = isset($_POST['landmark']) ? sanitize_text_field($_POST['landmark']) : '';
+    $city = isset($_POST['city']) ? sanitize_text_field($_POST['city']) : 'Jaipur';
+    $pincode = isset($_POST['pincode']) ? sanitize_text_field($_POST['pincode']) : '';
+    $delivery_slot = isset($_POST['delivery_slot']) ? sanitize_text_field($_POST['delivery_slot']) : '';
     $payment_method = isset($_POST['payment_method']) ? sanitize_text_field($_POST['payment_method']) : 'UPI / Razorpay';
 
     if (empty($email) || empty($phone) || empty($first_name) || empty($address)) {
@@ -36,9 +38,9 @@ function gbh_ajax_place_order() {
 
     // Create Order Post
     $order_id = wp_insert_post(array(
-        'post_type'    => 'gbh_order',
-        'post_title'   => 'Order ' . $order_num . ' — ' . $first_name . ' ' . $last_name,
-        'post_status'  => 'publish',
+        'post_type' => 'gbh_order',
+        'post_title' => 'Order ' . $order_num . ' — ' . $first_name . ' ' . $last_name,
+        'post_status' => 'publish',
         'post_content' => 'Customer Phone: ' . $phone . "\nEmail: " . $email,
     ));
 
@@ -103,13 +105,13 @@ function gbh_ajax_place_order() {
     }
 
     $redirect_url = add_query_arg(array(
-        'order_id'  => $order_id,
+        'order_id' => $order_id,
         'order_num' => $order_num,
     ), home_url('/thank-you/'));
 
     wp_send_json_success(array(
-        'message'      => 'Order placed successfully!',
-        'order_num'    => $order_num,
+        'message' => 'Order placed successfully!',
+        'order_num' => $order_num,
         'redirect_url' => $redirect_url
     ));
 }

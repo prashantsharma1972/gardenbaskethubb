@@ -1,125 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
-    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
-    <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/shop/shop.bundle.js"></script>
-    <?php get_header(); ?>
-<main class="main--container">
 
-<!-- ============================================================
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
+  <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
+  <script type="module" defer fetchpriority="low"
+    src="/wp-content/themes/gardenbaskethubb/build/shop/shop.bundle.js"></script>
+  <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/shop/shop.css">
+  <script type="module" defer fetchpriority="low"
+    src="/wp-content/themes/gardenbaskethubb/build/shop/shop.bundle.js"></script>
+  <?php get_header(); ?>
+  <main class="main--container">
+
+    <!-- ============================================================
      PAGE HERO
      ============================================================ -->
-<section class="page-hero">
-  <p class="breadcrumb"><a href="/">Home</a> · Shop</p>
-  <h1>The whole <em>garden</em>, in one place.</h1>
-  <p>Filter by category, season, or what you're growing. Fresh seedlings ship same-day in Jaipur.</p>
-</section>
+    <section class="banner-section">
+      <div class="container">
+        <h1 class="main_heading">The whole <em>garden</em>, in one place.</h1>
+        <p class="sub_description">Filter by category, season, or what you're growing. Fresh seedlings ship same-day in
+          Jaipur.</p>
+      </div>
+    </section>
 
-<!-- ============================================================
+    <!-- ============================================================
      SHOP CATALOG LAYOUT
      ============================================================ -->
-<section>
-  <div class="shop-layout">
-    <!-- Filter Sidebar -->
-    <aside class="filter-sidebar">
-      <h4>Category</h4>
-      <label><input type="checkbox" name="cat" value="seeds" class="filter-cat-checkbox" checked> Seeds</label>
-      <label><input type="checkbox" name="cat" value="seedlings" class="filter-cat-checkbox"> Seedlings (Jaipur)</label>
-      <label><input type="checkbox" name="cat" value="compost" class="filter-cat-checkbox"> Compost & Soil</label>
-      <label><input type="checkbox" name="cat" value="tools" class="filter-cat-checkbox"> Tools & Accessories</label>
-      <label><input type="checkbox" name="cat" value="pots" class="filter-cat-checkbox"> Pots & Planters</label>
-
-      <h4>Season</h4>
-      <label><input type="checkbox" name="season" value="monsoon" class="filter-season-checkbox"> Monsoon</label>
-      <label><input type="checkbox" name="season" value="winter" class="filter-season-checkbox"> Winter</label>
-      <label><input type="checkbox" name="season" value="summer" class="filter-season-checkbox"> Summer</label>
-      <label><input type="checkbox" name="season" value="all" class="filter-season-checkbox"> All Year</label>
-
-      <h4>Price Range</h4>
-      <div class="price-input">
-        <input type="number" id="filter-min-price" placeholder="Min ₹" min="0">
-        <input type="number" id="filter-max-price" placeholder="Max ₹" min="0">
+    <section class="blogs">
+      <div class="filter-section">
+        <div class="filters-type-with-search">
+          <div data-type="category" class="filter-type">
+            <span class="icons">
+              <svg class="add">
+                <use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#add'>
+              </svg>
+              <svg class="subtract">
+                <use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#hyphen'>
+              </svg>
+            </span>
+            Product Category
+          </div>
+          <div class="search">
+            <svg class="search__icon">
+              <use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#search'>
+            </svg>
+            <input placeholder="Search" type="text" name="search-products" id="search-products">
+          </div>
+        </div>
+        <div class=" filters-container">
+          <div data-type="category" class="filter-container">
+            <!-- Query Product Categories -->
+            <?php
+            $product_cats = get_terms(['taxonomy' => 'product_cat', 'hide_empty' => false]);
+            if (!empty($product_cats) && !is_wp_error($product_cats)) {
+              foreach ($product_cats as $cat) {
+                echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
+              }
+            }
+            ?>
+          </div>
+          <div class="filter-btns">
+            <button class="clear">Clear All</button>
+            <button class="results">Show Results</button>
+          </div>
+        </div>
       </div>
-
-      <h4>Delivery Option</h4>
-      <label><input type="checkbox" name="del" value="jaipur"> Same-Day Jaipur</label>
-      <label><input type="checkbox" name="del" value="india"> Pan India Shipping</label>
-      <label><input type="checkbox" name="del" value="cod"> COD Available</label>
-    </aside>
-
-    <!-- Product Grid Area -->
-    <div>
-      <div class="shop-toolbar">
-        <?php
-        $products_query = new WP_Query(array(
-          'post_type' => 'product',
-          'posts_per_page' => 24,
-        ));
-        $count = $products_query->found_posts;
-        ?>
-        <span class="results" id="gbh-results-count">Showing <?php echo esc_html($count > 0 ? $count : '24'); ?>
-          products</span>
-
-        <select id="gbh-sort-products">
-          <option value="featured">Sort: Featured</option>
-          <option value="low-high">Price: Low to High</option>
-          <option value="high-low">Price: High to Low</option>
-          <option value="newest">Newest First</option>
-        </select>
+      <div class="filter-sortby">
+        <p class="sort-by-heading"><span class="sort-by">Sort By: <span id="sort-by">Newest First</span></span>
+          <span class="svg-arrow"><svg width="13" height="13" class="drop-down" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+              </path>
+            </svg></span>
+        </p>
+        <div class="sorting">
+          <p data-attr="Newest First" data-find="newest">Newest First</p>
+          <p data-attr="Price: Low to High" data-find="low-high">Price: Low to High</p>
+          <p data-attr="Price: High to Low" data-find="high-low">Price: High to Low</p>
+        </div>
       </div>
+      <div class="loading" id="product-loader" style="display:none;">
+        <!-- Loader graphic here -->
+      </div>
+      <div class="resource-list product-grid" id="gbh-product-grid">
 
-      <div class="product-grid" id="gbh-product-grid">
-
-        <?php if ($products_query->have_posts()): ?>
-          <?php while ($products_query->have_posts()):
-            $products_query->the_post();
+        <?php if (have_posts()): ?>
+          <?php while (have_posts()):
+            the_post();
             $p_id = get_the_ID();
+            $title = get_field('product_title') ?: get_the_title();
             $price = get_field('product_price');
             $offer_price = get_field('product_offer_price');
             $discount_label = get_field('discount_label');
-            $thumb_url = get_the_post_thumbnail_url($p_id, 'gbh-card');
-            if (!$thumb_url)
-              $thumb_url = get_field('product_image');
+            $image_url = get_field('product_image') ?: get_the_post_thumbnail_url($p_id, 'gbh-card');
+            $image_alt = get_field('product_image_alt') ?: get_the_title();
             ?>
-            <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>"
+            <div class="resource-data product-card" data-product-id="<?php echo esc_attr($p_id); ?>"
               data-permalink="<?php the_permalink(); ?>">
-              <div class="product-img">
+              <div class="blog-feature-image product-img">
                 <a href="<?php the_permalink(); ?>" class="product-img-link">
-                  <?php if ($thumb_url): ?>
-                    <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
+                  <?php if ($image_url): ?>
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>"
+                      class="resource-img">
                   <?php else: ?>
                     🌱
                   <?php endif; ?>
                 </a>
 
-
                 <?php if ($discount_label): ?>
                   <span class="badge-hot"><?php echo esc_html($discount_label); ?></span>
-                <?php else: ?>
-                  <span class="badge-jaipur">Jaipur Only</span>
                 <?php endif; ?>
               </div>
 
-              <div class="product-body">
-                <div class="product-category">
-                  <?php
-                  $terms = get_the_terms($p_id, 'product_cat');
-                  echo ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Gardening';
-                  ?>
+              <div class="blog-content product-body">
+                <div class="blog-timeline product-category">
+                  <p>
+                    <?php
+                    $terms = get_the_terms($p_id, 'product_cat');
+                    echo ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Gardening';
+                    ?>
+                  </p>
                 </div>
 
-                <div class="product-name">
-                  <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                <div class="blog-title product-name">
+                  <h2 class="blog-heading">
+                    <a href="<?php the_permalink(); ?>"><?php echo esc_html($title); ?></a>
+                  </h2>
                 </div>
 
-                <div class="product-desc">
-                  <?php echo wp_trim_words(get_the_excerpt(), 10, '...'); ?>
-                </div>
-
-                <div class="product-footer">
+                <div class="author-div flex-div product-footer">
                   <div class="product-price">
                     <?php if ($offer_price): ?>
                       ₹<?php echo esc_html($offer_price); ?>
@@ -139,89 +150,10 @@
           wp_reset_postdata(); ?>
 
         <?php else: ?>
-          <!-- Demo Fallback Cards if DB has no products created yet -->
-          <div class="product-card">
-            <div class="product-img">🌱 <span class="badge-jaipur">Jaipur Only</span></div>
-            <div class="product-body">
-              <div class="product-category">Seedlings</div>
-              <div class="product-name"><a href="#">Tomato Seedling Tray</a></div>
-              <div class="product-desc">6 healthy seedlings, 3 weeks old. Same-day delivery in Jaipur.</div>
-              <div class="product-footer">
-                <div class="product-price">₹199 <small>/ tray</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-img">🌿 <span class="badge-new">New</span></div>
-            <div class="product-body">
-              <div class="product-category">Seeds</div>
-              <div class="product-name"><a href="#">Monsoon Veg Seed Kit</a></div>
-              <div class="product-desc">8 heirloom varieties, perfect for monsoon planting.</div>
-              <div class="product-footer">
-                <div class="product-price">₹349 <small>/ kit</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-img">🪴 <span class="badge-hot">Bestseller</span></div>
-            <div class="product-body">
-              <div class="product-category">Compost</div>
-              <div class="product-name"><a href="#">Organic Vermicompost 5kg</a></div>
-              <div class="product-desc">Premium quality, ideal for terrace & balcony gardens.</div>
-              <div class="product-footer">
-                <div class="product-price">₹299 <small>/ 5kg</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-img">🌸 <span class="badge-jaipur">Jaipur Only</span></div>
-            <div class="product-body">
-              <div class="product-category">Seedlings</div>
-              <div class="product-name"><a href="#">Marigold Sapling Pack</a></div>
-              <div class="product-desc">Fresh flowering saplings, ready to transplant.</div>
-              <div class="product-footer">
-                <div class="product-price">₹149 <small>/ pack of 4</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-img">🛠️</div>
-            <div class="product-body">
-              <div class="product-category">Tools</div>
-              <div class="product-name"><a href="#">Gardening Tool Set</a></div>
-              <div class="product-desc">5-piece essential kit — trowel, fork, pruner, gloves & more.</div>
-              <div class="product-footer">
-                <div class="product-price">₹599 <small>/ set</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="product-card">
-            <div class="product-img">🌼 <span class="badge-hot">Popular</span></div>
-            <div class="product-body">
-              <div class="product-category">Bundle</div>
-              <div class="product-name"><a href="#">Monsoon Starter Kit</a></div>
-              <div class="product-desc">Seeds + compost + tool — everything to start gardening.</div>
-              <div class="product-footer">
-                <div class="product-price">₹799 <small>/ kit</small></div>
-                <button class="add-btn">Add to bag</button>
-              </div>
-            </div>
-          </div>
+          <p>No products found.</p>
         <?php endif; ?>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-</main>
-<?php get_footer(); ?>
+  </main>
+  <?php get_footer(); ?>

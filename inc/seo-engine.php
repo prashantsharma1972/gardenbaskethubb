@@ -4,20 +4,22 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Render Dynamic Titles, Meta Descriptions, Canonical, OG Tags & Schema.org JSON-LD
  */
-function gbh_render_seo_meta_tags() {
+function gbh_render_seo_meta_tags()
+{
     $site_name = get_bloginfo('name') ? get_bloginfo('name') : 'Garden Basket Hub';
     $site_desc = 'Jaipur’s Premier E-Commerce Nursery for Heirloom Seeds, Live Saplings, 100% Organic Vermicompost & Terracotta Clay Pots. Same-day delivery in Jaipur!';
     $site_logo = get_template_directory_uri() . '/assets/images/og-banner.jpg';
 
     $page_title = '';
-    $meta_desc  = $site_desc;
-    $og_type    = 'website';
-    $og_image   = $site_logo;
+    $meta_desc = $site_desc;
+    $og_type = 'website';
+    $og_image = $site_logo;
 
     global $wp;
     $canonical_url = home_url(add_query_arg(array(), isset($wp->request) ? $wp->request : ''));
@@ -27,69 +29,75 @@ function gbh_render_seo_meta_tags() {
 
     if (is_front_page()) {
         $page_title = 'Garden Basket Hub — Heirloom Seeds, Saplings & Organic Soil Jaipur';
-        $meta_desc  = 'Buy 100% organic heirloom seeds, sapling trays, vermicompost, and handcrafted terracotta pots online in Jaipur. Same-day nursery delivery!';
+        $meta_desc = 'Buy 100% organic heirloom seeds, sapling trays, vermicompost, and handcrafted terracotta pots online in Jaipur. Same-day nursery delivery!';
     } elseif (is_singular('product')) {
         $post_id = get_the_ID();
-        $price   = get_post_meta($post_id, 'product_offer_price', true);
-        if (!$price) $price = get_post_meta($post_id, 'product_price', true);
-        if (!$price) $price = '199';
+        $price = get_post_meta($post_id, 'product_offer_price', true);
+        if (!$price)
+            $price = get_post_meta($post_id, 'product_price', true);
+        if (!$price)
+            $price = '199';
 
         $page_title = get_the_title() . ' (₹' . $price . ') — Garden Basket Hub Jaipur';
-        $excerpt    = get_the_excerpt();
-        if ($excerpt) $meta_desc = wp_strip_all_tags($excerpt);
-        
+        $excerpt = get_the_excerpt();
+        if ($excerpt)
+            $meta_desc = wp_strip_all_tags($excerpt);
+
         $thumb = get_the_post_thumbnail_url($post_id, 'large');
-        if ($thumb) $og_image = $thumb;
+        if ($thumb)
+            $og_image = $thumb;
         $og_type = 'product';
 
         // Render Product Schema JSON-LD
         echo '<script type="application/ld+json">' . json_encode(array(
-            '@context'    => 'https://schema.org/',
-            '@type'       => 'Product',
-            'name'        => get_the_title(),
-            'image'       => array($og_image),
+            '@context' => 'https://schema.org/',
+            '@type' => 'Product',
+            'name' => get_the_title(),
+            'image' => array($og_image),
             'description' => $meta_desc,
-            'sku'         => 'GBH-PROD-' . $post_id,
-            'brand'       => array('@type' => 'Brand', 'name' => 'Garden Basket Hub'),
-            'offers'      => array(
-                '@type'         => 'Offer',
-                'url'           => get_permalink(),
+            'sku' => 'GBH-PROD-' . $post_id,
+            'brand' => array('@type' => 'Brand', 'name' => 'Garden Basket Hub'),
+            'offers' => array(
+                '@type' => 'Offer',
+                'url' => get_permalink(),
                 'priceCurrency' => 'INR',
-                'price'         => floatval($price),
-                'availability'  => 'https://schema.org/InStock',
-                'seller'        => array('@type' => 'Organization', 'name' => 'Garden Basket Hub')
+                'price' => floatval($price),
+                'availability' => 'https://schema.org/InStock',
+                'seller' => array('@type' => 'Organization', 'name' => 'Garden Basket Hub')
             )
         ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
 
     } elseif (is_singular('post')) {
         $post_id = get_the_ID();
         $page_title = get_the_title() . ' — Gardening Tips | Garden Basket Hub';
-        $excerpt    = get_the_excerpt();
-        if ($excerpt) $meta_desc = wp_strip_all_tags($excerpt);
+        $excerpt = get_the_excerpt();
+        if ($excerpt)
+            $meta_desc = wp_strip_all_tags($excerpt);
         $thumb = get_the_post_thumbnail_url($post_id, 'large');
-        if ($thumb) $og_image = $thumb;
+        if ($thumb)
+            $og_image = $thumb;
         $og_type = 'article';
 
         // Render Article Schema JSON-LD
         echo '<script type="application/ld+json">' . json_encode(array(
-            '@context'      => 'https://schema.org',
-            '@type'         => 'Article',
-            'headline'      => get_the_title(),
-            'image'         => array($og_image),
+            '@context' => 'https://schema.org',
+            '@type' => 'Article',
+            'headline' => get_the_title(),
+            'image' => array($og_image),
             'datePublished' => get_the_date('c'),
-            'dateModified'  => get_the_modified_date('c'),
-            'author'        => array('@type' => 'Organization', 'name' => 'Garden Basket Hub Nursery Team')
+            'dateModified' => get_the_modified_date('c'),
+            'author' => array('@type' => 'Organization', 'name' => 'Garden Basket Hub Nursery Team')
         ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
 
     } elseif (is_post_type_archive('product') || is_page('shop')) {
         $page_title = 'Nursery Shop — Heirloom Seeds, Saplings & Soil | Garden Basket Hub';
-        $meta_desc  = 'Explore our curated shop of non-GMO heirloom seeds, seedling trays, organic soil mix, gardening tools, and clay pots. Same-day Jaipur delivery!';
+        $meta_desc = 'Explore our curated shop of non-GMO heirloom seeds, seedling trays, organic soil mix, gardening tools, and clay pots. Same-day Jaipur delivery!';
     } elseif (is_post_type_archive('reels') || is_page('reels')) {
         $page_title = 'Gardening Reels & Video Guides | Garden Basket Hub';
-        $meta_desc  = 'Watch quick 60-second video guides on seed germination, potting mix ratios, pest prevention, and balcony garden maintenance.';
+        $meta_desc = 'Watch quick 60-second video guides on seed germination, potting mix ratios, pest prevention, and balcony garden maintenance.';
     } elseif (is_home() || is_archive() || is_page('blog')) {
         $page_title = 'Gardening Guides, Soil Ratios & Care Tips | Garden Basket Hub';
-        $meta_desc  = 'Expert urban farming blog — monsoon plant care, vermicompost ratios, seedling protection, and organic growing guides.';
+        $meta_desc = 'Expert urban farming blog — monsoon plant care, vermicompost ratios, seedling protection, and organic growing guides.';
     } else {
         $page_title = get_the_title() . ' — Garden Basket Hub Jaipur';
     }
@@ -122,30 +130,30 @@ function gbh_render_seo_meta_tags() {
     // LocalBusiness Nursery Schema
     if (is_front_page()) {
         echo '<script type="application/ld+json">' . json_encode(array(
-            '@context'    => 'https://schema.org',
-            '@type'       => 'GardenStore',
-            'name'        => 'Garden Basket Hub',
-            'url'         => home_url('/'),
-            'logo'        => $site_logo,
+            '@context' => 'https://schema.org',
+            '@type' => 'GardenStore',
+            'name' => 'Garden Basket Hub',
+            'url' => home_url('/'),
+            'logo' => $site_logo,
             'description' => $site_desc,
-            'telephone'   => '+91-9876543210',
-            'address'     => array(
-                '@type'           => 'PostalAddress',
+            'telephone' => '+91-9876543210',
+            'address' => array(
+                '@type' => 'PostalAddress',
                 'addressLocality' => 'Jaipur',
-                'addressRegion'   => 'Rajasthan',
-                'postalCode'      => '302001',
-                'addressCountry'  => 'IN'
+                'addressRegion' => 'Rajasthan',
+                'postalCode' => '302001',
+                'addressCountry' => 'IN'
             ),
-            'geo'         => array(
-                '@type'     => 'GeoCoordinates',
-                'latitude'  => '26.9124',
+            'geo' => array(
+                '@type' => 'GeoCoordinates',
+                'latitude' => '26.9124',
                 'longitude' => '75.7873'
             ),
             'openingHoursSpecification' => array(
-                '@type'     => 'OpeningHoursSpecification',
+                '@type' => 'OpeningHoursSpecification',
                 'dayOfWeek' => array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
-                'opens'     => '08:00',
-                'closes'    => '20:00'
+                'opens' => '08:00',
+                'closes' => '20:00'
             )
         ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
     }

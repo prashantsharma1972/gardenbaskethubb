@@ -581,9 +581,23 @@
 		}
 	}
 }
-.index-container { max-width: 960px; margin: 0 auto; }
-.index-article { margin-bottom: 40px; }
-.index-article-title { font-family: var(--f-display); color: var(--soil); margin-bottom: 12px; }
-.index-article-content { color: #5c4436; line-height: 1.8; }
 
+.index-container {
+	max-width: 960px;
+	margin: 0 auto;
+}
 
+.index-article {
+	margin-bottom: 40px;
+}
+
+.index-article-title {
+	font-family: var(--f-display);
+	color: var(--soil);
+	margin-bottom: 12px;
+}
+
+.index-article-content {
+	color: #5c4436;
+	line-height: 1.8;
+}

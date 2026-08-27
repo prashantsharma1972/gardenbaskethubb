@@ -4,14 +4,17 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Fetch JWT Auth Token from Shiprocket API
  */
-function gbh_shiprocket_get_token() {
+function gbh_shiprocket_get_token()
+{
     $token = get_transient('_gbh_shiprocket_token');
-    if ($token) return $token;
+    if ($token)
+        return $token;
 
     $email = GBH_SHIPROCKET_EMAIL;
     $password = GBH_SHIPROCKET_PASSWORD;
@@ -22,7 +25,7 @@ function gbh_shiprocket_get_token() {
 
     $response = wp_remote_post('https://apiv2.shiprocket.in/v1/external/auth/login', array(
         'headers' => array('Content-Type' => 'application/json'),
-        'body'    => json_encode(array('email' => $email, 'password' => $password)),
+        'body' => json_encode(array('email' => $email, 'password' => $password)),
         'timeout' => 20
     ));
 
@@ -39,9 +42,11 @@ function gbh_shiprocket_get_token() {
 /**
  * Auto-Push Order to Shiprocket Panel
  */
-function gbh_shiprocket_create_order($order_id) {
+function gbh_shiprocket_create_order($order_id)
+{
     $token = gbh_shiprocket_get_token();
-    if (!$token) return false;
+    if (!$token)
+        return false;
 
     $customer_name = get_post_meta($order_id, '_customer_name', true);
     $customer_phone = get_post_meta($order_id, '_customer_phone', true);
@@ -57,9 +62,9 @@ function gbh_shiprocket_create_order($order_id) {
     if (is_array($items)) {
         foreach ($items as $item) {
             $order_items_payload[] = array(
-                'name'          => isset($item['title']) ? $item['title'] : 'Gardening Product',
-                'sku'           => 'GBH-' . (isset($item['id']) ? $item['id'] : (isset($item['product_id']) ? $item['product_id'] : 'PROD')),
-                'units'         => isset($item['qty']) ? intval($item['qty']) : (isset($item['quantity']) ? intval($item['quantity']) : 1),
+                'name' => isset($item['title']) ? $item['title'] : 'Gardening Product',
+                'sku' => 'GBH-' . (isset($item['id']) ? $item['id'] : (isset($item['product_id']) ? $item['product_id'] : 'PROD')),
+                'units' => isset($item['qty']) ? intval($item['qty']) : (isset($item['quantity']) ? intval($item['quantity']) : 1),
                 'selling_price' => isset($item['price']) ? floatval($item['price']) : 199.0
             );
         }
@@ -68,34 +73,34 @@ function gbh_shiprocket_create_order($order_id) {
     $pickup_loc = GBH_SHIPROCKET_PICKUP_LOCATION;
 
     $payload = array(
-        'order_id'              => 'GBH-' . $order_id,
-        'order_date'            => date('Y-m-d H:i'),
-        'pickup_location'       => $pickup_loc,
+        'order_id' => 'GBH-' . $order_id,
+        'order_date' => date('Y-m-d H:i'),
+        'pickup_location' => $pickup_loc,
         'billing_customer_name' => $customer_name ? $customer_name : 'Customer',
-        'billing_last_name'     => '',
-        'billing_address'       => $shipping_address ? $shipping_address : 'Jaipur',
-        'billing_city'          => $city ? $city : 'Jaipur',
-        'billing_pincode'       => $pincode ? $pincode : '302001',
-        'billing_state'         => 'Rajasthan',
-        'billing_country'       => 'India',
-        'billing_email'         => $customer_email ? $customer_email : 'customer@gardenbaskethubb.com',
-        'billing_phone'         => $customer_phone ? $customer_phone : '9876543210',
-        'shipping_is_billing'   => true,
-        'order_items'           => $order_items_payload,
-        'payment_method'        => (strtolower($payment_method) === 'cod') ? 'COD' : 'Prepaid',
-        'sub_total'             => floatval($total),
-        'length'                => 15,
-        'width'                 => 15,
-        'height'                => 15,
-        'weight'                => 0.5
+        'billing_last_name' => '',
+        'billing_address' => $shipping_address ? $shipping_address : 'Jaipur',
+        'billing_city' => $city ? $city : 'Jaipur',
+        'billing_pincode' => $pincode ? $pincode : '302001',
+        'billing_state' => 'Rajasthan',
+        'billing_country' => 'India',
+        'billing_email' => $customer_email ? $customer_email : 'customer@gardenbaskethubb.com',
+        'billing_phone' => $customer_phone ? $customer_phone : '9876543210',
+        'shipping_is_billing' => true,
+        'order_items' => $order_items_payload,
+        'payment_method' => (strtolower($payment_method) === 'cod') ? 'COD' : 'Prepaid',
+        'sub_total' => floatval($total),
+        'length' => 15,
+        'width' => 15,
+        'height' => 15,
+        'weight' => 0.5
     );
 
     $response = wp_remote_post('https://apiv2.shiprocket.in/v1/external/orders/create/adhoc', array(
         'headers' => array(
             'Authorization' => 'Bearer ' . $token,
-            'Content-Type'  => 'application/json'
+            'Content-Type' => 'application/json'
         ),
-        'body'    => json_encode($payload),
+        'body' => json_encode($payload),
         'timeout' => 20
     ));
 

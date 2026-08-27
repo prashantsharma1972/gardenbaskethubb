@@ -4,92 +4,95 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 // 1. Register Custom Post Types & Taxonomies
-function gbh_register_cpts_and_taxonomies() {
+function gbh_register_cpts_and_taxonomies()
+{
     // CPT: Products
     register_post_type('product', array(
         'labels' => array(
-            'name'          => 'Products',
+            'name' => 'Products',
             'singular_name' => 'Product',
-            'add_new_item'  => 'Add New Product',
-            'edit_item'     => 'Edit Product',
+            'add_new_item' => 'Add New Product',
+            'edit_item' => 'Edit Product',
         ),
-        'public'       => true,
-        'has_archive'  => true,
-        'rewrite'      => array('slug' => 'shop'),
-        'supports'     => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
-        'menu_icon'    => 'dashicons-cart',
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'shop'),
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'menu_icon' => 'dashicons-cart',
         'show_in_rest' => true,
     ));
 
     // Taxonomy: Product Categories
     register_taxonomy('product_cat', 'product', array(
         'labels' => array(
-            'name'          => 'Product Categories',
+            'name' => 'Product Categories',
             'singular_name' => 'Product Category',
         ),
         'hierarchical' => true,
-        'rewrite'      => array('slug' => 'product-category'),
+        'rewrite' => array('slug' => 'product-category'),
         'show_in_rest' => true,
     ));
 
     // Taxonomy: Sowing Seasons
     register_taxonomy('product_season', 'product', array(
         'labels' => array(
-            'name'          => 'Sowing Seasons',
+            'name' => 'Sowing Seasons',
             'singular_name' => 'Season',
         ),
         'hierarchical' => true,
-        'rewrite'      => array('slug' => 'season'),
+        'rewrite' => array('slug' => 'season'),
         'show_in_rest' => true,
     ));
 
     // CPT: Gardening Reels
     register_post_type('reels', array(
         'labels' => array(
-            'name'          => 'Gardening Reels',
+            'name' => 'Gardening Reels',
             'singular_name' => 'Reel',
-            'add_new_item'  => 'Add New Reel',
-            'edit_item'     => 'Edit Reel',
+            'add_new_item' => 'Add New Reel',
+            'edit_item' => 'Edit Reel',
         ),
-        'public'       => true,
-        'has_archive'  => true,
-        'rewrite'      => array('slug' => 'reels'),
-        'supports'     => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
-        'menu_icon'    => 'dashicons-video-alt3',
+        'public' => true,
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'reels'),
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'menu_icon' => 'dashicons-video-alt3',
         'show_in_rest' => true,
     ));
 
     // Taxonomy: Reel Category
     register_taxonomy('reel_cat', 'reels', array(
         'labels' => array(
-            'name'          => 'Reel Categories',
+            'name' => 'Reel Categories',
             'singular_name' => 'Reel Category',
         ),
         'hierarchical' => true,
-        'rewrite'      => array('slug' => 'reel-category'),
+        'rewrite' => array('slug' => 'reel-category'),
         'show_in_rest' => true,
     ));
 
     // CPT: GBH Store Orders
     register_post_type('gbh_order', array(
         'labels' => array(
-            'name'          => 'Store Orders',
+            'name' => 'Store Orders',
             'singular_name' => 'Order',
         ),
-        'public'       => false,
-        'show_ui'      => true,
+        'public' => false,
+        'show_ui' => true,
         'show_in_menu' => true,
-        'supports'     => array('title', 'editor', 'custom-fields'),
-        'menu_icon'    => 'dashicons-clipboard',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'menu_icon' => 'dashicons-clipboard',
     ));
 }
 add_action('init', 'gbh_register_cpts_and_taxonomies');
 
 // 2. Automatic Required Pages Creator
-function gbh_create_required_wp_pages() {
+function gbh_create_required_wp_pages()
+{
     $pages = array(
         'shop' => array('title' => 'Shop All Products', 'template' => 'archive-product.php'),
         'reels' => array('title' => 'Gardening Reels', 'template' => 'archive-reels.php'),
@@ -108,10 +111,10 @@ function gbh_create_required_wp_pages() {
         $existing = get_page_by_path($slug);
         if (!$existing) {
             $page_id = wp_insert_post(array(
-                'post_type'    => 'page',
-                'post_title'   => $data['title'],
-                'post_name'    => $slug,
-                'post_status'  => 'publish',
+                'post_type' => 'page',
+                'post_title' => $data['title'],
+                'post_name' => $slug,
+                'post_status' => 'publish',
                 'post_content' => '',
             ));
             if ($page_id && !is_wp_error($page_id)) {
@@ -123,24 +126,27 @@ function gbh_create_required_wp_pages() {
 add_action('init', 'gbh_create_required_wp_pages', 5);
 
 // 3. Dynamic URL Resolver Helper
-function gbh_get_page_url($slug) {
+function gbh_get_page_url($slug)
+{
     $page = get_page_by_path($slug);
     if ($page) {
         return get_permalink($page->ID);
     }
-    
+
     // Check if pretty permalinks are enabled
     $permalink_structure = get_option('permalink_structure');
     if (!empty($permalink_structure)) {
         return home_url('/' . trim($slug, '/') . '/');
     }
-    
+
     return home_url('/?page_name=' . urlencode($slug));
 }
 
 // 4. Template Redirect Override Guard
-function gbh_template_redirect_override($template) {
-    if (is_admin()) return $template;
+function gbh_template_redirect_override($template)
+{
+    if (is_admin())
+        return $template;
 
     $req_uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
     $path = trim(parse_url($req_uri, PHP_URL_PATH), '/');
@@ -162,7 +168,8 @@ function gbh_template_redirect_override($template) {
 
     if (isset($route_map[$path])) {
         $file = get_template_directory() . '/' . $route_map[$path];
-        if (file_exists($file)) return $file;
+        if (file_exists($file))
+            return $file;
     }
 
     if (isset($_GET['post_type'])) {
@@ -179,7 +186,8 @@ function gbh_template_redirect_override($template) {
 add_filter('template_include', 'gbh_template_redirect_override', 99);
 
 // 5. Automatic Sample Content Seeder
-function gbh_seed_sample_content() {
+function gbh_seed_sample_content()
+{
     $prod_count = wp_count_posts('product');
     if (isset($prod_count->publish) && intval($prod_count->publish) === 0) {
         $sample_products = array(

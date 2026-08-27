@@ -4,12 +4,14 @@
  * Garden Basket Hub
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 /**
  * Register Sitemap Rewrite Rule
  */
-function gbh_register_sitemap_rewrite() {
+function gbh_register_sitemap_rewrite()
+{
     add_rewrite_rule('^sitemap\.xml$', 'index.php?gbh_sitemap=1', 'top');
 }
 add_action('init', 'gbh_register_sitemap_rewrite');
@@ -17,7 +19,8 @@ add_action('init', 'gbh_register_sitemap_rewrite');
 /**
  * Register Custom Query Variable
  */
-function gbh_add_sitemap_query_var($vars) {
+function gbh_add_sitemap_query_var($vars)
+{
     $vars[] = 'gbh_sitemap';
     return $vars;
 }
@@ -26,7 +29,8 @@ add_filter('query_vars', 'gbh_add_sitemap_query_var');
 /**
  * Output Dynamic XML Sitemap
  */
-function gbh_render_xml_sitemap() {
+function gbh_render_xml_sitemap()
+{
     if (get_query_var('gbh_sitemap')) {
         header('Content-Type: application/xml; charset=utf-8');
         echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
@@ -45,10 +49,10 @@ function gbh_render_xml_sitemap() {
         $prods = get_posts(array('post_type' => 'product', 'posts_per_page' => 100, 'post_status' => 'publish'));
         foreach ($prods as $p) {
             $urls[] = array(
-                'url'        => get_permalink($p->ID),
-                'priority'   => '0.8',
+                'url' => get_permalink($p->ID),
+                'priority' => '0.8',
                 'changefreq' => 'weekly',
-                'lastmod'    => get_the_modified_date('c', $p->ID)
+                'lastmod' => get_the_modified_date('c', $p->ID)
             );
         }
 
@@ -56,10 +60,10 @@ function gbh_render_xml_sitemap() {
         $blogs = get_posts(array('post_type' => 'post', 'posts_per_page' => 100, 'post_status' => 'publish'));
         foreach ($blogs as $b) {
             $urls[] = array(
-                'url'        => get_permalink($b->ID),
-                'priority'   => '0.7',
+                'url' => get_permalink($b->ID),
+                'priority' => '0.7',
                 'changefreq' => 'weekly',
-                'lastmod'    => get_the_modified_date('c', $b->ID)
+                'lastmod' => get_the_modified_date('c', $b->ID)
             );
         }
 
@@ -83,7 +87,8 @@ add_action('template_redirect', 'gbh_render_xml_sitemap');
 /**
  * Custom Robots.txt Directives Filter
  */
-function gbh_custom_robots_txt($output, $public) {
+function gbh_custom_robots_txt($output, $public)
+{
     $sitemap_url = home_url('/sitemap.xml');
     $robots = "User-agent: *\n";
     $robots .= "Allow: /\n";

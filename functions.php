@@ -12,7 +12,74 @@ define('GBH_THEME_DIR', get_template_directory());
 define('GBH_THEME_URI', get_template_directory_uri());
 
 /* ============================================================
-   1. API & CREDENTIALS CONFIGURATION
+   1. DISABLE UNUSED WP FEATURES (from s2-labs)
+   ============================================================ */
+// Disable WordPress Emojis
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
+
+// Disable WordPress Embeds and unused link tags
+remove_action('wp_head', 'wp_oembed_add_discovery_links');
+remove_action('wp_head', 'wp_oembed_add_host_js');
+remove_action('wp_head', 'rest_output_link_wp_head');
+remove_action('wp_head', 'rel_canonical');
+remove_action('wp_head', 'wp_shortlink_wp_head', 10);
+remove_action('wp_head', 'rel_shortlink');
+
+// Disable Dashicons
+function remove_dashicons_styles() {
+    wp_deregister_style('dashicons');
+}
+add_action('wp_print_styles', 'remove_dashicons_styles', 100);
+
+function add_image_insert_override($size) {
+    unset($size["thumbnail"]);
+    unset($size["medium"]);
+    unset($size["medium_large"]);
+    unset($size["large"]);
+    unset($size["1536x1536"]);
+    unset($size["2048x2048"]);
+    return $size;
+}
+add_action("intermediate_image_sizes_advanced", "add_image_insert_override");
+
+// Block endpoints for public users only on wp-json requests
+function allow_specific_rest_api_endpoints($endpoints) {
+    if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false) {
+        $allowed_endpoints = [
+            '/wp/v2/posts',
+            '/wp/v2/tags',
+            '/wp/v2/pages',
+            '/wp/v2/products',
+            '/wp/v2/gardening-reels',
+        ];
+        foreach ($endpoints as $route => $handlers) {
+            $route_match = false;
+            foreach ($allowed_endpoints as $allowed) {
+                if (strpos($route, $allowed) === 0) {
+                    $route_match = true;
+                    break;
+                }
+            }
+            if (!$route_match) {
+                unset($endpoints[$route]);
+            }
+        }
+    }
+    return $endpoints;
+}
+add_filter('rest_endpoints', 'allow_specific_rest_api_endpoints');
+
+function disable_search_redirect() {
+    if (is_search() && !empty($_GET['s'])) {
+        wp_redirect(home_url('/404'));
+        exit();
+    }
+}
+add_action('template_redirect', 'disable_search_redirect');
+
+/* ============================================================
+   2. API & CREDENTIALS CONFIGURATION
    ============================================================ */
 // Razorpay Credentials (Plug keys directly here when received)
 if (!defined('GBH_RAZORPAY_KEY_ID'))
@@ -61,6 +128,15 @@ function gbh_theme_setup()
     add_image_size('gbh-thumb', 200, 200, true);
 }
 add_action('after_setup_theme', 'gbh_theme_setup');
+
+// Register Custom Menus
+function gbh_register_menus() {
+    register_nav_menus(array(
+        'primary-menu' => __('Primary Menu', 'gardenbaskethubb'),
+        'footer-menu' => __('Footer Menu', 'gardenbaskethubb')
+    ));
+}
+add_action('init', 'gbh_register_menus');
 
 // Disable WordPress Admin Bar for clean storefront design
 add_filter('show_admin_bar', '__return_false');

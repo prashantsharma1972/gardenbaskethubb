@@ -40,7 +40,8 @@
     <div class="footer-products footer-col">
       <span class="footer--heading">Nursery Contact</span>
       <ul class="service-list">
-        <li><a href="https://wa.me/919876543210" target="_blank" class="footer-products--link">WhatsApp Direct Help</a></li>
+        <li><a href="https://wa.me/919876543210" target="_blank" class="footer-products--link">WhatsApp Direct Help</a>
+        </li>
         <li><a href="mailto:hello@gardenbaskethub.in" class="footer-products--link">hello@gardenbaskethub.in</a></li>
         <li><a href="/contact-us/" class="footer-products--link">Mansarovar Nursery, Jaipur, RJ</a></li>
       </ul>

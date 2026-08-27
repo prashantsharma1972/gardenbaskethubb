@@ -3,22 +3,20 @@
 $cart_data = gbh_get_cart_data();
 $cart_count = $cart_data['total_count'];
 ?>
-    <title><?php wp_title('|', true, 'right'); ?></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script>
+    function loadJS(FILE_URL, defer = true) {
+        let scriptEle = document.createElement("script");
+        scriptEle.setAttribute("src", FILE_URL);
+        scriptEle.setAttribute("type", "text/javascript");
+        scriptEle.setAttribute("defer", defer);
+        document.head.appendChild(scriptEle);
+    }
+</script>
 
-    <script>
-        function loadJS(FILE_URL, defer = true) {
-            let scriptEle = document.createElement("script");
-            scriptEle.setAttribute("src", FILE_URL);
-            scriptEle.setAttribute("type", "text/javascript");
-            scriptEle.setAttribute("defer", defer);
-            document.head.appendChild(scriptEle);
-        }
-    </script>
-
-    <?php wp_head(); ?>
+<?php wp_head(); ?>
 
 </head>
 
@@ -43,8 +41,7 @@ $cart_count = $cart_data['total_count'];
                             <li><a href="/blog/">Blog</a></li>
                             <li><a href="/about-us/">About Us</a></li>
                             <li>
-                                <a href="/cart/" title="Shopping Bag"
-                                    aria-label="Shopping Bag">
+                                <a href="/cart/" title="Shopping Bag" aria-label="Shopping Bag">
                                     🛒 <span class="cart-count-badge"><?php echo esc_html($cart_count); ?></span>
                                 </a>
                             </li>

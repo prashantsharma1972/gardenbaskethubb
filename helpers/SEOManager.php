@@ -3,21 +3,25 @@
  * Garden Basket Hub — Professional SEO, Sitemap & Robots.txt Manager
  */
 
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
-class GBH_SEO_Manager {
+class GBH_SEO_Manager
+{
 
-    public static function init() {
+    public static function init()
+    {
         add_action('wp_head', array(__CLASS__, 'inject_meta_tags'), 1);
         add_action('do_robotstxt', array(__CLASS__, 'generate_robots_txt'), 10, 2);
-        
+
         // Add rewrite rule for dynamic sitemap if desired
         // Or generate a static sitemap.xml in root
     }
 
-    public static function inject_meta_tags() {
+    public static function inject_meta_tags()
+    {
         global $post;
-        
+
         $title = get_bloginfo('name');
         $desc = get_bloginfo('description');
         $url = home_url();
@@ -32,25 +36,26 @@ class GBH_SEO_Manager {
             }
         }
 
-        echo '<!-- GBH SEO Manager -->'."\n";
-        echo '<meta name="description" content="'.esc_attr($desc).'">'."\n";
-        echo '<meta property="og:title" content="'.esc_attr($title).'">'."\n";
-        echo '<meta property="og:description" content="'.esc_attr($desc).'">'."\n";
-        echo '<meta property="og:url" content="'.esc_url($url).'">'."\n";
-        echo '<meta property="og:type" content="website">'."\n";
-        echo '<meta property="og:image" content="'.esc_url($image).'">'."\n";
-        echo '<meta name="twitter:card" content="summary_large_image">'."\n";
-        echo '<!-- /GBH SEO Manager -->'."\n";
+        echo '<!-- GBH SEO Manager -->' . "\n";
+        echo '<meta name="description" content="' . esc_attr($desc) . '">' . "\n";
+        echo '<meta property="og:title" content="' . esc_attr($title) . '">' . "\n";
+        echo '<meta property="og:description" content="' . esc_attr($desc) . '">' . "\n";
+        echo '<meta property="og:url" content="' . esc_url($url) . '">' . "\n";
+        echo '<meta property="og:type" content="website">' . "\n";
+        echo '<meta property="og:image" content="' . esc_url($image) . '">' . "\n";
+        echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+        echo '<!-- /GBH SEO Manager -->' . "\n";
     }
 
-    public static function generate_robots_txt($output, $public) {
+    public static function generate_robots_txt($output, $public)
+    {
         $site_url = home_url();
-        
+
         $custom_robots = "User-agent: *\n";
         $custom_robots .= "Disallow: /wp-admin/\n";
         $custom_robots .= "Allow: /wp-admin/admin-ajax.php\n";
         $custom_robots .= "Sitemap: {$site_url}/sitemap.xml\n";
-        
+
         return $custom_robots;
     }
 }

@@ -10,22 +10,89 @@
     background: #fff;
     border-radius: 16px;
     padding: 48px 32px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
-.thankyou-section { padding-top: 160px; min-height: 70vh; display: flex; align-items: center; justify-content: center; }
-.thankyou-icon { font-size: 4rem; margin-bottom: 12px; }
-.thankyou-heading { font-family: var(--f-display); font-size: 2.4rem; color: var(--soil); margin-bottom: 12px; }
-.thankyou-paragraph { font-size: 1.05rem; color: var(--clay); line-height: 1.7; margin-bottom: 28px; }
-.thankyou-details-card { background: var(--white); padding: 24px; border-radius: 4px; text-align: left; margin-bottom: 32px; border: 1px solid rgba(44,26,14,0.1); }
-.thankyou-details-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
-.thankyou-details-label { font-family: var(--f-mono); font-size: 0.75rem; color: var(--clay); text-transform: uppercase; }
-.thankyou-details-val { font-size: 0.9rem; color: var(--soil); }
-.thankyou-details-val-leaf { font-size: 0.9rem; color: var(--leaf); font-weight: bold; }
-.total-row { border-top: 1px solid rgba(44,26,14,0.08); padding-top: 12px; }
-.thankyou-details-val-total { font-family: var(--f-display); font-size: 1.2rem; color: var(--soil); font-weight: bold; }
-.thankyou-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-.btn-leaf { background: var(--leaf); }
+.thankyou-section {
+    padding-top: 160px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.thankyou-icon {
+    font-size: 4rem;
+    margin-bottom: 12px;
+}
 
+.thankyou-heading {
+    font-family: var(--f-display);
+    font-size: 2.4rem;
+    color: var(--soil);
+    margin-bottom: 12px;
+}
+
+.thankyou-paragraph {
+    font-size: 1.05rem;
+    color: var(--clay);
+    line-height: 1.7;
+    margin-bottom: 28px;
+}
+
+.thankyou-details-card {
+    background: var(--white);
+    padding: 24px;
+    border-radius: 4px;
+    text-align: left;
+    margin-bottom: 32px;
+    border: 1px solid rgba(44, 26, 14, 0.1);
+}
+
+.thankyou-details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.thankyou-details-label {
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    color: var(--clay);
+    text-transform: uppercase;
+}
+
+.thankyou-details-val {
+    font-size: 0.9rem;
+    color: var(--soil);
+}
+
+.thankyou-details-val-leaf {
+    font-size: 0.9rem;
+    color: var(--leaf);
+    font-weight: bold;
+}
+
+.total-row {
+    border-top: 1px solid rgba(44, 26, 14, 0.08);
+    padding-top: 12px;
+}
+
+.thankyou-details-val-total {
+    font-family: var(--f-display);
+    font-size: 1.2rem;
+    color: var(--soil);
+    font-weight: bold;
+}
+
+.thankyou-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-leaf {
+    background: var(--leaf);
+}

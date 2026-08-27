@@ -1,82 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
-    <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
-    <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.bundle.js"></script>
-    <?php get_header(); ?>
-<main class="main--container">
 
-<!-- ============================================================
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preload" as="style" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
+  <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.css">
+  <script type="module" defer fetchpriority="low"
+    src="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.bundle.js"></script>
+  <?php get_header(); ?>
+  <main class="main--container">
+
+    <!-- ============================================================
      CONTACT HERO
      ============================================================ -->
-<section class="page-hero">
-  <p class="breadcrumb"><a href="/">Home</a> · Contact</p>
-  <h1>Say <em>hello</em>.</h1>
-  <p>Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
-</section>
+    <section class="page-hero">
+      <p class="breadcrumb"><a href="/">Home</a> · Contact</p>
+      <h1>Say <em>hello</em>.</h1>
+      <p>Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
+    </section>
 
-<!-- ============================================================
+    <!-- ============================================================
      CONTACT LAYOUT
      ============================================================ -->
-<section>
-  <div class="contact-layout">
-    <div class="contact-info">
-      <h2>Visit the garden</h2>
-      <p>Our nursery is open every day except Tuesdays. Come say hi, pet the shop cat, and pick your seedlings in
-        person.</p>
+    <section>
+      <div class="contact-layout">
+        <div class="contact-info">
+          <h2>Visit the garden</h2>
+          <p>Our nursery is open every day except Tuesdays. Come say hi, pet the shop cat, and pick your seedlings in
+            person.</p>
 
-      <div class="contact-row">
-        <span class="ic">📍</span>
-        <div><strong>Nursery</strong><span>Jaipur, Rajasthan · 302001</span></div>
-      </div>
-      <div class="contact-row">
-        <span class="ic">💬</span>
-        <div><strong>WhatsApp</strong><span>+91 98765 43210</span></div>
-      </div>
-      <div class="contact-row">
-        <span class="ic">📧</span>
-        <div><strong>Email</strong><span>hello@gardenbaskethub.in</span></div>
-      </div>
-      <div class="contact-row">
-        <span class="ic">📷</span>
-        <div><strong>Instagram</strong><span>@gardenbaskethub</span></div>
-      </div>
-      <div class="contact-row">
-        <span class="ic">🕒</span>
-        <div><strong>Hours</strong><span>Wed – Mon · 9 AM to 7 PM</span></div>
-      </div>
-    </div>
+          <div class="contact-row">
+            <span class="ic">📍</span>
+            <div><strong>Nursery</strong><span>Jaipur, Rajasthan · 302001</span></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic">💬</span>
+            <div><strong>WhatsApp</strong><span>+91 98765 43210</span></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic">📧</span>
+            <div><strong>Email</strong><span>hello@gardenbaskethub.in</span></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic">📷</span>
+            <div><strong>Instagram</strong><span>@gardenbaskethub</span></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic">🕒</span>
+            <div><strong>Hours</strong><span>Wed – Mon · 9 AM to 7 PM</span></div>
+          </div>
+        </div>
 
-    <form class="contact-form" action="#" method="POST">
-      <div class="form-group">
-        <label>Your Name</label>
-        <input type="text" placeholder="What should we call you?" required>
+        <form class="contact-form" action="#" method="POST">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="What should we call you?" required>
+          </div>
+          <div class="form-group">
+            <label>Email or WhatsApp</label>
+            <input type="text" placeholder="So we can reply" required>
+          </div>
+          <div class="form-group">
+            <label>Topic</label>
+            <select>
+              <option>Plant question</option>
+              <option>Order issue</option>
+              <option>Wholesale enquiry</option>
+              <option>Partnership / collab</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us about your garden..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary contact-btn-full">Send Message</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label>Email or WhatsApp</label>
-        <input type="text" placeholder="So we can reply" required>
-      </div>
-      <div class="form-group">
-        <label>Topic</label>
-        <select>
-          <option>Plant question</option>
-          <option>Order issue</option>
-          <option>Wholesale enquiry</option>
-          <option>Partnership / collab</option>
-          <option>Something else</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Message</label>
-        <textarea placeholder="Tell us about your garden..."></textarea>
-      </div>
-      <button type="submit" class="btn-primary contact-btn-full">Send Message</button>
-    </form>
-  </div>
-</section>
+    </section>
 
-</main>
-<?php get_footer(); ?>
+  </main>
+  <?php get_footer(); ?>

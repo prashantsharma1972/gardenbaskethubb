@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /wp-admin/
-Disallow: /cart/
-Disallow: /checkout/
-Disallow: /thank-you/
-
-Sitemap: https://gardenbaskethubb.com/sitemap.xml
