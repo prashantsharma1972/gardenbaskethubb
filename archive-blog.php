@@ -26,8 +26,40 @@
     <!-- ============================================================
      BLOG POSTS CATALOG GRID
      ============================================================ -->
-    <section>
-      <div class="about-story-cards">
+    <section class="blogs">
+      <div class="filter-section">
+        <div class="filters-type-with-search">
+          <div data-type="category" class="filter-type">
+            <span class="icons">
+              <svg class="add"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#add'></use></svg>
+              <svg class="subtract"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#hyphen'></use></svg>
+            </span>
+            Blog Category
+          </div>
+          <div class="search">
+            <svg class="search__icon"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#search'></use></svg>
+            <input placeholder="Search guides..." type="text" id="search-blogs">
+          </div>
+        </div>
+        <div class="filters-container">
+          <div data-type="category" class="filter-container">
+            <?php
+            $blog_cats = get_categories(array('hide_empty' => false));
+            if (!empty($blog_cats) && !is_wp_error($blog_cats)) {
+              foreach ($blog_cats as $cat) {
+                echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
+              }
+            }
+            ?>
+          </div>
+          <div class="filter-btns">
+            <button class="clear">Clear All</button>
+            <button class="results">Show Results</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-story-cards" id="gbh-blog-grid">
         <?php
         // Custom query to fetch posts (blog entries) if not using default loop
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -53,7 +85,11 @@
             $categories = get_the_category($b_id);
             $cat_name = (!empty($categories)) ? $categories[0]->name : 'Gardening';
             ?>
-            <article class="product-card featured-blog-card" data-permalink="<?php the_permalink(); ?>"
+            <article class="product-card featured-blog-card" 
+              data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
+              data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>"
+              data-date="<?php echo get_the_time('U', $b_id); ?>"
+              data-permalink="<?php the_permalink(); ?>"
               onclick="window.location.href='<?php the_permalink(); ?>';">
               <div>
                 <div class="product-img blog-img-wrap">

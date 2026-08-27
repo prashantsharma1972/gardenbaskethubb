@@ -38,6 +38,10 @@
             </span>
             Reel Tag
           </div>
+          <div class="search">
+            <svg class="search__icon"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#search'></use></svg>
+            <input placeholder="Search reels..." type="text" id="search-reels">
+          </div>
         </div>
         <div class="filters-container">
           <div data-type="category" class="filter-container">
@@ -67,10 +71,17 @@
             if (!$thumbnail && function_exists('get_field')) {
                 $thumbnail = get_field('thumbnail_image', $r_id);
             }
+            
+            $terms = get_the_terms($r_id, 'reels_tag');
+            $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Tutorial';
             ?>
             
             <!-- We add the "product-card" base to inherit standard card look if desired, or rely purely on .reel-card -->
-            <div class="resource-data product-card reel-card" data-reel-id="<?php echo esc_attr($r_id); ?>" data-video-url="<?php echo esc_url($video_url); ?>">
+            <div class="resource-data product-card reel-card" 
+              data-reel-id="<?php echo esc_attr($r_id); ?>" 
+              data-video-url="<?php echo esc_url($video_url); ?>"
+              data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
+              data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>">
               
               <div class="blog-feature-image product-img">
                 <a href="<?php the_permalink(); ?>" class="product-img-link play-reel-btn">

@@ -96,8 +96,16 @@
             $discount_label = get_field('discount_label');
             $image_url = get_field('product_image') ?: get_the_post_thumbnail_url($p_id, 'gbh-card');
             $image_alt = get_field('product_image_alt') ?: get_the_title();
+            
+            $terms = get_the_terms($p_id, 'product_cat');
+            $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Gardening';
             ?>
-            <div class="resource-data product-card" data-product-id="<?php echo esc_attr($p_id); ?>"
+            <div class="resource-data product-card" 
+              data-product-id="<?php echo esc_attr($p_id); ?>"
+              data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
+              data-title="<?php echo esc_attr(strtolower($title)); ?>"
+              data-price="<?php echo esc_attr($offer_price ? $offer_price : ($price ? $price : 199)); ?>"
+              data-date="<?php echo get_the_time('U', $p_id); ?>"
               data-permalink="<?php the_permalink(); ?>">
               <div class="blog-feature-image product-img">
                 <a href="<?php the_permalink(); ?>" class="product-img-link">

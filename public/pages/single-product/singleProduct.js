@@ -5,6 +5,53 @@ import './singleProduct.scss';
 (function($) {
     'use strict';
 
+    // 1. AJAX Add to Cart / Buy Now Button
+    $(document).on('click', '.add-btn, .btn-add-to-cart, .btn-buy-now', function(e) {
+        e.preventDefault();
+        let $btn = $(this);
+        let isBuyNow = $btn.hasClass('btn-buy-now') || $btn.text().trim().toLowerCase() === 'buy now';
+        let productId = $btn.data('product-id') || $btn.closest('[data-product-id]').data('product-id');
+        let quantity = 1; 
+        let variant = $('.opt-pill.selected').text().trim() || '';
+
+        if (!productId) {
+            if(window.gbh && window.gbh.showToast) window.gbh.showToast('Please select a valid product', 'error');
+            return;
+        }
+
+        $btn.prop('disabled', true).css('opacity', '0.7').text('Adding...');
+
+        $.ajax({
+            url: (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.ajax_url : '/wp-admin/admin-ajax.php',
+            type: 'POST',
+            data: {
+                action: 'gbh_add_to_cart',
+                nonce: (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.nonce : '',
+                product_id: productId,
+                quantity: quantity,
+                variant: variant
+            },
+            success: function(response) {
+                $btn.prop('disabled', false).css('opacity', '1').text('Add to bag');
+                if (response.success) {
+                    if(window.gbh && window.gbh.updateCartDOM) window.gbh.updateCartDOM(response.data.cart);
+                    if (isBuyNow) {
+                        window.location.href = (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.checkout_url : '/checkout';
+                    } else {
+                        if(window.gbh && window.gbh.showToast) window.gbh.showToast(response.data.message, 'success');
+                        else alert("Added to cart!");
+                    }
+                } else {
+                    if(window.gbh && window.gbh.showToast) window.gbh.showToast(response.data.message || 'Error adding to cart', 'error');
+                }
+            },
+            error: function() {
+                $btn.prop('disabled', false).css('opacity', '1').text('Add to bag');
+                if(window.gbh && window.gbh.showToast) window.gbh.showToast('Network error. Please try again.', 'error');
+            }
+        });
+    });
+
     // 6. Check Pincode Delivery
     $(document).on('click', '.pincode-check button', function(e) {
         e.preventDefault();
