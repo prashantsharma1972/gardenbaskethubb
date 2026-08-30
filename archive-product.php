@@ -85,9 +85,18 @@
           </div>
 
           <div class="product-grid" id="gbh-product-grid">
-            <?php if (have_posts()): ?>
-              <?php while (have_posts()):
-                the_post();
+            <?php
+            $paged = (get_query_var('paged')) ? get_query_var('paged') : ((get_query_var('page')) ? get_query_var('page') : 1);
+            $product_args = array(
+                'post_type' => 'product',
+                'posts_per_page' => 12,
+                'paged' => $paged,
+            );
+            $products_query = new WP_Query($product_args);
+            
+            if ($products_query->have_posts()):
+              while ($products_query->have_posts()):
+                $products_query->the_post();
                 $p_id = get_the_ID();
                 $title = get_field('product_title') ?: get_the_title();
                 $price = get_field('product_price');

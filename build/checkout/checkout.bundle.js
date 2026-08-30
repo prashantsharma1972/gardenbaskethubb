@@ -1,1 +1,335 @@
-(()=>{var e={236:()=>{!function(e){"use strict";e(document).on("click","#gbh-mobile-toggle",(function(t){t.preventDefault(),e("#gbh-mobile-drawer").addClass("active"),e("#gbh-mobile-overlay").addClass("active"),e("body").css("overflow","hidden")})),e(document).on("click","#gbh-mobile-close, #gbh-mobile-overlay",(function(t){t.preventDefault(),e("#gbh-mobile-drawer").removeClass("active"),e("#gbh-mobile-overlay").removeClass("active"),e("body").css("overflow","")})),e(document).on("submit",".contact-form",(function(t){t.preventDefault();let a=e(this),o=a.find('button[type="submit"]');o.prop("disabled",!0).text("Sending message..."),setTimeout((function(){o.prop("disabled",!1).text("Send Message"),a[0].reset(),window.gbh.showToast("Thank you! Your message has been sent to our Jaipur nursery team.","success")}),800)})),e(document).on("click",".product-card",(function(t){if(e(t.target).closest(".add-btn, .btn-buy-now, input, button, select").length>0)return;let a=e(this).attr("data-permalink")||e(this).find(".product-name a").attr("href");a&&"#"!==a&&""!==a&&(window.location.href=a)}))}(jQuery)},984:()=>{!function(e){"use strict";function t(t){let a=e(".cart-count-badge");a.length&&a.text(t)}window.gbh=window.gbh||{},window.gbh.showToast=function(t,a="success"){let o=e("#gbh-toast-notification");o.length||(o=e('<div id="gbh-toast-notification" class="gbh-toast"></div>').appendTo("body"));let n="success"===a?"🌱":"⚠️";o.html("<span>"+n+"</span> <span>"+t+"</span>").addClass("show"),setTimeout((function(){o.removeClass("show")}),3500)},window.gbh.updateCartCountBadge=t,window.gbh.updateCartDOM=function(a){t(a.total_count),e(".summary-cart-count").text(a.total_count),e(".summary-subtotal").text(a.subtotal_formatted),e(".summary-delivery").text(a.delivery_fee_formatted),e(".summary-total").text(a.total_formatted),a.discount>0&&e(".summary-discount").text(a.discount_formatted),0===a.total_count&&e(".cart-layout").length&&e(".cart-layout").fadeOut(300,(function(){e(this).replaceWith(`\n                    <div class="empty-cart-view-container">\n                        <div class="empty-icon">🛒 🌿</div>\n                        <h2 class="empty-title">Your garden bag is empty</h2>\n                        <p class="empty-desc">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>\n                        <a href="${gbh_ajax_obj.cart_url.replace("/cart/","/shop/")}" class="btn-primary empty-btn">\n                            Explore Nursery Shop ➔\n                        </a>\n                    </div>\n                `)}))}}(jQuery)}},t={};function a(o){var n=t[o];if(void 0!==n)return n.exports;var r=t[o]={exports:{}};return e[o](r,r.exports,a),r.exports}a.n=e=>{var t=e&&e.__esModule?()=>e.default:()=>e;return a.d(t,{a:t}),t},a.d=(e,t)=>{for(var o in t)a.o(t,o)&&!a.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},a.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),(()=>{"use strict";var e;a(984),a(236),(e=jQuery)(document).on("click",".pay-option",(function(){e(".pay-option").removeClass("selected"),e(this).addClass("selected");let t=e(this).find(".label").text().trim();e("#payment_method_input").val(t)})),e(document).on("submit","#gbh-checkout-form",(function(t){t.preventDefault();let a=e(this),o=a.find('button[type="submit"], .btn-place-order'),n=e("#payment_method_input").val()||"UPI / Razorpay";o.prop("disabled",!0).text("Processing Order...");let r=function(t){let n=a.serializeArray();n.push({name:"action",value:"gbh_place_order"}),n.push({name:"nonce",value:gbh_ajax_obj.nonce}),t&&Array.isArray(t)&&t.forEach((function(e){n.push(e)})),e.ajax({url:gbh_ajax_obj.ajax_url,type:"POST",data:e.param(n),success:function(e){e.success?(window.gbh.showToast(e.data.message,"success"),setTimeout((function(){window.location.href=e.data.redirect_url}),1e3)):(o.prop("disabled",!1).text("Place Order"),window.gbh.showToast(e.data.message,"error"))},error:function(){o.prop("disabled",!1).text("Place Order"),window.gbh.showToast("Order processing failed. Please try again.","error")}})};-1!==n.indexOf("Razorpay")||-1!==n.indexOf("UPI")||-1!==n.indexOf("Partial")?e.ajax({url:gbh_ajax_obj.ajax_url,type:"POST",data:{action:"gbh_create_razorpay_order",nonce:gbh_ajax_obj.nonce},success:function(e){if(e.success&&"undefined"!=typeof Razorpay){let t={key:e.data.key_id,amount:e.data.amount,currency:"INR",name:"Garden Basket Hub",description:"Nursery Plants & Supplies Order",handler:function(e){r([{name:"razorpay_payment_id",value:e.razorpay_payment_id},{name:"razorpay_order_id",value:e.razorpay_order_id}])},prefill:{name:a.find('input[name="first_name"]').val()+" "+a.find('input[name="last_name"]').val(),email:a.find('input[name="email"]').val(),contact:a.find('input[name="phone"]').val()},theme:{color:"#3A6B35"},modal:{ondismiss:function(){o.prop("disabled",!1).text("Place Order"),window.gbh.showToast("Payment window closed. Order not placed.","warning")}}};new Razorpay(t).open()}else r([])},error:function(){r([])}}):r([])}))})()})();
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "../src-utilities/global.js":
+/*!**********************************!*\
+  !*** ../src-utilities/global.js ***!
+  \**********************************/
+/***/ (() => {
+
+(function ($) {
+  'use strict';
+
+  // 12. Mobile Menu Drawer Toggle
+  $(document).on('click', '#gbh-mobile-toggle', function (e) {
+    e.preventDefault();
+    $('#gbh-mobile-drawer').addClass('active');
+    $('#gbh-mobile-overlay').addClass('active');
+    $('body').css('overflow', 'hidden');
+  });
+  $(document).on('click', '#gbh-mobile-close, #gbh-mobile-overlay', function (e) {
+    e.preventDefault();
+    $('#gbh-mobile-drawer').removeClass('active');
+    $('#gbh-mobile-overlay').removeClass('active');
+    $('body').css('overflow', '');
+  });
+
+  // 15. Contact Form Handler
+  $(document).on('submit', '.contact-form', function (e) {
+    e.preventDefault();
+    let $form = $(this);
+    let $btn = $form.find('button[type="submit"]');
+    $btn.prop('disabled', true).text('Sending message...');
+    setTimeout(function () {
+      $btn.prop('disabled', false).text('Send Message');
+      $form[0].reset();
+      window.gbh.showToast('Thank you! Your message has been sent to our Jaipur nursery team.', 'success');
+    }, 800);
+  });
+
+  // 16. Product Card Single View Navigation
+  $(document).on('click', '.product-card', function (e) {
+    if ($(e.target).closest('.add-btn, .btn-buy-now, input, button, select').length > 0) {
+      return; // allow button actions without navigating
+    }
+    let permalink = $(this).attr('data-permalink') || $(this).find('.product-name a').attr('href');
+    if (permalink && permalink !== '#' && permalink !== '') {
+      window.location.href = permalink;
+    }
+  });
+})(jQuery);
+
+/***/ }),
+
+/***/ "../src-utilities/main.js":
+/*!********************************!*\
+  !*** ../src-utilities/main.js ***!
+  \********************************/
+/***/ (() => {
+
+(function ($) {
+  'use strict';
+
+  // Toast Notification Handler
+  function showToast(message, type = 'success') {
+    let $toast = $('#gbh-toast-notification');
+    if (!$toast.length) {
+      $toast = $('<div id="gbh-toast-notification" class="gbh-toast"></div>').appendTo('body');
+    }
+    let icon = type === 'success' ? '🌱' : '⚠️';
+    $toast.html('<span>' + icon + '</span> <span>' + message + '</span>').addClass('show');
+    setTimeout(function () {
+      $toast.removeClass('show');
+    }, 3500);
+  }
+
+  // Update Header Cart Count Badge
+  function updateCartCountBadge(count) {
+    let $badge = $('.cart-count-badge');
+    if ($badge.length) {
+      $badge.text(count);
+    }
+  }
+
+  // Dynamic Cart DOM Updater helper function
+  function updateCartDOM(cart) {
+    updateCartCountBadge(cart.total_count);
+    $('.summary-cart-count').text(cart.total_count);
+    $('.summary-subtotal').text(cart.subtotal_formatted);
+    $('.summary-delivery').text(cart.delivery_fee_formatted);
+    $('.summary-total').text(cart.total_formatted);
+    if (cart.discount > 0) {
+      $('.summary-discount').text(cart.discount_formatted);
+    }
+
+    // If cart is empty now, show empty view dynamically
+    if (cart.total_count === 0 && $('.cart-layout').length) {
+      $('.cart-layout').fadeOut(300, function () {
+        $(this).replaceWith(`
+                    <div class="empty-cart-view-container">
+                        <div class="empty-icon">🛒 🌿</div>
+                        <h2 class="empty-title">Your garden bag is empty</h2>
+                        <p class="empty-desc">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
+                        <a href="${gbh_ajax_obj.cart_url.replace('/cart/', '/shop/')}" class="btn-primary empty-btn">
+                            Explore Nursery Shop ➔
+                        </a>
+                    </div>
+                `);
+      });
+    }
+  }
+
+  // Expose globally
+  window.gbh = window.gbh || {};
+  window.gbh.showToast = showToast;
+  window.gbh.updateCartCountBadge = updateCartCountBadge;
+  window.gbh.updateCartDOM = updateCartDOM;
+})(jQuery);
+
+/***/ }),
+
+/***/ "./checkout/checkout.scss":
+/*!********************************!*\
+  !*** ./checkout/checkout.scss ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************************!*\
+  !*** ./checkout/checkout.js ***!
+  \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _src_utilities_main_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../src-utilities/main.js */ "../src-utilities/main.js");
+/* harmony import */ var _src_utilities_main_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_src_utilities_main_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _src_utilities_global_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../src-utilities/global.js */ "../src-utilities/global.js");
+/* harmony import */ var _src_utilities_global_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_src_utilities_global_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _checkout_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./checkout.scss */ "./checkout/checkout.scss");
+
+
+
+(function ($) {
+  'use strict';
+
+  // 8. Payment Method Selection (Checkout)
+  $(document).on('click', '.pay-option', function () {
+    $('.pay-option').removeClass('selected');
+    $(this).addClass('selected');
+    let method = $(this).find('.label').text().trim();
+    $('#payment_method_input').val(method);
+  });
+
+  // 9. Checkout Form Submission with Razorpay Modal Integration
+  $(document).on('submit', '#gbh-checkout-form', function (e) {
+    e.preventDefault();
+    let $form = $(this);
+    let $btn = $form.find('button[type="submit"], .btn-place-order');
+    let paymentMethod = $('#payment_method_input').val() || 'UPI / Razorpay';
+    $btn.prop('disabled', true).text('Processing Order...');
+    let processFinalOrderPlacement = function (extraFields) {
+      let formData = $form.serializeArray();
+      formData.push({
+        name: 'action',
+        value: 'gbh_place_order'
+      });
+      formData.push({
+        name: 'nonce',
+        value: gbh_ajax_obj.nonce
+      });
+      if (extraFields && Array.isArray(extraFields)) {
+        extraFields.forEach(function (f) {
+          formData.push(f);
+        });
+      }
+      $.ajax({
+        url: gbh_ajax_obj.ajax_url,
+        type: 'POST',
+        data: $.param(formData),
+        success: function (response) {
+          if (response.success) {
+            window.gbh.showToast(response.data.message, 'success');
+            setTimeout(function () {
+              window.location.href = response.data.redirect_url;
+            }, 1000);
+          } else {
+            $btn.prop('disabled', false).text('Place Order');
+            window.gbh.showToast(response.data.message, 'error');
+          }
+        },
+        error: function () {
+          $btn.prop('disabled', false).text('Place Order');
+          window.gbh.showToast('Order processing failed. Please try again.', 'error');
+        }
+      });
+    };
+
+    // If Online Payment (Razorpay / UPI), launch Razorpay Checkout Popup
+    if (paymentMethod.indexOf('Razorpay') !== -1 || paymentMethod.indexOf('UPI') !== -1 || paymentMethod.indexOf('Partial') !== -1) {
+      $.ajax({
+        url: gbh_ajax_obj.ajax_url,
+        type: 'POST',
+        data: {
+          action: 'gbh_create_razorpay_order',
+          nonce: gbh_ajax_obj.nonce
+        },
+        success: function (res) {
+          if (res.success && typeof Razorpay !== 'undefined') {
+            let options = {
+              "key": res.data.key_id,
+              "amount": res.data.amount,
+              "currency": "INR",
+              "name": "Garden Basket Hub",
+              "description": "Nursery Plants & Supplies Order",
+              "handler": function (response) {
+                processFinalOrderPlacement([{
+                  name: 'razorpay_payment_id',
+                  value: response.razorpay_payment_id
+                }, {
+                  name: 'razorpay_order_id',
+                  value: response.razorpay_order_id
+                }]);
+              },
+              "prefill": {
+                "name": $form.find('input[name="first_name"]').val() + ' ' + $form.find('input[name="last_name"]').val(),
+                "email": $form.find('input[name="email"]').val(),
+                "contact": $form.find('input[name="phone"]').val()
+              },
+              "theme": {
+                "color": "#3A6B35"
+              },
+              "modal": {
+                "ondismiss": function () {
+                  $btn.prop('disabled', false).text('Place Order');
+                  window.gbh.showToast('Payment window closed. Order not placed.', 'warning');
+                }
+              }
+            };
+            let rzp1 = new Razorpay(options);
+            rzp1.open();
+          } else {
+            // Fallback if Razorpay SDK or Keys not present
+            processFinalOrderPlacement([]);
+          }
+        },
+        error: function () {
+          processFinalOrderPlacement([]);
+        }
+      });
+    } else {
+      // COD / Direct Order Placement
+      processFinalOrderPlacement([]);
+    }
+  });
+})(jQuery);
+})();
+
+/******/ })()
+;
+//# sourceMappingURL=checkout.bundle.js.map

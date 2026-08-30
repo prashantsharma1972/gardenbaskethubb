@@ -9,7 +9,7 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/blogs/blogs.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
+  <main>
 
     <!-- ============================================================
      BLOG HERO SECTION

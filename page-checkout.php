@@ -9,7 +9,7 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/checkout/checkout.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
+  <main>
     <?php
     $cart = gbh_get_cart_data();
     ?>

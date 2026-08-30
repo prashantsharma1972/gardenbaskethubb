@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/wp-content/themes/gardenbaskethubb/build/singleProduct/singleProduct.css">
     <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/singleProduct/singleProduct.bundle.js"></script>
     <?php get_header(); ?>
-  <main class="main--container">
+  <main>
     <?php while (have_posts()):
       the_post();
       $product_id = get_the_ID();

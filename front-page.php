@@ -9,7 +9,7 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/frontPage/frontPage.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
+  <main>
 
     <!-- ============================================================
      HOMEPAGE HERO SECTION
@@ -130,7 +130,7 @@
                     <div class="product-price">
                       <?php if ($hp_offer): ?>
                         ₹<?php echo esc_html($hp_offer); ?>
-                        <?php if ($hp_price): ?><del>₹<?php echo esc_html($hp_price); ?></del><?php endif; ?>
+                        <?php if ($hp_price): ?><small style="text-decoration: line-through;">₹<?php echo esc_html($hp_price); ?></small><?php endif; ?>
                       <?php else: ?>
                         ₹<?php echo esc_html($hp_price ? $hp_price : '199'); ?>
                       <?php endif; ?>
