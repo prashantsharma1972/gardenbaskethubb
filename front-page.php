@@ -327,7 +327,7 @@
           <a href="/blog/" class="btn-ghost">View All Guides ➔</a>
         </div>
 
-        <div class="about-story-cards">
+        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr); gap: 32px;">
           <?php
           $featured_blogs = new WP_Query(array(
             'post_type' => 'post',
@@ -338,30 +338,21 @@
             while ($featured_blogs->have_posts()):
               $featured_blogs->the_post();
               $fb_id = get_the_ID();
-              $fb_read_time = get_post_meta($fb_id, 'read_time', true);
-              if (!$fb_read_time && function_exists('get_field'))
-                $fb_read_time = get_field('read_time', $fb_id);
-              if (!$fb_read_time)
-                $fb_read_time = '5 min read';
               $fb_thumb = get_the_post_thumbnail_url($fb_id, 'medium');
               ?>
-              <div class="product-card featured-blog-card" data-permalink="<?php the_permalink(); ?>">
-                <div>
-                  <div class="blog-meta-header">
-                    <span><?php echo get_the_date('M j, Y'); ?></span>
-                    <span>⏱️ <?php echo esc_html($fb_read_time); ?></span>
+              <div class="product-card">
+                <?php if ($fb_thumb): ?>
+                  <div class="product-img">
+                    <img src="<?php echo esc_url($fb_thumb); ?>" alt="<?php the_title(); ?>" style="width:100%; height:200px; object-fit:cover; border-radius:4px;">
                   </div>
-                  <h3 class="blog-title">
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                  </h3>
-                  <p class="blog-excerpt">
-                    <?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?>
-                  </p>
-                </div>
-                <div>
-                  <a href="<?php the_permalink(); ?>" class="btn-ghost btn-ghost-small">
-                    Read Guide ➔
-                  </a>
+                <?php endif; ?>
+                <div class="product-body">
+                  <div class="product-category"><?php echo get_the_date('M j, Y'); ?></div>
+                  <div class="product-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+                  <div class="product-desc"><?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?></div>
+                  <div class="product-footer" style="margin-top:auto; padding-top:16px;">
+                    <a href="<?php the_permalink(); ?>" style="text-decoration:none; font-weight:500; color:var(--leaf); font-size:0.9rem;">Read Guide ➔</a>
+                  </div>
                 </div>
               </div>
             <?php endwhile;
