@@ -18,12 +18,12 @@
 
 ## 📁 Repository Directory & File Structure
 
-```
+```text
 gardenbaskethubb/
 ├── functions.php                   # Master Theme Loader, API Constants & Asset Enqueue
-├── style.css                       # Design System CSS Tokens, Global Component Styles & Media Queries
+├── style.css                       # Root Stylesheet (Not used for styles, just WP Theme Info)
 ├── header.php                      # Site Header, Desktop Nav, Mobile Drawer Overlay & Toggle Button
-├── footer.php                      # Shared Footer, Legal Policy Links & Crisp Vector SVGs (Instagram, WA, YT)
+├── footer.php                      # Shared Footer, Legal Policy Links & Crisp Vector SVGs
 ├── sitemap.xml                     # Physical XML Sitemap fallback
 ├── robots.txt                      # Physical Robots.txt crawler directives
 ├── index.php                       # Fallback Main WordPress Loop Template
@@ -32,13 +32,15 @@ gardenbaskethubb/
 │
 ├── public/                         # Frontend Source Code (Webpack Entrypoints)
 │   ├── pages/                      # Page-specific JS/SCSS (shop, single-product, cart, etc.)
-│   └── src-utilities/              # Global Utilities (ecommerce.js, header.js, reels.js)
+│   ├── scss-utilities/             # Global Sass Modules (_base.scss, _breakpoints.scss, _variables.scss)
+│   └── src-utilities/              # Global JS Utilities (ecommerce.js, header.js, footer.js, reels.js)
 │
 ├── build/                          # Compiled Webpack Output (DO NOT EDIT DIRECTLY)
 │   ├── frontPage.js, shop.js, etc. # Minified Bundles
 │   └── *.css                       # Compiled Styles
 │
-├── package.json                    # NPM Dependencies & Scripts (`npm run build`)
+├── docs/                           # Documentation (CHANGELOG, PENDING_IMPLEMENTATION, PROGRESS_TRACKER, README)
+├── package.json                    # NPM Dependencies & Scripts (`npm run build`, `npm run dev`)
 ├── webpack.config.js               # Webpack Bundler Configuration
 │
 ├── archive-product.php             # Shop Catalog Page (Live AJAX Category, Season & Price Filter Grid)
@@ -56,11 +58,8 @@ gardenbaskethubb/
 ├── page-contact-us.php             # Contact Us Page (Jaipur Nursery Details, Hours, Form with Toast Handler)
 │
 ├── privacy-policy.php              # Privacy Policy Legal Page
-
 ├── page-terms-and-conditions.php   # Terms & Conditions Legal Page
 ├── page-refund-policy.php          # Refund & Shipping Policy Legal Page (Live Plant Guarantee, Jaipur Shipping)
-│
-├── sample-code.php                 # Client reference design specification document
 ```
 
 ---
@@ -147,5 +146,9 @@ Use `gbh_get_page_url('shop')` or `gbh_get_page_url('cart')` across templates. I
 
 1. **Maintain Dynamic DOM Updates**: Never use `location.reload()` in JavaScript for cart updates. Always call `updateCartDOM(data)` in `public/src-utilities/ecommerce.js` or related modules.
 2. **Obey Design System Tokens**: Use CSS variables defined in `:root` (`var(--soil)`, `var(--clay)`, `var(--leaf)`, `var(--sand)`, `var(--sprout)`, `var(--marigold)`, `var(--white)`, `var(--ink)`).
-3. **Product Card Navigation**: Always give `.product-card` containers `data-permalink="<?php the_permalink(); ?>"` and wrap product title and thumbnail in `<a href="<?php the_permalink(); ?>">`.
-4. **PHP Code Linting**: Always verify syntax with `php -l <filename>` before pushing changes.
+3. **Responsive Mobile Engineering**: The theme employs a strict "Desktop-First, Override for Mobile" CSS strategy.
+   - All desktop structural grids (`.shop-layout`, `.product-grid`, `.cat-grid-wrapper`) are defined in standard selectors.
+   - All mobile layout changes (360px targeted clamps, `1fr` grid collapses, filter toggles) MUST be written safely inside isolated `@media (max-width: 900px)` or `@media (max-width: 500px)` blocks within `_breakpoints.scss` so desktop views are never compromised.
+   - The Shop, Blog, and Reels filters use a Pure CSS Checkbox Hack for mobile accordion dropdowns. Do NOT wrap these in native `<details>` tags as they break the desktop shadow DOM display.
+4. **Product Card Navigation**: Always give `.product-card` containers `data-permalink="<?php the_permalink(); ?>"` and wrap product title and thumbnail in `<a href="<?php the_permalink(); ?>">`.
+5. **PHP Code Linting**: Always verify syntax with `php -l <filename>` before pushing changes.

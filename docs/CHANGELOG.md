@@ -24,3 +24,27 @@
   - Added the missing click handler logic in `reels.js`. Clicking any `.reel-card` now correctly extracts the `data-video` URL, dynamically injects an `iframe` (or HTML5 `video`) into the `#gbh-reel-modal` body, and toggles the lightbox overlay.
 - **Global Navigation Crash:**
   - Patched `header.js` with strict null checks (`if (sideNavbar && toggleIcon)`) to prevent a `TypeError` crash (`querySelectorAll` of null) on pages that don't load the mobile navigation DOM elements, restoring JS execution across the site.
+
+## [v1.2.0] - 2026-08-31
+
+### Desktop UI & Aesthetic Overhaul
+- **Global Typography Restyling:** Re-engineered all header sizes, section labels, and body text spacing.
+- **Front Page Redesign:**
+  - Designed a 5-column CSS grid for the Category section (`.cat-grid-wrapper`).
+  - Transformed the "Why local growers choose us" section into a 4-column `.about-values-grid` with shadow cards.
+  - Implemented the Jaipur Sowing Calendar using a 3-column `.about-story-cards` grid with distinct seasonal background colors.
+  - Replaced broken HTML in the Featured Guides section with the global `.product-grid` markup, ensuring consistency with the blog archive.
+- **Archive Pages Fixes:**
+  - Ported `.filter-sidebar` CSS rules out of `shop.scss` into the global `_base.scss` to fix missing filter bars on the Blog and Reels archives.
+- **Single Pages Fixes:**
+  - Re-styled related posts on `single-blog.php` into the standardized 3-column `.product-grid`.
+
+### Mobile & 360px Responsiveness Sweep (Strict CSS Only)
+- **Typography & Padding Scaling:** Clamped `h1` headings to `2.2rem` and global paragraph tags to `16px` inside isolated `@media (max-width: 500px)` blocks to ensure extreme legibility without horizontal scrolling. Tightened `<section>` margins to `16px` on 360px phones.
+- **Grid Safeties:** Forced all complex global grids (categories, shop layouts, value grids, blog cards) to collapse to `1fr` securely on narrow screens.
+- **Mobile Filter Accordion (Pure CSS Checkbox Hack):** 
+  - Restructured the HTML in `archive-product.php`, `archive-blog.php`, and `archive-reels.php` using a robust hidden checkbox hack.
+  - On desktop (above 900px), the sidebar is permanently pinned.
+  - On mobile, it transforms seamlessly into a native "Filter & Sort Options" dropdown accordion, saving massive vertical screen space.
+- **Cart Row Stack:** Fixed the brutally squished single-line cart row. Mobile devices now render `.cart-row` as a beautiful 2x2 grid layout (image & title on top, quantity & remove buttons spanning the bottom).
+- **About Us Stats Scaling:** Shrunk the massive `.stat-num` "5,000+" fonts inside `.stats-strip` and widened the gap so the numbers sit perfectly inside a breathable 2x2 grid on mobile screens.

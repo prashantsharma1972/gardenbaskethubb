@@ -33,11 +33,15 @@ Last Updated: 2026-08-21
   - Implemented Automatic CPT Sample Content Seeder (`gbh_seed_sample_content`) for 6 starter products, 4 reels, and 3 blog guides.
   - Implemented Automatic Page Auto-Creator (`gbh_create_required_wp_pages`) and Dynamic URL Resolver (`gbh_get_page_url`).
   - Implemented Template Redirect Guard (`gbh_template_redirect_override`) for `/shop/`, `/reels/`, `/blog/`, `/about-us/`, `/contact-us/`, `/cart/`, `/checkout/`, `/thank-you/`, `/privacy-policy/`, `/terms-and-conditions/`, `/refund-policy/`.
-- [x] **UI & UX Refinement (Patch v1.1.0)**:
-  - Fixed "Chota Chota" UI scaling issue: Removed max-width constraints to enable a full-width fluid layout across all pages (Shop, Contact, Home) matching the exact proportions of the Archive Blog page.
+- [x] **UI & UX Refinement (Patch v1.1.0 & v1.2.0)**:
+  - Fixed "Chota Chota" UI scaling issue: Removed max-width constraints to enable a full-width fluid layout across all pages.
   - Increased global base font size, heading clamps, and product card typography for enhanced readability.
   - Refactored Contact Us layout to a responsive Grid layout, eliminating overlapping CSS conflicts.
-  - Patched JS crash (`querySelectorAll` null reference) in `header.js` for pages missing the mobile nav elements.
+  - Complete Desktop Restyling: Designed massive multi-column grids for Front Page (Category grid, Values grid, Sowing Calendar).
+  - Standardized `.product-grid` component usage across Blog Archive, Shop Archive, Reels Archive, and Single post/product pages.
+  - Mobile Responsiveness (360px targeted): Clamped typography (`h1` to 2.2rem) and section paddings for perfect reading on extremely small mobile screens.
+  - Mobile Component Structuring: Rewrote Cart Page rows to stack beautifully on mobile, and implemented a Pure CSS Checkbox Hack for the Filter sidebars to act as mobile dropdown menus without breaking desktop layouts.
+  - Patched JS crash (`querySelectorAll` null reference) in `header.js`.
   - Rewrote Single Product QTY Stepper logic in `ecommerce.js` utilizing explicit CSS classes for reliable state updates.
   - Implemented missing "Buy Now" instant-checkout redirect flow on Single Product pages.
   - Added video modal player click handlers and iframe injection logic to `reels.js` for Archive Reels page.
