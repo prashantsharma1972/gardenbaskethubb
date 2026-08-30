@@ -9,7 +9,7 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/singleReels/singleReels.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
+  <main>
     <?php while (have_posts()):
       the_post();
       $r_id = get_the_ID();

@@ -9,7 +9,7 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/aboutUs/aboutUs.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
+  <main>
 
     <!-- ============================================================
      ABOUT HERO SECTION

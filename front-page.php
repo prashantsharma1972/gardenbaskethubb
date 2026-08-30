@@ -14,23 +14,21 @@
     <!-- ============================================================
      HOMEPAGE HERO SECTION
      ============================================================ -->
-    <section class="hero-section page-hero home-hero">
-      <div class="container">
-        <p class="section-label">🌿 Rooted in Jaipur · Same-Day Delivery</p>
-        <h1 class="hero-title">Growing happiness, <em>one seed</em> at a time.</h1>
-        <p class="hero-desc">
-          Fresh pesticide-free seedlings, heirloom organic seeds, nutrient-rich vermicompost, and essential gardening
-          tools
-          delivered directly to your doorstep.
-        </p>
-        <div class="hero-actions">
-          <a href="/shop/" class="btn-primary">
-            Explore Shop ➔
-          </a>
-          <a href="/about-us/" class="btn-ghost">
-            Read Our Story
-          </a>
-        </div>
+    <section class="page-hero">
+      <p class="breadcrumb">🌿 Rooted in Jaipur · Same-Day Delivery</p>
+      <h1>Growing happiness, <em>one seed</em> at a time.</h1>
+      <p>
+        Fresh pesticide-free seedlings, heirloom organic seeds, nutrient-rich vermicompost, and essential gardening
+        tools
+        delivered directly to your doorstep.
+      </p>
+      <div class="hero-actions" style="margin-top:24px;display:flex;gap:12px;justify-content:center;">
+        <a href="/shop/" class="btn-primary">
+          Explore Shop ➔
+        </a>
+        <a href="/about-us/" class="btn-ghost">
+          Read Our Story
+        </a>
       </div>
     </section>
 

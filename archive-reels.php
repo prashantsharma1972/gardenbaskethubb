@@ -9,16 +9,15 @@
   <script type="module" defer fetchpriority="low" src="/wp-content/themes/gardenbaskethubb/build/reels/reels.bundle.js"></script>
   <?php get_header(); ?>
   
-  <main class="main--container">
+  <main>
 
     <!-- ============================================================
      PAGE HERO
      ============================================================ -->
-    <section class="banner-section">
-      <div class="container">
-        <h1 class="main_heading">Gardening <em>Reels</em>.</h1>
-        <p class="sub_description">Watch and learn quick tips and tricks for your garden.</p>
-      </div>
+    <section class="page-hero">
+      <p class="breadcrumb"><a href="/">Home</a> · Reels</p>
+      <h1>Gardening <em>Reels</em>.</h1>
+      <p>Watch and learn quick tips and tricks for your garden.</p>
     </section>
 
     <!-- ============================================================

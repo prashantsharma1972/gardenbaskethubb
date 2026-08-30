@@ -35,14 +35,14 @@ $cart_count = $cart_data['total_count'];
             <li><a href="/reels/">Reels</a></li>
             <li><a href="/blog/">Blog</a></li>
             <li><a href="/about-us/">Our Story</a></li>
-            <li><a href="/cart/">Cart (<span class="cart-count-badge"><?php echo esc_html($cart_count); ?></span>)</a></li>
+            <li><a href="/cart/">Cart (<?php echo esc_html($cart_count); ?>)</a></li>
             <li><a href="/contact-us/" class="nav-cta">Get in Touch</a></li>
         </ul>
 
         <!-- Mobile Controls (Hamburger) -->
         <div class="mobile-nav-controls" style="display:none;">
             <a href="/cart/" class="mobile-cart-icon" aria-label="View Shopping Bag">
-                🛒 (<span class="cart-count-badge"><?php echo esc_html($cart_count); ?></span>)
+                🛒 (<?php echo esc_html($cart_count); ?>)
             </a>
             <button id="gbh-mobile-toggle" class="hamburger mobile-toggle" aria-label="Toggle Menu">
                 <span class="line"></span>
@@ -74,7 +74,7 @@ $cart_count = $cart_data['total_count'];
 
         <div class="mobile-drawer-footer">
             <a href="/cart/" class="btn-primary mobile-cart-btn cart-btn-full" style="display:block; text-align:center;">
-                View Bag (<span class="cart-count-badge"><?php echo esc_html($cart_count); ?></span>)
+                View Bag (<?php echo esc_html($cart_count); ?>)
             </a>
             <a href="https://wa.me/919876543210" target="_blank" class="btn-primary" style="background:#25D366; display:block; text-align:center; margin-top:12px;">
                 💬 WhatsApp Expert Support

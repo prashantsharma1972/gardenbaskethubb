@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <div class="about-story-cards" id="gbh-blog-grid">
+      <div class="product-grid" id="gbh-blog-grid">
         <?php
         // Custom query to fetch posts (blog entries) if not using default loop
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;

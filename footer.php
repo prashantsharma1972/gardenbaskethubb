@@ -49,6 +49,24 @@
         </div>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('gbh-mobile-toggle');
+            const closeBtn = document.getElementById('gbh-mobile-close');
+            const drawer = document.getElementById('gbh-mobile-drawer');
+            const overlay = document.getElementById('gbh-mobile-overlay');
+
+            if (toggleBtn && drawer && overlay) {
+                const toggleMenu = () => {
+                    drawer.classList.toggle('open');
+                    overlay.classList.toggle('active');
+                };
+                toggleBtn.addEventListener('click', toggleMenu);
+                closeBtn?.addEventListener('click', toggleMenu);
+                overlay.addEventListener('click', toggleMenu);
+            }
+        });
+    </script>
 <?php wp_footer(); ?>
 </body>
 
