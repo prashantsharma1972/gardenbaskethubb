@@ -23,6 +23,9 @@ nav {
     @include tablet {
         padding: 16px 24px;
     }
+    @include mobile {
+        padding: 12px 16px;
+    }
 }
 
 .nav-logo {
@@ -158,6 +161,10 @@ nav {
     padding: 24px;
     border-bottom: 1px solid rgba(44, 26, 14, 0.08);
 
+    @include mobile {
+        padding: 16px;
+    }
+
     .nav-logo {
         font-size: 1.2rem;
     }
@@ -180,6 +187,10 @@ nav {
     flex-direction: column;
     gap: 20px;
 
+    @include mobile {
+        padding: 16px;
+    }
+
     li a {
         font-size: 1.1rem;
         font-family: var(--f-body);
@@ -196,6 +207,10 @@ nav {
     display: flex;
     flex-direction: column;
     gap: 12px;
+
+    @include mobile {
+        padding: 16px;
+    }
 }
 
 /* OVERLAY */

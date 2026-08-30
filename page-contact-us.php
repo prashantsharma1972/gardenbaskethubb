@@ -9,16 +9,17 @@
   <script type="module" defer fetchpriority="low"
     src="/wp-content/themes/gardenbaskethubb/build/contactUs/contactUs.bundle.js"></script>
   <?php get_header(); ?>
-  <main class="main--container">
-
+  
     <!-- ============================================================
      CONTACT HERO
      ============================================================ -->
-    <section class="page-hero">
-      <p class="breadcrumb"><a href="/">Home</a> · Contact</p>
+    <section class="page-hero" style="text-align: center; width: 100%;">
+      <p class="breadcrumb" style="justify-content: center;"><a href="/">Home</a> · Contact</p>
       <h1>Say <em>hello</em>.</h1>
-      <p>Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
+      <p style="margin: 0 auto;">Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>
     </section>
+
+  <main>
 
     <!-- ============================================================
      CONTACT LAYOUT

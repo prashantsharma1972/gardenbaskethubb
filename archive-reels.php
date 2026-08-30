@@ -23,42 +23,34 @@
     <!-- ============================================================
      REELS GRID
      ============================================================ -->
-    <section class="blogs">
-      <div class="filter-section">
-        <div class="filters-type-with-search">
-          <div data-type="category" class="filter-type">
-            <span class="icons">
-              <svg class="add">
-                <use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#add'></use>
-              </svg>
-              <svg class="subtract">
-                <use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#hyphen'></use>
-              </svg>
-            </span>
-            Reel Tag
-          </div>
-          <div class="search">
-            <svg class="search__icon"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#search'></use></svg>
-            <input placeholder="Search reels..." type="text" id="search-reels">
-          </div>
+    <section class="shop-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        
+        <div class="search">
+          <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input placeholder="Search reels..." type="text" id="search-reels">
         </div>
-        <div class="filters-container">
-          <div data-type="category" class="filter-container">
-            <?php
-            $reels_tags = get_terms(['taxonomy' => 'reels_tag', 'hide_empty' => false]);
-            if (!empty($reels_tags) && !is_wp_error($reels_tags)) {
-              foreach ($reels_tags as $tag) {
-                echo '<span class="filter" data-title="' . esc_attr($tag->name) . '" data-id="' . esc_attr($tag->term_id) . '">' . esc_html($tag->name) . '</span>';
-              }
+
+        <h4>Reel Tag</h4>
+        <div class="filter-container">
+          <?php
+          $reel_cats = get_terms(['taxonomy' => 'reel_tag', 'hide_empty' => false]);
+          if (!empty($reel_cats) && !is_wp_error($reel_cats)) {
+            foreach ($reel_cats as $cat) {
+              echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
             }
-            ?>
-          </div>
-          <div class="filter-btns">
-            <button class="clear">Clear All</button>
-            <button class="results">Show Results</button>
-          </div>
+          }
+          ?>
         </div>
-      </div>
+        <div class="filter-btns">
+          <button class="clear">Clear All</button>
+          <button class="results">Show Results</button>
+        </div>
+      </aside>
 
       <div class="reels-grid" id="gbh-reels-grid">
         <?php if (have_posts()): ?>
@@ -76,10 +68,9 @@
             $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Tutorial';
             ?>
             
-            <a href="<?php the_permalink(); ?>" class="reel-card play-reel-btn" 
+            <a href="<?php echo esc_url($video_url ? $video_url : '#'); ?>" class="reel-card" target="_blank"
               style="<?php echo $style; ?>"
               data-reel-id="<?php echo esc_attr($r_id); ?>" 
-              data-video-url="<?php echo esc_url($video_url); ?>"
               data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
               data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>">
                 
@@ -100,18 +91,6 @@
           <button class="btn-primary" id="load-more-reels">Load More Reels</button>
       </div>
     </section>
-
-    <!-- Modal for playing reels -->
-    <div class="reel-modal">
-        <div class="reel-modal-overlay"></div>
-        <div class="reel-modal-content">
-            <button class="reel-modal-close">&times;</button>
-            <h3 class="reel-modal-title">Gardening Guide</h3>
-            <div class="reel-modal-body">
-            <!-- Player appended via JS -->
-            </div>
-        </div>
-    </div>
 
   </main>
   <?php get_footer(); ?>

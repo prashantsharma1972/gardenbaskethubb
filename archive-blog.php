@@ -26,38 +26,34 @@
     <!-- ============================================================
      BLOG POSTS CATALOG GRID
      ============================================================ -->
-    <section class="blogs">
-      <div class="filter-section">
-        <div class="filters-type-with-search">
-          <div data-type="category" class="filter-type">
-            <span class="icons">
-              <svg class="add"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#add'></use></svg>
-              <svg class="subtract"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#hyphen'></use></svg>
-            </span>
-            Blog Category
-          </div>
-          <div class="search">
-            <svg class="search__icon"><use href='/wp-content/themes/gardenbaskethubb/public/sprites/shop.svg#search'></use></svg>
-            <input placeholder="Search guides..." type="text" id="search-blogs">
-          </div>
+    <section class="shop-layout">
+      <!-- Sidebar Filters -->
+      <aside class="filter-sidebar">
+        
+        <div class="search">
+          <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input placeholder="Search guides..." type="text" id="search-blogs">
         </div>
-        <div class="filters-container">
-          <div data-type="category" class="filter-container">
-            <?php
-            $blog_cats = get_categories(array('hide_empty' => false));
-            if (!empty($blog_cats) && !is_wp_error($blog_cats)) {
-              foreach ($blog_cats as $cat) {
-                echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
-              }
+
+        <h4>Category</h4>
+        <div class="filter-container">
+          <?php
+          $blog_cats = get_categories(array('hide_empty' => false));
+          if (!empty($blog_cats) && !is_wp_error($blog_cats)) {
+            foreach ($blog_cats as $cat) {
+              echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
             }
-            ?>
-          </div>
-          <div class="filter-btns">
-            <button class="clear">Clear All</button>
-            <button class="results">Show Results</button>
-          </div>
+          }
+          ?>
         </div>
-      </div>
+        <div class="filter-btns">
+          <button class="clear">Clear All</button>
+          <button class="results">Show Results</button>
+        </div>
+      </aside>
 
       <div class="product-grid" id="gbh-blog-grid">
         <?php
@@ -101,26 +97,23 @@
                   <span class="badge-new badge-cat"><?php echo esc_html($cat_name); ?></span>
                 </div>
 
-                <div class="product-body blog-card-body">
-                  <div class="blog-meta-header">
-                    <span><?php echo get_the_date('M j, Y'); ?></span>
-                    <span>⏱️ <?php echo esc_html($read_time); ?></span>
+                <div class="product-body">
+                  <div class="product-category">
+                    <?php echo get_the_date('M j, Y'); ?> &middot; ⏱️ <?php echo esc_html($read_time); ?>
                   </div>
 
-                  <h2 class="blog-title">
+                  <div class="product-name">
                     <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                  </h2>
+                  </div>
 
-                  <div class="blog-excerpt">
-                    <?php echo wp_trim_words(get_the_excerpt(), 18, '...'); ?>
+                  <div class="product-desc">
+                    <?php echo wp_trim_words(get_the_excerpt(), 15, '...'); ?>
+                  </div>
+                  
+                  <div class="product-footer" style="margin-top:auto; padding-top:16px;">
+                    <a href="<?php the_permalink(); ?>" style="text-decoration:none; font-weight:500; color:var(--leaf); font-size:0.9rem;">Read Full Article ➔</a>
                   </div>
                 </div>
-              </div>
-
-              <div class="blog-card-footer">
-                <a href="<?php the_permalink(); ?>" class="btn-ghost btn-ghost-small">
-                  Read Full Article ➔
-                </a>
               </div>
             </article>
           <?php endwhile; ?>

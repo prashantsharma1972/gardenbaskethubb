@@ -29,32 +29,15 @@
       $cat_name = (!empty($categories)) ? $categories[0]->name : 'Gardening Guide';
       ?>
 
-      <!-- BLOG BREADCRUMB -->
-      <section class="pdp-breadcrumb-bar">
-        <div class="pdp-breadcrumb-inner">
-          <p class="breadcrumb-item"><a href="/blog">Blogs</a></p>
-          <span class="breadcrumb-sep">&rsaquo;</span>
-          <p class="breadcrumb-item breadcrumb-current"><?php echo the_title(); ?></p>
-        </div>
-      </section>
-
       <!-- BLOG HERO -->
-      <section class="blog-hero-section">
-        <div class="blog-hero-inner">
-          <div class="blog-hero-content">
-            <span class="badge-new badge-cat"><?php echo esc_html($cat_name); ?></span>
-            <h1 class="blog-hero-title"><?php echo the_title(); ?></h1>
-          </div>
-          <div class="blog-hero-meta">
-            <div class="blog-author">
-              <strong class="blog-author-name">Garden Basket Hub Team</strong>
-              <div class="blog-author-role">Nursery Experts</div>
-              <div class="blog-author-date">
-                <span>📅 <?php echo get_the_date('F j, Y'); ?></span>
-                <span>⏱️ <?php echo esc_html($read_time); ?></span>
-              </div>
-            </div>
-          </div>
+      <section class="page-hero" style="padding-bottom: 24px;">
+        <p class="breadcrumb"><a href="/blog">Blogs</a> · <?php echo esc_html($cat_name); ?></p>
+        <h1 style="max-width:800px; margin:0 auto 16px;"><?php echo the_title(); ?></h1>
+        
+        <div style="display:flex; justify-content:center; align-items:center; gap:16px; color:var(--text-light); font-size:0.95rem;">
+            <span>📅 <?php echo get_the_date('M j, Y'); ?></span>
+            <span>⏱️ <?php echo esc_html($read_time); ?></span>
+            <span>✍️ Garden Basket Hub Team</span>
         </div>
       </section>
 
@@ -80,11 +63,11 @@
           <a href="/blog/" class="btn-ghost">View All Guides ➔</a>
         </div>
 
-        <div class="blog-related-grid">
+        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr); gap: 32px; padding: 24px 0;">
           <?php
           $related_query = new WP_Query(array(
             'post_type' => 'post',
-            'posts_per_page' => 2,
+            'posts_per_page' => 3,
             'post__not_in' => array($b_id),
           ));
 
@@ -93,15 +76,19 @@
               $related_query->the_post();
               $rel_thumb = get_the_post_thumbnail_url(get_the_ID(), 'medium');
               ?>
-              <div class="related-card">
+              <div class="product-card">
                 <?php if ($rel_thumb): ?>
-                  <img src="<?php echo esc_url($rel_thumb); ?>" alt="<?php the_title(); ?>" class="related-card-img-cover">
+                  <div class="product-img">
+                    <img src="<?php echo esc_url($rel_thumb); ?>" alt="<?php the_title(); ?>" style="width:100%; height:200px; object-fit:cover; border-radius:4px;">
+                  </div>
                 <?php endif; ?>
-                <div class="related-card-body">
-                  <span class="related-card-date"><?php echo get_the_date('M j, Y'); ?></span>
-                  <h3 class="related-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                  <p class="related-card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?></p>
-                  <a href="<?php the_permalink(); ?>" class="btn-ghost">Read Guide ➔</a>
+                <div class="product-body">
+                  <div class="product-category"><?php echo get_the_date('M j, Y'); ?></div>
+                  <div class="product-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
+                  <div class="product-desc"><?php echo wp_trim_words(get_the_excerpt(), 14, '...'); ?></div>
+                  <div class="product-footer" style="margin-top:auto; padding-top:16px;">
+                    <a href="<?php the_permalink(); ?>" style="text-decoration:none; font-weight:500; color:var(--leaf); font-size:0.9rem;">Read Guide ➔</a>
+                  </div>
                 </div>
               </div>
           <?php endwhile;

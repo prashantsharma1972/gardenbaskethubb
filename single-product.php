@@ -38,17 +38,8 @@
       }
       ?>
 
-      <!-- BREADCRUMB -->
-      <section class="pdp-breadcrumb-bar">
-        <div class="pdp-breadcrumb-inner">
-          <p class="breadcrumb-item"><a href="/shop">Shop</a></p>
-          <span class="breadcrumb-sep">&rsaquo;</span>
-          <p class="breadcrumb-item breadcrumb-current"><?php echo esc_html($title); ?></p>
-        </div>
-      </section>
-
       <!-- MAIN PDP SECTION -->
-      <section style="padding-top:140px;">
+      <section>
         <div class="pdp">
 
           <!-- Gallery Column -->

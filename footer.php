@@ -22,10 +22,11 @@
                 <h4>Info</h4>
                 <ul>
                     <li><a href="/about-us/">Our Story</a></li>
-                    <li><a href="/refund-policy/">Shipping Policy</a></li>
-                    <li><a href="/refund-policy/">Returns</a></li>
+                    <li><a href="/refund-policy/">Refund Policy</a></li>
+                    <li><a href="/privacy-policy/">Privacy Policy</a></li>
+                    <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
                     <li><a href="/blog/">Plant Care Guides</a></li>
-                    <li><a href="#">FAQ</a></li>
+                    <li><a href="/contact-us/">FAQ</a></li>
                 </ul>
             </div>
             <div class="footer-col">
