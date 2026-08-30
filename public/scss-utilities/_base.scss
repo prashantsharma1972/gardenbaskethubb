@@ -56,13 +56,14 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    -webkit-text-size-adjust: none;
-    line-height: 1;
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--body-background);
-    scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
 }
 
@@ -178,64 +179,7 @@ abbr {
 }
 
 /* clears the ‘X’ from Chrome */
-// Resetting CSS
 
-@import './breakpoints';
-
-:root {
-    --body-background: #FFFFFF;
-}
-
-::selection {
-    background-color: #3c0b42a5;
-    color: #EFEAF1;
-}
-
-:focus {
-    outline: none;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    vertical-align: center;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    -webkit-appearance: value;
-    -moz-appearance: value;
-    appearance: value;
-}
-
-a,
-button,
-img a,
-input {
-    transition: all ease-in 0.3s;
-}
-
-// Global Size Setting
-html {
-    font-size: 62.5%;
-    overflow-x: hidden;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    font-size: 10px;
-
-    // Below 1500px
-    @include desktop {
-        font-size: 9px;
-    }
-
-    // Below 1050px
-    @include tablet {
-        font-size: 8px;
-    }
-}
 
 body {
     font-family: 'Roboto', sans-serif;

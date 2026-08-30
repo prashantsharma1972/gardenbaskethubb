@@ -2,159 +2,113 @@
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/breakpoints';
 @import '../../scss-utilities/footer';
-@import '../../scss-utilities/variables';
 
-/* ============================================================
-   CHECKOUT PAGE — checkout.scss
-   ============================================================ */
-
+/* CHECKOUT */
 .checkout-layout {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 48px;
-  align-items: start;
-
-  @include tablet {
-    grid-template-columns: 1fr;
-  }
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 48px;
+    align-items: flex-start;
 }
 
-/* === CHECKOUT FORM === */
-.checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+.checkout-form .step {
+    margin-bottom: 36px;
+}
 
-  .step {
-    h3 {
-      font-family: var(--f-display);
-      font-size: 1.05rem;
-      color: var(--soil);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+.checkout-form h3 {
+    font-family: var(--f-display);
+    font-size: 1.4rem;
+    color: var(--soil);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-      .num {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: var(--soil);
-        color: var(--white);
-        font-size: 0.8rem;
-        font-weight: 700;
-        font-family: var(--f-mono);
-        flex-shrink: 0;
-      }
-    }
-  }
+.checkout-form h3 .num {
+    width: 30px;
+    height: 30px;
+    background: var(--leaf);
+    color: var(--white);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--f-mono);
+    font-size: 0.85rem;
+}
 
-  .form-grid {
+.form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-
-    @include mobile {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    &.full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--soil);
-    }
-
-    input,
-    select {
-      border: 1px solid rgba(44, 26, 14, 0.2);
-      border-radius: 4px;
-      padding: 10px 12px;
-      font-size: 0.9rem;
-      font-family: var(--f-body);
-      color: var(--soil);
-      background: var(--white);
-      transition: border-color 0.2s;
-
-      &:focus {
-        outline: none;
-        border-color: var(--leaf);
-      }
-
-      &::placeholder {
-        color: var(--clay);
-        font-size: 0.85rem;
-      }
-    }
-  }
 }
 
-/* === PAYMENT OPTIONS === */
+.form-grid .full {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--clay);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(44, 26, 14, 0.2);
+    border-radius: 2px;
+    font-family: var(--f-body);
+    font-size: 0.92rem;
+    background: var(--white);
+    color: var(--ink);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--leaf);
+}
+
 .pay-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px;
-  border: 2px solid rgba(44, 26, 14, 0.1);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 1px solid rgba(44, 26, 14, 0.2);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
 
-  &:hover {
+.pay-option.selected {
     border-color: var(--leaf);
-    background: rgba(78, 138, 72, 0.04);
-  }
+    background: rgba(123, 191, 106, 0.08);
+}
 
-  &.selected {
-    border-color: var(--leaf);
-    background: rgba(78, 138, 72, 0.06);
-  }
+.pay-option .ic {
+    font-size: 1.4rem;
+}
 
-  .ic {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .label {
-    font-size: 0.9rem;
-    font-weight: 600;
+.pay-option .label {
+    font-weight: 500;
     color: var(--soil);
-    margin-bottom: 2px;
-  }
+}
 
-  .sub {
+.pay-option .sub {
     font-size: 0.78rem;
     color: var(--clay);
-    line-height: 1.4;
-  }
 }
 
-.btn-place-order {
-  width: 100%;
-  text-align: center;
-  padding: 16px;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 4px;
-  border: none;
-  cursor: pointer;
-  font-family: var(--f-body);
-}
-
-.checkout-btn-full {
-  width: 100%;
-  text-align: center;
+@media (max-width:900px) {
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
 }

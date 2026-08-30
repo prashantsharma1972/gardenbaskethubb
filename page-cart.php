@@ -99,7 +99,7 @@
             <a href="/checkout/" class="btn-primary checkout-btn">
               Proceed to Checkout
             </a>
-            <p class="shipping-notice">
+            <p style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-align:center;margin-top:16px;letter-spacing:0.06em;">
               ✦ Free shipping pan India above ₹799
             </p>
           </aside>

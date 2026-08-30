@@ -29,9 +29,9 @@ $cart_count = $cart_data['total_count'];
     <header class="header">
         <div class="header-wrapper">
             <div class="header-main">
-                <a href="/" class="smartit-home nav-logo">
-                    Garden <span>Basket</span> Hub
-                </a>
+      <div class="header__logo">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="nav-logo">Garden <span>Basket</span> Hub</a>
+      </div>
 
                 <div class="nav-container">
                     <nav class="site-nav">

@@ -181,6 +181,19 @@ function gbh_template_redirect_override($template)
         }
     }
 
+    if (is_single()) {
+        $post_type = get_post_type();
+        if ($post_type === 'product' && file_exists(get_template_directory() . '/single-product.php')) {
+            return get_template_directory() . '/single-product.php';
+        }
+        if ($post_type === 'reels' && file_exists(get_template_directory() . '/single-reels.php')) {
+            return get_template_directory() . '/single-reels.php';
+        }
+        if (($post_type === 'post' || $post_type === 'blog') && file_exists(get_template_directory() . '/single-blog.php')) {
+            return get_template_directory() . '/single-blog.php';
+        }
+    }
+
     return $template;
 }
 add_filter('template_include', 'gbh_template_redirect_override', 99);

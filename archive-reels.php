@@ -61,7 +61,7 @@
         </div>
       </div>
 
-      <div class="resource-list reels-catalog-grid" id="gbh-reels-grid">
+      <div class="reels-grid" id="gbh-reels-grid">
         <?php if (have_posts()): ?>
           <?php while (have_posts()):
             the_post();
@@ -71,48 +71,34 @@
             if (!$thumbnail && function_exists('get_field')) {
                 $thumbnail = get_field('thumbnail_image', $r_id);
             }
+            $style = $thumbnail ? 'background-image: url(' . esc_url($thumbnail) . ');' : '';
             
             $terms = get_the_terms($r_id, 'reels_tag');
             $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Tutorial';
             ?>
             
-            <!-- We add the "product-card" base to inherit standard card look if desired, or rely purely on .reel-card -->
-            <div class="resource-data product-card reel-card" 
+            <a href="<?php the_permalink(); ?>" class="reel-card play-reel-btn" 
+              style="<?php echo $style; ?>"
               data-reel-id="<?php echo esc_attr($r_id); ?>" 
               data-video-url="<?php echo esc_url($video_url); ?>"
               data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
               data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>">
-              
-              <div class="blog-feature-image product-img">
-                <a href="<?php the_permalink(); ?>" class="product-img-link play-reel-btn">
-                  <?php if ($thumbnail): ?>
-                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php the_title(); ?>" class="resource-img">
-                  <?php else: ?>
-                    <div style="background: #ccc; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                        <span>▶</span>
-                    </div>
-                  <?php endif; ?>
-                </a>
-              </div>
-
-              <div class="blog-content product-body">
-                <div class="blog-title product-name">
-                  <h2 class="blog-heading">
-                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                  </h2>
-                </div>
                 
-                <div class="author-div flex-div product-footer">
-                  <a href="<?php the_permalink(); ?>" class="btn-ghost btn-ghost-small">Watch Reel ➔</a>
+                <div class="play">▶</div>
+                <div class="meta">
+                    <h4><?php echo wp_trim_words(get_the_title(), 6, '...'); ?></h4>
+                    <span><?php echo esc_html($cat_name); ?></span>
                 </div>
-              </div>
-            </div>
+            </a>
             
           <?php endwhile;
           wp_reset_postdata(); ?>
         <?php else: ?>
           <p>No reels found.</p>
         <?php endif; ?>
+      </div>
+      <div style="text-align:center;margin-top:48px;">
+          <button class="btn-primary" id="load-more-reels">Load More Reels</button>
       </div>
     </section>
 

@@ -117,7 +117,7 @@
               </div>
             </div>
 
-            <button type="submit" class="btn-primary btn-place-order checkout-btn-full">
+            <button type="submit" class="btn-primary btn-place-order" style="width:100%;text-align:center;padding:18px;">
               Place Order · <?php echo esc_html($cart['total_formatted']); ?>
             </button>
           </form>
@@ -149,7 +149,7 @@
               <span><?php echo esc_html($cart['total_formatted']); ?></span>
             </div>
 
-            <p class="secure-checkout-msg">
+            <p style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);margin-top:16px;letter-spacing:0.06em;text-align:center;">
               🔒 256-Bit SSL Secure Checkout · 100% Satisfaction Guaranteed
             </p>
           </aside>

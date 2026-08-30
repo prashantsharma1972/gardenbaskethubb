@@ -21,10 +21,13 @@
 		"@builder.io/partytown": "^0.10.0",
 		"@wordpress/api-fetch": "^6.47.0",
 		"aos": "^2.3.4",
+		"autoprefixer": "^10.5.4",
 		"gsap": "^3.12.4",
 		"just-validate": "^4.3.0",
 		"onchange": "^7.1.0",
+		"postcss": "^8.5.26",
 		"sweetalert2": "^11.6.13",
-		"swiper": "^11.0.5"
+		"swiper": "^11.0.5",
+		"tailwindcss": "^4.3.3"
 	}
 }

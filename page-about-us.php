@@ -14,142 +14,58 @@
     <!-- ============================================================
      ABOUT HERO SECTION
      ============================================================ -->
-    <section class="page-hero home-hero">
-      <p class="breadcrumb"><a href="/">Home</a> · Our Story</p>
-      <h1 class="hero-title">Rooted in <em>Jaipur</em>, growing happiness.</h1>
-      <p class="hero-desc">
-        From a small local nursery in Jaipur to an all-in-one organic gardening hub — we are on a mission to bring fresh
-        seedlings, heirloom seeds, and green living into every home.
-      </p>
-      <div class="hero-actions">
-        <a href="/shop/" class="btn-primary">Explore Our Shop ➔</a>
-        <a href="/contact-us/" class="btn-ghost">Visit Our Nursery</a>
-      </div>
+    <section class="page-hero">
+        <p class="breadcrumb"><a href="/">Home</a> · Our Story</p>
+        <h1>Rooted in <em>Jaipur</em>, growing happiness.</h1>
+        <p>A small gardening shop with big dreams — and a love for fresh seedlings, organic seeds and the people who plant them.</p>
     </section>
 
-    <!-- ============================================================
-     STORY CARDS (SLEEK 3-COLUMN LAYOUT)
-     ============================================================ -->
     <section>
-      <div class="section-header-center">
-        <p class="section-label">Our Heritage & Mission</p>
-        <h2 class="section-title">The story behind Garden Basket Hub</h2>
-      </div>
-
-      <div class="about-story-cards">
-        <div class="story-card card-white">
-          <div class="story-meta">01 · Origins</div>
-          <h3 class="story-title">Born in Jaipur</h3>
-          <p class="story-desc">
-            What started as a home garden experiment in Jaipur grew into an organic nursery dedicated to helping urban
-            growers cultivate fresh, chemical-free food right on their balconies and terraces.
-          </p>
-          <p class="story-desc">
-            We make home gardening accessible, straightforward, and deeply satisfying for growers at every level.
-          </p>
+        <div class="about-grid">
+            <div class="about-visual">🌱</div>
+            <div class="about-text">
+                <h2>How it all <em>started</em></h2>
+                <p>What began as a small nursery in Jaipur — selling seeds and saplings to neighbours — grew slowly into the Garden Basket Hub you see today.</p>
+                <p>We noticed something simple: people wanted to grow their own food but didn't know where to start. So we built a shop that helps gardeners at every level — from the curious beginner with a balcony, to the experienced grower with a full terrace garden.</p>
+            </div>
         </div>
 
-        <div class="story-card card-sand">
-          <div class="story-meta color-leaf">02 · Standards</div>
-          <h3 class="story-title">100% Organic Sourcing</h3>
-          <p class="story-desc">
-            Every seed variety is tested for high germination rates. Our saplings are raised in pure organic
-            vermicompost
-            without synthetic chemical sprays or growth stimulants.
-          </p>
-          <p class="story-desc">
-            Local Jaipur orders are delivered same-day in protective sleeves so live plants arrive fresh and vibrant.
-          </p>
+        <div class="about-grid reverse">
+            <div class="about-visual green">🌿</div>
+            <div class="about-text">
+                <h2>What makes us <em>different</em></h2>
+                <p>We don't sell what we don't grow or use ourselves. Every seed packet, every seedling, every tool is something we've tested in our own gardens.</p>
+                <p>Our seedlings are delivered the same day in Jaipur because plants don't belong in a warehouse for days. Our seeds and tools ship across India for everyone else.</p>
+            </div>
         </div>
 
-        <div class="story-card card-white">
-          <div class="story-meta color-clay">03 · Community</div>
-          <h3 class="story-title">Local Artisans & Support</h3>
-          <p class="story-desc">
-            Our terracotta pots are hand-thrown by traditional potters in Rajasthan, supporting local crafts and
-            sustainable
-            pottery traditions.
-          </p>
-          <p class="story-desc">
-            Plus, our WhatsApp Plant Doctor team provides ongoing care advice so your garden stays healthy all year
-            long.
-          </p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
-     VALUES FEATURE CARDS
-     ============================================================ -->
-    <section class="section-sand">
-      <div class="section-header-center">
-        <p class="section-label">Why growers trust us</p>
-        <h2 class="section-title">The Garden Basket Hub Promise</h2>
-      </div>
-
-      <div class="about-values-grid">
-        <div class="value-card">
-          <div class="value-icon">🌱</div>
-          <h3 class="value-title">Pesticide-Free</h3>
-          <p class="value-desc">All saplings and seeds are grown using natural neem oil and organic compost.</p>
+        <div class="about-grid">
+            <div class="about-visual">🤝</div>
+            <div class="about-text">
+                <h2>Built for the <em>community</em></h2>
+                <p>We answer plant questions on WhatsApp every day — because growing should be fun, not frustrating.</p>
+                <p>Our compost comes from local Jaipur sources. Our pottery is made by local artisans. Our delivery partners are local riders. When you buy from Garden Basket Hub, you're supporting an entire ecosystem of growers.</p>
+            </div>
         </div>
 
-        <div class="value-card">
-          <div class="value-icon">🚚</div>
-          <h3 class="value-title">Same-Day Jaipur</h3>
-          <p class="value-desc">Fresh seedlings arrive hydrated on the exact day you order within Jaipur.</p>
+        <div class="stats-strip">
+            <div class="stat">
+                <div class="stat-num">5,000+</div>
+                <div class="stat-label">Happy Gardeners</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">120+</div>
+                <div class="stat-label">Seed Varieties</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">60+</div>
+                <div class="stat-label">Fresh Seedlings</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">Same-Day</div>
+                <div class="stat-label">Jaipur Delivery</div>
+            </div>
         </div>
-
-        <div class="value-card">
-          <div class="value-icon">💬</div>
-          <h3 class="value-title">WhatsApp Support</h3>
-          <p class="value-desc">Get direct guidance from our nursery experts on soil mixing, watering, and care.</p>
-        </div>
-
-        <div class="value-card">
-          <div class="value-icon">🏺</div>
-          <h3 class="value-title">Artisan Pottery</h3>
-          <p class="value-desc">Eco-friendly terracotta and clay pots hand-crafted by Rajasthan artisans.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-     STATS STRIP
-     ============================================================ -->
-    <section>
-      <div class="stats-strip">
-        <div class="stat">
-          <div class="stat-num">5,000+</div>
-          <div class="stat-label">Happy Gardeners</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">120+</div>
-          <div class="stat-label">Organic Seed Varieties</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">60+</div>
-          <div class="stat-label">Fresh Seedling Packs</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">Same-Day</div>
-          <div class="stat-label">Jaipur Delivery</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-     CALL TO ACTION BANNER
-     ============================================================ -->
-    <section class="section-cta">
-      <div class="cta-banner">
-        <h2 class="cta-title">Ready to start your home garden?</h2>
-        <p class="cta-desc">Browse our monsoon seeds and fresh seedling trays delivered directly from our Jaipur
-          nursery.
-        </p>
-        <a href="/shop/" class="btn-primary cta-btn">Shop Garden Essentials ➔</a>
-      </div>
     </section>
 
   </main>

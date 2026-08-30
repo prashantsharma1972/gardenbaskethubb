@@ -48,8 +48,8 @@
       </section>
 
       <!-- MAIN PDP SECTION -->
-      <section class="pdp-section">
-        <div class="pdp-inner">
+      <section style="padding-top:140px;">
+        <div class="pdp">
 
           <!-- Gallery Column -->
           <div class="pdp-gallery">
@@ -62,39 +62,55 @@
 
           <!-- Info Column -->
           <div class="pdp-info">
-            <h1 class="pdp-title"><?php echo esc_html($title); ?></h1>
+            <p class="breadcrumb"><a href="/">Home</a> · <a href="/shop">Shop</a> · <?php echo esc_html($title); ?></p>
+            <h1><?php echo esc_html($title); ?></h1>
 
-            <div class="pdp-price-block">
+            <div class="price">
               <?php if ($offer_price): ?>
-                <span class="pdp-price-final">₹<?php echo esc_html($offer_price); ?></span>
-                <span class="pdp-price-strike">₹<?php echo esc_html($price); ?></span>
+                ₹<?php echo esc_html($offer_price); ?>
+                <small style="text-decoration: line-through;">₹<?php echo esc_html($price); ?></small>
               <?php else: ?>
-                <span class="pdp-price-final">₹<?php echo esc_html($price ? $price : '199'); ?></span>
+                ₹<?php echo esc_html($price ? $price : '199'); ?>
               <?php endif; ?>
             </div>
 
+            <p class="desc">
+              <?php echo wp_trim_words(get_the_excerpt(), 30, '...'); ?>
+            </p>
+
+            <div class="pdp-options">
+              <div class="qty-row">
+                <label style="font-family:var(--f-mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--clay);">Qty</label>
+                <div class="qty-stepper">
+                  <button type="button" class="qty-minus">−</button>
+                  <input type="number" value="1" min="1" max="99">
+                  <button type="button" class="qty-plus">+</button>
+                </div>
+              </div>
+            </div>
+
             <div class="pdp-cta">
-              <button class="btn-pdp-primary add-btn" data-product-id="<?php echo esc_attr($product_id); ?>">
+              <button class="btn-primary add-btn" data-product-id="<?php echo esc_attr($product_id); ?>">
                 Add to Bag
               </button>
-              <button class="btn-pdp-ghost btn-buy-now" data-product-id="<?php echo esc_attr($product_id); ?>">
+              <button class="btn-secondary btn-buy-now" data-product-id="<?php echo esc_attr($product_id); ?>">
                 Buy Now
               </button>
             </div>
 
             <div class="pincode-check">
-              <label class="pincode-label">Check delivery availability in your area</label>
-              <div class="pincode-row">
-                <input type="text" placeholder="Enter 6-digit Pincode (e.g. 302001)" class="pincode-input">
-                <button class="pincode-btn">Check</button>
+              <label>Check delivery availability in your area</label>
+              <div class="row">
+                <input type="text" placeholder="Enter 6-digit Pincode (e.g. 302001)">
+                <button>Check</button>
               </div>
             </div>
 
-            <div class="pdp-trust-grid">
-              <div class="pdp-trust-item"><span>🚚</span> Same-day delivery in Jaipur</div>
-              <div class="pdp-trust-item"><span>🌿</span> 100% Organic &amp; Non-GMO</div>
-              <div class="pdp-trust-item"><span>💬</span> Free WhatsApp Advice</div>
-              <div class="pdp-trust-item"><span>♻️</span> Eco-friendly Packaging</div>
+            <div class="pdp-trust">
+              <div class="pdp-trust-item"><span class="ic">🚚</span> Same-day delivery in Jaipur</div>
+              <div class="pdp-trust-item"><span class="ic">🌿</span> 100% Organic &amp; Non-GMO</div>
+              <div class="pdp-trust-item"><span class="ic">💬</span> Free WhatsApp Advice</div>
+              <div class="pdp-trust-item"><span class="ic">♻️</span> Eco-friendly Packaging</div>
             </div>
           </div>
 
