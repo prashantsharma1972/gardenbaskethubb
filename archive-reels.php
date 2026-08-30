@@ -27,29 +27,35 @@
       <!-- Sidebar Filters -->
       <aside class="filter-sidebar">
         
-        <div class="search">
-          <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input placeholder="Search reels..." type="text" id="search-reels">
-        </div>
+        <div class="mobile-filter-dropdown">
+            <input type="checkbox" id="mobile-filter-toggle-reels" class="filter-toggle-checkbox" style="display: none;">
+            <label for="mobile-filter-toggle-reels" class="mobile-filter-summary">Filter & Sort Options</label>
+            <div class="mobile-filter-content">
+              <div class="search">
+                <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input placeholder="Search reels..." type="text" id="search-reels">
+              </div>
 
-        <h4>Reel Tag</h4>
-        <div class="filter-container">
-          <?php
-          $reel_cats = get_terms(['taxonomy' => 'reel_tag', 'hide_empty' => false]);
-          if (!empty($reel_cats) && !is_wp_error($reel_cats)) {
-            foreach ($reel_cats as $cat) {
-              echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
-            }
-          }
-          ?>
-        </div>
-        <div class="filter-btns">
-          <button class="clear">Clear All</button>
-          <button class="results">Show Results</button>
-        </div>
+              <h4>Reel Tag</h4>
+              <div class="filter-container">
+                <?php
+                $reel_cats = get_terms(['taxonomy' => 'reel_tag', 'hide_empty' => false]);
+                if (!empty($reel_cats) && !is_wp_error($reel_cats)) {
+                  foreach ($reel_cats as $cat) {
+                    echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
+                  }
+                }
+                ?>
+              </div>
+              <div class="filter-btns">
+                <button class="clear">Clear All</button>
+                <button class="results">Show Results</button>
+              </div>
+            </div>
+          </div>
       </aside>
 
       <div class="reels-grid" id="gbh-reels-grid">

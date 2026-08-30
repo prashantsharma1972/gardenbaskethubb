@@ -31,30 +31,36 @@
         <!-- Sidebar Filters -->
         <aside class="filter-sidebar">
           
-          <div class="search">
-            <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input placeholder="Search products..." type="text" name="search-products" id="search-products">
-          </div>
+          <div class="mobile-filter-dropdown">
+            <input type="checkbox" id="mobile-filter-toggle" class="filter-toggle-checkbox" style="display: none;">
+            <label for="mobile-filter-toggle" class="mobile-filter-summary">Filter & Sort Options</label>
+            <div class="mobile-filter-content">
+              <div class="search">
+                <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input placeholder="Search products..." type="text" name="search-products" id="search-products">
+              </div>
 
-          <h4>Category</h4>
-          <div class="filter-container">
-            <?php
-            $product_cats = get_terms(['taxonomy' => 'product_cat', 'hide_empty' => false]);
-            if (!empty($product_cats) && !is_wp_error($product_cats)) {
-              foreach ($product_cats as $cat) {
-                // Render spans that look like checkboxes (handled by CSS) for the existing JS logic
-                echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
-              }
-            }
-            ?>
-          </div>
+              <h4>Category</h4>
+              <div class="filter-container">
+                <?php
+                $product_cats = get_terms(['taxonomy' => 'product_cat', 'hide_empty' => false]);
+                if (!empty($product_cats) && !is_wp_error($product_cats)) {
+                  foreach ($product_cats as $cat) {
+                    // Render spans that look like checkboxes (handled by CSS) for the existing JS logic
+                    echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
+                  }
+                }
+                ?>
+              </div>
 
-          <div class="filter-btns">
-            <button class="clear">Clear All</button>
-            <button class="results">Show Results</button>
+              <div class="filter-btns">
+                <button class="clear">Clear All</button>
+                <button class="results">Show Results</button>
+              </div>
+            </div>
           </div>
         </aside>
 

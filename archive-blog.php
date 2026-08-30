@@ -29,30 +29,37 @@
     <section class="shop-layout">
       <!-- Sidebar Filters -->
       <aside class="filter-sidebar">
-        
-        <div class="search">
-          <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input placeholder="Search guides..." type="text" id="search-blogs">
-        </div>
+        <div class="mobile-filter-dropdown">
+            <input type="checkbox" id="mobile-filter-toggle-blog" class="filter-toggle-checkbox" style="display: none;">
+            <label for="mobile-filter-toggle-blog" class="mobile-filter-summary">Filter & Sort Options</label>
+            <div class="mobile-filter-content">
+              <div class="search">
+                <svg class="search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input placeholder="Search articles..." type="text" name="search-products" id="search-products">
+              </div>
 
-        <h4>Category</h4>
-        <div class="filter-container">
-          <?php
-          $blog_cats = get_categories(array('hide_empty' => false));
-          if (!empty($blog_cats) && !is_wp_error($blog_cats)) {
-            foreach ($blog_cats as $cat) {
-              echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
-            }
-          }
-          ?>
-        </div>
-        <div class="filter-btns">
-          <button class="clear">Clear All</button>
-          <button class="results">Show Results</button>
-        </div>
+              <h4>Category</h4>
+              <div class="filter-container">
+                <?php
+                $blog_cats = get_terms(['taxonomy' => 'category', 'hide_empty' => false]);
+                if (!empty($blog_cats) && !is_wp_error($blog_cats)) {
+                  foreach ($blog_cats as $cat) {
+                    if ($cat->name === 'Uncategorized') continue;
+                    echo '<span class="filter" data-title="' . esc_attr($cat->name) . '" data-id="' . esc_attr($cat->term_id) . '">' . esc_html($cat->name) . '</span>';
+                  }
+                }
+                ?>
+              </div>
+
+              <div class="filter-btns">
+                <button class="clear">Clear All</button>
+                <button class="results">Show Results</button>
+              </div>
+            </div>
+          </div>
       </aside>
 
       <div class="product-grid" id="gbh-blog-grid">
