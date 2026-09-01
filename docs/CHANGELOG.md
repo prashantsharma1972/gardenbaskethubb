@@ -1,5 +1,44 @@
 # Garden Basket Hub - Changelog
 
+## [v1.3.0] - 2026-09-01
+
+### Dynamic Front-Page Sections (WordPress CPT Integration)
+- **Products Section**: Now pulls 6 most-recent products from `product` CPT (`orderby=date DESC`). Each card shows the correct `product_cat` taxonomy label (not hardcoded). Added `data-permalink` on every `.product-card` for click navigation. `loading="lazy"` on all thumbnails.
+- **Reels Section REBUILT**: Completely replaced 4 hardcoded static Instagram-linked cards with live WordPress `reels` CPT query (4 most recent, `orderby=date DESC`). Each reel card now shows: CPT thumbnail image (with emoji fallback), reel title, `reel_view_count` post meta, and correctly links to `single-reels.php`. Graceful static fallback if DB is empty.
+- **Blogs Section**: Now uses `orderby=date DESC` for truly most-recent 3 posts. Added `read_time` post meta badge and `product_cat`-style category term badge on each card. `loading="lazy"` on all thumbnails.
+- All `get_field()` (ACF) calls paired with `get_post_meta()` fallbacks for robustness.
+
+### FAQ Accordion — About Us Page
+- Added a full **8-question FAQ accordion** section to `page-about-us.php`.
+- Questions cover: pan-India delivery, Jaipur pincode checker, organic/non-GMO seeds, seed shelf life, Live Plant Guarantee, WhatsApp Plant Doctor, payment methods (Razorpay/COD), and bulk/wholesale orders.
+- Implemented as a **Pure CSS Checkbox Hack** — zero JavaScript. Smooth `max-height` height transition, rotating `+` → `×` icon on open.
+- Full responsive SCSS in `aboutUs.scss`: desktop, 900px, and 500px breakpoints. Uses only existing CSS design token variables.
+
+### Coupon Code System Overhaul (`cart-engine.php`)
+- Replaced the single hardcoded 2-coupon check with a clean **Coupon Registry array** — easy to add/change codes by editing one place.
+- **7 valid coupon codes** now active: `ORGANIC10` (₹100), `MONSOON10` (₹120), `GARDEN10` (₹120), `JAIPUR100` (₹100), `MONSOON200` (₹200), `WELCOME50` (₹50), `SEED15` (₹150).
+- Each coupon has its own discount amount and human-readable label shown in the success toast.
+- Synced with README.md docs (previously mismatched).
+- Improved error message now shows example valid codes.
+
+### Sticky Floating WhatsApp Chat Button (`footer.php`)
+- Added a **sticky `position:fixed` WhatsApp button** visible on every single page of the site.
+- Uses a proper inline SVG WhatsApp logo (not emoji) for crisp rendering at all DPRs.
+- Features: green pulsing animation (2.8s loop), bounce scale on hover, tooltip `"💬 Chat with us!"` with smooth fade+slide transition.
+- Pre-filled WhatsApp message: `"Hello Garden Basket Hub! I need help with my order 🌿"`
+- Mobile responsive: smaller 50×50px at 600px, tooltip hidden on mobile (tap interface).
+
+### Performance & JavaScript Fixes
+- **Buy Now fix**: `ecommerce.js` — redirect now uses `window.gbh_ajax_obj.checkout_url` (dynamic from WordPress) instead of hardcoded `/checkout/`.
+- **`footer.js`**: Was a completely empty 16-byte file. Now has a meaningful comment placeholder — the Webpack bundle entry is valid.
+- **`loading="lazy"`**: Added to all product card images, reel card thumbnails, and blog card thumbnails across `front-page.php`.
+
+### PHP Verification
+- All 4 modified PHP files validated via `php -l`: `front-page.php`, `page-about-us.php`, `inc/cart-engine.php`, `footer.php` — **0 syntax errors**.
+- Webpack build: `compiled successfully in 10502ms`, 34 assets emitted, 0 errors.
+
+---
+
 ## [v1.1.0] - 2026-08-21
 
 ### UI & Layout Fixes

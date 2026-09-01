@@ -150,7 +150,7 @@ export function initEcommerce() {
             },
             success: function(res) {
                 if (res.success) {
-                    window.location.href = '/checkout/';
+                    window.location.href = (window.gbh_ajax_obj && window.gbh_ajax_obj.checkout_url) ? window.gbh_ajax_obj.checkout_url : '/checkout/';
                 } else {
                     $btn.prop('disabled', false).html(originalText);
                     showToast(res.data.message || 'Error processing checkout.', 'error');

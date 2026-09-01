@@ -193,14 +193,39 @@ function gbh_ajax_apply_coupon()
 
     $coupon = isset($_POST['coupon']) ? strtoupper(trim(sanitize_text_field($_POST['coupon']))) : '';
 
-    if ($coupon === 'MONSOON10' || $coupon === 'GARDEN10') {
-        $_SESSION['gbh_discount'] = 120;
+    if (empty($coupon)) {
+        wp_send_json_error(array('message' => 'Please enter a coupon code.'));
+        return;
+    }
+
+    /**
+     * GBH Coupon Code Registry
+     * Format: 'CODE' => [ 'discount' => ₹amount, 'label' => 'Description' ]
+     *
+     * To add/change a coupon — just edit this array.
+     */
+    $valid_coupons = array(
+        'ORGANIC10'   => array('discount' => 100,  'label' => '₹100 Off on Organic Products'),
+        'MONSOON10'   => array('discount' => 120,  'label' => '₹120 Off Monsoon Special'),
+        'GARDEN10'    => array('discount' => 120,  'label' => '₹120 Off Garden Essentials'),
+        'JAIPUR100'   => array('discount' => 100,  'label' => '₹100 Off Jaipur Delivery Special'),
+        'MONSOON200'  => array('discount' => 200,  'label' => '₹200 Off Monsoon Bumper Sale'),
+        'WELCOME50'   => array('discount' => 50,   'label' => '₹50 Off Welcome Discount'),
+        'SEED15'      => array('discount' => 150,  'label' => '₹150 Off Seeds & Seedlings'),
+    );
+
+    if (isset($valid_coupons[$coupon])) {
+        $discount = $valid_coupons[$coupon]['discount'];
+        $label    = $valid_coupons[$coupon]['label'];
+
+        $_SESSION['gbh_discount'] = $discount;
+
         wp_send_json_success(array(
-            'message' => 'Coupon ' . esc_html($coupon) . ' applied! (₹120 Off)',
-            'cart' => gbh_get_cart_data()
+            'message' => '🎉 Coupon <strong>' . esc_html($coupon) . '</strong> applied! ' . esc_html($label),
+            'cart'    => gbh_get_cart_data()
         ));
     } else {
-        wp_send_json_error(array('message' => 'Invalid coupon code. Try MONSOON10'));
+        wp_send_json_error(array('message' => '❌ Invalid coupon code. Try <strong>ORGANIC10</strong> or <strong>MONSOON10</strong> for discounts!'));
     }
 }
 add_action('wp_ajax_gbh_apply_coupon', 'gbh_ajax_apply_coupon');

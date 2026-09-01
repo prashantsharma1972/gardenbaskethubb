@@ -20,6 +20,11 @@ $mobile: 31.25em; //500px
   }
 }
 
+/* Blog grid keeps 32px gap on desktop */
+.blog-grid {
+  gap: 32px;
+}
+
 /* ============================================================
    RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ============================================================ */
@@ -218,6 +223,7 @@ section {
   .cat-grid-wrapper, 
   .about-values-grid,
   .product-grid,
+  .blog-grid,
   .reels-grid,
   .about-story-cards,
   .staff-grid,
@@ -263,15 +269,30 @@ section {
     padding: 14px 20px;
     background: var(--soil);
     color: var(--white);
-    font-size: 1.6rem;
-    font-family: var(--f-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--f-body);
     cursor: pointer;
     border-radius: 4px;
     margin-bottom: 24px;
+    user-select: none;
   }
-  
+
+  /* Chevron indicator — rotates when open */
+  .mobile-filter-summary::after {
+    content: '▼';
+    font-size: 0.7rem;
+    opacity: 0.8;
+    transition: transform 0.25s ease;
+    display: inline-block;
+  }
+
   .filter-toggle-checkbox:checked + .mobile-filter-summary {
     background: var(--ink);
+  }
+
+  .filter-toggle-checkbox:checked + .mobile-filter-summary::after {
+    transform: rotate(180deg);
   }
 }
 

@@ -1,3 +1,8 @@
+<?php
+/**
+ * Garden Basket Hub — Privacy Policy Page
+ */
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,45 +16,59 @@
   <?php get_header(); ?>
   <main>
 
-    <!-- ============================================================
-     PRIVACY POLICY HERO
-     ============================================================ -->
-    <section class="page-hero doc-hero">
-      <p class="section-label">Transparency & Trust</p>
-      <h1 class="hero-title">Privacy <em>Policy</em></h1>
-      <p class="hero-desc">
-        How we protect your data while delivering gardening happiness.
-      </p>
+    <section class="page-hero">
+      <p class="breadcrumb"><a href="/">Home</a> · Legal</p>
+      <h1>Privacy <em>Policy</em></h1>
+      <p>How we collect, use and protect your data while delivering gardening happiness.</p>
     </section>
 
-    <!-- ============================================================
-     POLICY CONTENT
-     ============================================================ -->
-    <section class="section-sand">
-      <div class="container" style="max-width: 800px; padding: 60px 20px;">
-        <h2>1. Information We Collect</h2>
-        <p>
-          When you order seeds, saplings, or supplies from Garden Basket Hub, we collect standard e-commerce details
-          like your name, address, and phone number to fulfill your order.
-        </p>
+    <section class="section-sand legal-page-section">
+      <div class="container">
+        <div class="legal-doc">
 
-        <h2>2. Payment Security</h2>
-        <p>
-          All transactions are encrypted and processed by Razorpay or PhonePe gateways. We do not store your credit card
-          information.
-        </p>
+          <p class="legal-updated">Last updated: September 2026</p>
 
-        <h2>3. Third-Party Logistics</h2>
-        <p>
-          For Jaipur local deliveries, we share your address and phone number with Porter or Borzo drivers. For
-          pan-India
-          seed orders, we share details with BlueDart/Delhivery.
-        </p>
+          <div class="legal-section">
+            <div class="legal-num">01</div>
+            <div class="legal-body">
+              <h2>Information We Collect</h2>
+              <p>When you order seeds, saplings, or gardening supplies from Garden Basket Hub, we collect standard e-commerce details including your full name, delivery address, phone number, and email address — solely to fulfil your order and communicate delivery updates.</p>
+            </div>
+          </div>
 
-        <h2>4. Contact Us</h2>
-        <p>
-          If you have privacy concerns, contact our team at privacy@gardenbaskethub.com.
-        </p>
+          <div class="legal-section">
+            <div class="legal-num">02</div>
+            <div class="legal-body">
+              <h2>Payment Security</h2>
+              <p>All transactions are securely encrypted and processed by <strong>Razorpay</strong>, a PCI-DSS compliant payment gateway. Garden Basket Hub does not store, view, or retain any credit card or bank account information on our servers.</p>
+            </div>
+          </div>
+
+          <div class="legal-section">
+            <div class="legal-num">03</div>
+            <div class="legal-body">
+              <h2>Third-Party Logistics</h2>
+              <p>For Jaipur same-day deliveries, we share your address and phone number with our local delivery partners (Porter/Borzo). For pan-India seed orders, we share the same details with BlueDart/Delhivery for shipment tracking. We do not sell your data to any third party for marketing purposes.</p>
+            </div>
+          </div>
+
+          <div class="legal-section">
+            <div class="legal-num">04</div>
+            <div class="legal-body">
+              <h2>Cookies &amp; Analytics</h2>
+              <p>Our website uses basic session cookies to maintain your shopping cart across page navigations. We may use anonymised analytics (Google Analytics) to understand site traffic. No personally identifiable information is shared with analytics providers.</p>
+            </div>
+          </div>
+
+          <div class="legal-section">
+            <div class="legal-num">05</div>
+            <div class="legal-body">
+              <h2>Contact Us</h2>
+              <p>If you have any privacy concerns or wish to request data deletion, please contact our team at <a href="mailto:privacy@gardenbaskethubb.com">privacy@gardenbaskethubb.com</a> or WhatsApp us directly.</p>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
