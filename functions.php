@@ -83,17 +83,17 @@ add_action('template_redirect', 'disable_search_redirect');
    ============================================================ */
 // Razorpay Credentials (Plug keys directly here when received)
 if (!defined('GBH_RAZORPAY_KEY_ID'))
-    define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_YOUR_KEY_ID_HERE'));
+    define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_SqkT1XkdPBznc5'));
 if (!defined('GBH_RAZORPAY_KEY_SECRET'))
-    define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'YOUR_SECRET_HERE'));
+    define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'C4lgkZpvpvNwgLYCoT82gZKH'));
 
 // Shiprocket Credentials
 if (!defined('GBH_SHIPROCKET_EMAIL'))
     define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant753@gmail.com'));
 if (!defined('GBH_SHIPROCKET_PASSWORD'))
-    define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@123'));
+    define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@9414216343'));
 if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION'))
-    define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Jaipur_Nursery_Main'));
+    define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Home'));
 
 /* ============================================================
    2. LOAD MODULAR SUBSYSTEMS (/inc/ & /helpers/)
