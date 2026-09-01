@@ -509,3 +509,15 @@
   }
 }
 
+
+.mobile-tabs-container { display: none; margin-bottom: 24px; }
+.mobile-tab-select { width: 100%; padding: 12px 16px; border: 1px solid rgba(44, 26, 14, 0.2); border-radius: 4px; font-family: var(--f-body); font-size: 1rem; color: var(--soil); background: var(--white); cursor: pointer; }
+@media (max-width: 900px) {
+  .tabs-nav { display: none !important; }
+  .mobile-tabs-container { display: block; }
+}
+
+.pdp-related-grid { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 24px; padding-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.pdp-related-grid::-webkit-scrollbar { display: none; }
+.related-card { min-width: 320px; flex-shrink: 0; scroll-snap-align: start; }
+

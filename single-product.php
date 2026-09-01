@@ -110,11 +110,21 @@
 
       <!-- CARE TABS SECTION -->
       <section class="pdp-care-tabs">
+        <!-- Mobile Dropdown -->
+        <div class="mobile-tabs-container">
+          <select class="mobile-tab-select">
+            <option value="tab-growing">🌱 How to Grow</option>
+            <option value="tab-care">💧 Plant Care Tips</option>
+            <option value="tab-pests">🪲 Pests &amp; Diseases</option>
+            <option value="tab-harvest">🪴 Harvesting</option>
+          </select>
+        </div>
+        <!-- Desktop Tabs -->
         <div class="tabs-nav">
           <button class="tab-btn active" data-tab="tab-growing">🌱 How to Grow</button>
           <button class="tab-btn" data-tab="tab-care">💧 Plant Care Tips</button>
           <button class="tab-btn" data-tab="tab-pests">🪲 Pests &amp; Diseases</button>
-          <button class="tab-btn" data-tab="tab-harvest">🌾 Harvesting</button>
+          <button class="tab-btn" data-tab="tab-harvest">🪴 Harvesting</button>
         </div>
         <div class="tabs-body">
           <div id="tab-growing" class="tab-content active">
@@ -143,11 +153,11 @@
           <h2 class="section-title">Related Gardening Essentials</h2>
         </div>
 
-        <div class="pdp-related-grid">
+        <div class="pdp-related-grid slider-grid">
           <?php
           $related = new WP_Query(array(
             'post_type' => 'product',
-            'posts_per_page' => 3,
+            'posts_per_page' => 6,
             'post__not_in' => array($product_id),
           ));
 

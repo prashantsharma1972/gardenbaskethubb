@@ -54,12 +54,7 @@
     color: var(--leaf);
 }
 
-/* PRODUCT GRID (reused) */
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-}
+/* PRODUCT GRID (reused in _base.scss) */
 
 .product-card {
     border: 1px solid rgba(44, 26, 14, 0.1);
@@ -387,11 +382,12 @@
         padding: 120px 24px 56px;
     }
 
-    .product-grid {
-        grid-template-columns: 1fr;
-    }
-
     .shop-layout {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 500px) {
+    .shop-toolbar .results { font-size: 0.65rem; }
+    .filter-sortby .sort-by-heading { font-size: 0.7rem; padding: 6px 8px; }
 }

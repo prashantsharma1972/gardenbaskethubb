@@ -448,6 +448,10 @@ section {
     gap: 28px;
     
     @include tablet {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include mobile {
         grid-template-columns: 1fr;
     }
 }
@@ -1692,3 +1696,9 @@ section {
                 padding: 48px 24px 32px;
             }
         }
+
+/* GLOBAL SLIDER GRID for Related Sections */
+.slider-grid { display: flex !important; overflow-x: auto; scroll-snap-type: x mandatory; gap: 24px; padding-bottom: 20px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.slider-grid::-webkit-scrollbar { display: none; }
+.slider-grid > * { min-width: 320px; flex-shrink: 0; scroll-snap-align: start; }
+

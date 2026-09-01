@@ -63,7 +63,7 @@
           <a href="/blog/" class="btn-ghost">View All Guides ➔</a>
         </div>
 
-        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr); gap: 32px; padding: 24px 0;">
+        <div class="slider-grid" style="padding: 24px 0;">
           <?php
           $related_query = new WP_Query(array(
             'post_type' => 'post',

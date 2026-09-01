@@ -68,7 +68,9 @@
         $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
         $blog_query = new WP_Query(array(
           'post_type' => 'post',
-          'posts_per_page' => 9,
+          'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order' => 'DESC',
           'paged' => $paged
         ));
 

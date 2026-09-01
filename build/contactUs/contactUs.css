@@ -201,7 +201,7 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background: var(--brand);
+    background: var(--soil);
     color: var(--white);
     font-size: 1.6rem;
     font-family: var(--f-heading);
@@ -729,6 +729,11 @@ section {
   gap: 28px;
 }
 @media (max-width: 65.625em) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 31.25em) {
   .product-grid {
     grid-template-columns: 1fr;
   }
@@ -1945,6 +1950,27 @@ footer {
     padding: 48px 24px 32px;
   }
 }
+/* GLOBAL SLIDER GRID for Related Sections */
+.slider-grid {
+  display: flex !important;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 24px;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.slider-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.slider-grid > * {
+  min-width: 320px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
 /* ============================================================
    RESPONSIVE BREAKPOINTS (TABLET & MOBILE)
    ============================================================ */
@@ -2144,7 +2170,7 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background: var(--brand);
+    background: var(--soil);
     color: var(--white);
     font-size: 1.6rem;
     font-family: var(--f-heading);
@@ -2679,7 +2705,7 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background: var(--brand);
+    background: var(--soil);
     color: var(--white);
     font-size: 1.6rem;
     font-family: var(--f-heading);
@@ -2928,7 +2954,7 @@ section {
     justify-content: space-between;
     align-items: center;
     padding: 14px 20px;
-    background: var(--brand);
+    background: var(--soil);
     color: var(--white);
     font-size: 1.6rem;
     font-family: var(--f-heading);

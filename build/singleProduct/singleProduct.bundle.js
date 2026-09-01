@@ -299,6 +299,18 @@ __webpack_require__.r(__webpack_exports__);
     $('.tab-content').removeClass('active');
     $(this).addClass('active');
     $('#' + target).addClass('active');
+
+    // Sync mobile dropdown if it exists
+    $('.mobile-tab-select').val(target);
+  });
+  $(document).on('change', '.mobile-tab-select', function () {
+    let target = $(this).val();
+    $('.tab-content').removeClass('active');
+    $('#' + target).addClass('active');
+
+    // Sync desktop buttons
+    $('.tab-btn').removeClass('active');
+    $('.tab-btn[data-tab="' + target + '"]').addClass('active');
   });
 
   // 11. PDP Image Thumbnail Swap

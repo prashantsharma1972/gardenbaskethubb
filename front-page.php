@@ -200,30 +200,30 @@
         </div>
 
         <div class="reels-grid">
-          <div class="reel-card r1">
+          <a href="https://www.instagram.com/gardenbaskethub" target="_blank" class="reel-card r1" style="text-decoration:none; display:flex; flex-direction:column;">
             <div class="play">▶️</div>
             <div class="meta">
               <h4>Monsoon gardening tips</h4><span>2.4K views</span>
             </div>
-          </div>
-          <div class="reel-card r2">
+          </a>
+          <a href="https://www.instagram.com/gardenbaskethub" target="_blank" class="reel-card r2" style="text-decoration:none; display:flex; flex-direction:column;">
             <div class="play">▶️</div>
             <div class="meta">
               <h4>How to repot your plant</h4><span>3.1K views</span>
             </div>
-          </div>
-          <div class="reel-card r3">
+          </a>
+          <a href="https://www.instagram.com/gardenbaskethub" target="_blank" class="reel-card r3" style="text-decoration:none; display:flex; flex-direction:column;">
             <div class="play">▶️</div>
             <div class="meta">
               <h4>Terracotta pots from Jaipur</h4><span>1.8K views</span>
             </div>
-          </div>
-          <div class="reel-card r4">
+          </a>
+          <a href="https://www.instagram.com/gardenbaskethub" target="_blank" class="reel-card r4" style="text-decoration:none; display:flex; flex-direction:column;">
             <div class="play">▶️</div>
             <div class="meta">
               <h4>Seed saving 101</h4><span>5.2K views</span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>

@@ -95,7 +95,9 @@
             $paged = (get_query_var('paged')) ? get_query_var('paged') : ((get_query_var('page')) ? get_query_var('page') : 1);
             $product_args = array(
                 'post_type' => 'product',
-                'posts_per_page' => 12,
+                'posts_per_page' => -1,
+                  'orderby' => 'date',
+                  'order' => 'DESC',
                 'paged' => $paged,
             );
             $products_query = new WP_Query($product_args);

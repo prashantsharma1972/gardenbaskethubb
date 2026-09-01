@@ -215,3 +215,13 @@ add_action('init', function () {
         update_option('gbh_rules_flushed_v4', 1);
     }
 }, 99);
+add_action('pre_get_posts', 'gbh_archive_queries');
+function gbh_archive_queries($query) {
+  if (!is_admin() && $query->is_main_query()) {
+    if (is_post_type_archive('reels') || is_post_type_archive('product') || is_home()) {
+      $query->set('posts_per_page', -1);
+      $query->set('orderby', 'date');
+      $query->set('order', 'DESC');
+    }
+  }
+}
