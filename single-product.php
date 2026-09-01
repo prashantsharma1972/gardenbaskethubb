@@ -108,42 +108,35 @@
         </div>
       </section>
 
-      <!-- CARE TABS SECTION -->
-      <section class="pdp-care-tabs">
-        <!-- Mobile Dropdown -->
-        <div class="mobile-tabs-container">
-          <select class="mobile-tab-select">
-            <option value="tab-growing">🌱 How to Grow</option>
-            <option value="tab-care">💧 Plant Care Tips</option>
-            <option value="tab-pests">🪲 Pests &amp; Diseases</option>
-            <option value="tab-harvest">🪴 Harvesting</option>
-          </select>
-        </div>
-        <!-- Desktop Tabs -->
-        <div class="tabs-nav">
-          <button class="tab-btn active" data-tab="tab-growing">🌱 How to Grow</button>
-          <button class="tab-btn" data-tab="tab-care">💧 Plant Care Tips</button>
-          <button class="tab-btn" data-tab="tab-pests">🪲 Pests &amp; Diseases</button>
-          <button class="tab-btn" data-tab="tab-harvest">🪴 Harvesting</button>
-        </div>
-        <div class="tabs-body">
-          <div id="tab-growing" class="tab-content active">
-            <h3 class="tab-heading">How to Grow <?php echo esc_html($title); ?></h3>
+      <!-- CARE ACCORDION SECTION -->
+      <section class="pdp-care-tabs" style="max-width:800px; margin: 0 auto; padding: 0 24px;">
+        <details class="gbh-accordion" open>
+          <summary>🌱 How to Grow <?php echo esc_html($title); ?></summary>
+          <div class="gbh-accordion-content">
             <?php echo $how_to_grow ? wp_kses_post($how_to_grow) : '<p>Sow seeds directly in pots or grow bags at a depth of 2–2.5 cm. Maintain spacing of 30–45 cm between plants. Keep soil evenly moist during germination.</p>'; ?>
           </div>
-          <div id="tab-care" class="tab-content">
-            <h3 class="tab-heading">Plant Care Requirements</h3>
+        </details>
+        
+        <details class="gbh-accordion">
+          <summary>💧 Plant Care Requirements</summary>
+          <div class="gbh-accordion-content">
             <?php echo $care_tips ? wp_kses_post($care_tips) : '<p><strong>Sunlight:</strong> 6–8 hours of direct sunlight daily.<br><strong>Watering:</strong> Keep soil moist.</p>'; ?>
           </div>
-          <div id="tab-pests" class="tab-content">
-            <h3 class="tab-heading">Pest &amp; Disease Prevention</h3>
+        </details>
+        
+        <details class="gbh-accordion">
+          <summary>🪲 Pest &amp; Disease Prevention</summary>
+          <div class="gbh-accordion-content">
             <?php echo $pests_diseases ? wp_kses_post($pests_diseases) : '<p>Spray organic Neem Oil solution every 10–15 days as a preventative measure.</p>'; ?>
           </div>
-          <div id="tab-harvest" class="tab-content">
-            <h3 class="tab-heading">Harvesting Guide</h3>
+        </details>
+        
+        <details class="gbh-accordion">
+          <summary>🪴 Harvesting Guide</summary>
+          <div class="gbh-accordion-content">
             <?php echo $harvesting_guide ? wp_kses_post($harvesting_guide) : '<p>Harvest tender fruits/vegetables regularly when they reach optimal size.</p>'; ?>
           </div>
-        </div>
+        </details>
       </section>
 
       <!-- RELATED PRODUCTS SECTION -->
@@ -153,7 +146,8 @@
           <h2 class="section-title">Related Gardening Essentials</h2>
         </div>
 
-        <div class="pdp-related-grid slider-grid">
+        <div class="swiper pdp-related-swiper">
+          <div class="swiper-wrapper">
           <?php
           $related = new WP_Query(array(
             'post_type' => 'product',
@@ -168,7 +162,7 @@
               $r_price = get_field('product_offer_price') ? get_field('product_offer_price') : get_field('product_price');
               $r_thumb = get_the_post_thumbnail_url($r_id, 'medium');
               ?>
-              <div class="related-card">
+              <div class="swiper-slide related-card">
                 <div class="related-card-img">
                   <?php if ($r_thumb): ?>
                     <img src="<?php echo esc_url($r_thumb); ?>" alt="<?php the_title(); ?>">
@@ -189,6 +183,7 @@
           <?php endwhile;
             wp_reset_postdata();
           endif; ?>
+          </div>
         </div>
       </section>
 

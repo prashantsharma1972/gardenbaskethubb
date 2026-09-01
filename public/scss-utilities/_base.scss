@@ -1756,3 +1756,65 @@ section {
     .legal-section { flex-direction: column; gap: 12px; }
     .legal-num { font-size: 1.2rem; }
 }
+
+/* ============================================================
+   GLOBAL ACCORDION (Drop Toggler)
+   ============================================================ */
+details.gbh-accordion {
+    border-bottom: 1px solid rgba(44, 26, 14, 0.1);
+}
+details.gbh-accordion:first-child {
+    border-top: 1px solid rgba(44, 26, 14, 0.1);
+}
+details.gbh-accordion summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--soil);
+    list-style: none;
+    transition: color 0.2s ease;
+}
+details.gbh-accordion summary::-webkit-details-marker {
+    display: none;
+}
+details.gbh-accordion summary:hover {
+    color: var(--leaf);
+}
+details.gbh-accordion summary::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--sand);
+    color: var(--leaf);
+    font-size: 1.2rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+}
+details.gbh-accordion[open] summary {
+    color: var(--leaf);
+}
+details.gbh-accordion[open] summary::after {
+    content: '×';
+    background: var(--leaf);
+    color: var(--white);
+    transform: rotate(90deg);
+}
+.gbh-accordion-content {
+    padding: 0 0 20px;
+    color: var(--clay);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+.gbh-accordion-content p {
+    margin-bottom: 12px;
+}

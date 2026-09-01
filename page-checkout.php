@@ -108,13 +108,6 @@
                 </div>
               </div>
 
-              <div class="pay-option">
-                <span class="ic">💳</span>
-                <div>
-                  <div class="label">Partial COD</div>
-                  <div class="sub">Pay ₹100 advance online, rest on delivery</div>
-                </div>
-              </div>
             </div>
 
             <button type="submit" class="btn-primary btn-place-order" style="width:100%;text-align:center;padding:18px;">

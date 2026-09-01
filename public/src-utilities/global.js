@@ -73,4 +73,31 @@
         }
     });
 
+    // ============================================================
+    // Swiper Initialization
+    // ============================================================
+    $(document).ready(function() {
+        if (typeof Swiper !== 'undefined' && $('.swiper').length) {
+            new Swiper('.swiper', {
+                slidesPerView: 1.2,
+                spaceBetween: 16,
+                grabCursor: true,
+                breakpoints: {
+                    600: {
+                        slidesPerView: 2.2,
+                        spaceBetween: 20
+                    },
+                    900: {
+                        slidesPerView: 3,
+                        spaceBetween: 24
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                        spaceBetween: 24
+                    }
+                }
+            });
+        }
+    });
+
 })(jQuery);

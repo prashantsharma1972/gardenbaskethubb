@@ -42,16 +42,18 @@ function showCopyAlert() {
 }
 
 let copylink = document.getElementById('copylink');
-copylink.addEventListener('click', function (e) {
-	let urldata = window.location.href;
-	if (!navigator.clipboard) {
-		fallbackCopyTextToClipboard(urldata);
+if (copylink) {
+	copylink.addEventListener('click', function (e) {
+		let urldata = window.location.href;
+		if (!navigator.clipboard) {
+			fallbackCopyTextToClipboard(urldata);
+			showCopyAlert();
+			return;
+		}
+		copyTextToClipboard(urldata);
 		showCopyAlert();
-		return;
-	}
-	copyTextToClipboard(urldata);
-	showCopyAlert();
-});
+	});
+}
 //copy link to clipboard
 
 
@@ -95,43 +97,51 @@ const unmuteIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" 
 `;
 
 // Play or Pause the audio
-playPauseBtn.addEventListener('click', () => {
-	if (audio.paused) {
-		audio.play();
-		playPauseBtn.innerHTML = pauseIcon;
-	} else {
-		audio.pause();
-		playPauseBtn.innerHTML = playIcon;
-	}
-});
+if (playPauseBtn && audio) {
+	playPauseBtn.addEventListener('click', () => {
+		if (audio.paused) {
+			audio.play();
+			playPauseBtn.innerHTML = pauseIcon;
+		} else {
+			audio.pause();
+			playPauseBtn.innerHTML = playIcon;
+		}
+	});
+}
 
 // Mute or Unmute the audio
-muteBtn.addEventListener('click', () => {
-	audio.muted = !audio.muted;
-	muteBtn.innerHTML = audio.muted ? unmuteIcon : muteIcon;
-});
+if (muteBtn && audio) {
+	muteBtn.addEventListener('click', () => {
+		audio.muted = !audio.muted;
+		muteBtn.innerHTML = audio.muted ? unmuteIcon : muteIcon;
+	});
+}
 
 // Update progress bar as the audio plays
-audio.addEventListener('timeupdate', () => {
-	if (!isDragging) {
-		const progressPercent = (audio.currentTime / audio.duration) * 100;
-		progressBarFill.style.width = `${progressPercent}%`;
-	}
-});
+if (audio && progressBarFill) {
+	audio.addEventListener('timeupdate', () => {
+		if (!isDragging) {
+			const progressPercent = (audio.currentTime / audio.duration) * 100;
+			progressBarFill.style.width = `${progressPercent}%`;
+		}
+	});
+}
 
 // Seek audio position on progress bar click
-progressBar.addEventListener('click', (event) => {
-	const progressBarWidth = progressBar.offsetWidth;
-	const clickX = event.offsetX;
-	const newTime = (clickX / progressBarWidth) * audio.duration;
-	audio.currentTime = newTime;
-});
+if (progressBar && audio) {
+	progressBar.addEventListener('click', (event) => {
+		const progressBarWidth = progressBar.offsetWidth;
+		const clickX = event.offsetX;
+		const newTime = (clickX / progressBarWidth) * audio.duration;
+		audio.currentTime = newTime;
+	});
 
-// Dragging functionality for progress bar
-progressBar.addEventListener('mousedown', (event) => {
-	isDragging = true;
-	updateProgress(event);
-});
+	// Dragging functionality for progress bar
+	progressBar.addEventListener('mousedown', (event) => {
+		isDragging = true;
+		updateProgress(event);
+	});
+}
 
 document.addEventListener('mousemove', (event) => {
 	if (isDragging) {
@@ -144,6 +154,7 @@ document.addEventListener('mouseup', () => {
 });
 
 function updateProgress(event) {
+	if (!progressBar || !audio || !progressBarFill) return;
 	const progressBarWidth = progressBar.offsetWidth;
 	const clickX = event.clientX - progressBar.getBoundingClientRect().left;
 	const newTime = Math.max(0, Math.min(clickX / progressBarWidth, 1)) * audio.duration;
