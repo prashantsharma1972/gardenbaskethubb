@@ -66,9 +66,9 @@
             $video_url = get_field('video_url');
             $thumbnail = get_the_post_thumbnail_url($r_id, 'large');
             if (!$thumbnail && function_exists('get_field')) {
-                $thumbnail = get_field('thumbnail_image', $r_id);
+                $thumbnail = get_field('thumbnail_image', $r_id) ?: (get_field('product_image', $r_id) ?: get_field('banner_image', $r_id));
             }
-            $style = $thumbnail ? 'background-image: url(' . esc_url($thumbnail) . ');' : '';
+            $style = $thumbnail ? 'background-image: url(' . esc_url($thumbnail) . ');' : 'background: #e0e7df;';
             
             $terms = get_the_terms($r_id, 'reels_tag');
             $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Tutorial';

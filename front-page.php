@@ -132,7 +132,7 @@
                     <?php if ($hp_thumb): ?>
                       <img src="<?php echo esc_url($hp_thumb); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
                     <?php else: ?>
-                      🌱
+                      <div style="width:100%; height:100%; background:#f4f4f4;"></div>
                     <?php endif; ?>
                   </a>
 
@@ -250,6 +250,8 @@
                   <img src="<?php echo esc_url($hr_thumb); ?>" alt="<?php the_title_attribute(); ?>"
                        loading="lazy"
                        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;opacity:0.55;">
+                <?php else: ?>
+                  <div style="position:absolute;inset:0;width:100%;height:100%;background:#e0e7df;border-radius:inherit;opacity:0.55;"></div>
                 <?php endif; ?>
                 <div class="play">▶️</div>
                 <div class="meta">
@@ -396,6 +398,7 @@
               $featured_blogs->the_post();
               $fb_id        = get_the_ID();
               $fb_thumb     = get_the_post_thumbnail_url($fb_id, 'medium');
+              if (!$fb_thumb && function_exists('get_field')) $fb_thumb = get_field('banner_image', $fb_id);
               if (!$fb_thumb) $fb_thumb = get_post_meta($fb_id, 'banner_image', true);
 
               $fb_read_time = get_post_meta($fb_id, 'read_time', true);
@@ -406,15 +409,15 @@
               $fb_cat_name = ($fb_cats && !is_wp_error($fb_cats)) ? $fb_cats[0]->name : '';
               ?>
               <div class="product-card blog-card">
-                <?php if ($fb_thumb): ?>
-                  <div class="product-img blog-thumb">
-                    <a href="<?php the_permalink(); ?>">
+                <div class="product-img blog-thumb">
+                  <a href="<?php the_permalink(); ?>" style="display:block;width:100%;height:200px;background:#f4f4f4;border-radius:4px;overflow:hidden;">
+                    <?php if ($fb_thumb): ?>
                       <img src="<?php echo esc_url($fb_thumb); ?>" alt="<?php the_title_attribute(); ?>"
                            loading="lazy"
-                           style="width:100%; height:200px; object-fit:cover; border-radius:4px;">
-                    </a>
-                  </div>
-                <?php endif; ?>
+                           style="width:100%; height:100%; object-fit:cover;">
+                    <?php endif; ?>
+                  </a>
+                </div>
                 <div class="product-body">
                   <div class="product-category" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                     <span><?php echo get_the_date('M j, Y'); ?></span>

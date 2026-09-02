@@ -130,7 +130,7 @@
                       <?php if ($image_url): ?>
                         <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>">
                       <?php else: ?>
-                        🌱
+                        <div style="width:100%; height:100%; background:#f4f4f4;"></div>
                       <?php endif; ?>
                     </a>
                     <?php if ($discount_label): ?>

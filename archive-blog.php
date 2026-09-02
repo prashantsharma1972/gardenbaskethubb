@@ -101,7 +101,7 @@
                   <?php if ($banner_img): ?>
                     <img src="<?php echo esc_url($banner_img); ?>" alt="<?php the_title(); ?>" class="blog-img">
                   <?php else: ?>
-                    <div class="blog-img-fallback">📖</div>
+                    <div class="blog-img-fallback" style="width:100%; height:100%; background:#f4f4f4;"></div>
                   <?php endif; ?>
                   <span class="badge-new badge-cat"><?php echo esc_html($cat_name); ?></span>
                 </div>

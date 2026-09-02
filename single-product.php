@@ -33,9 +33,15 @@
       if (!$harvesting_guide && function_exists('get_field')) $harvesting_guide = get_field('harvesting_guide');
 
       $main_img = get_the_post_thumbnail_url($product_id, 'large');
-      if (!$main_img) {
+      if (!$main_img && function_exists('get_field')) {
         $main_img = get_field('product_image');
       }
+      
+      $img_1 = function_exists('get_field') ? get_field('product_image_1') : '';
+      $img_2 = function_exists('get_field') ? get_field('product_image_2') : '';
+      $img_3 = function_exists('get_field') ? get_field('product_image_3') : '';
+      
+      $gallery_images = array_filter(array($main_img, $img_1, $img_2, $img_3));
       ?>
 
       <!-- MAIN PDP SECTION -->
@@ -43,11 +49,24 @@
         <div class="pdp">
 
           <!-- Gallery Column -->
-          <div class="pdp-gallery">
-            <div class="pdp-main-img">
-              <?php if ($main_img): ?>
-                <img src="<?php echo esc_url($main_img); ?>" alt="<?php echo esc_attr($title); ?>">
-              <?php endif; ?>
+          <div class="pdp-gallery" style="position: relative; overflow: hidden; width: 100%;">
+            <div class="swiper pdp-gallery-swiper" style="width: 100%; height: 100%;">
+              <div class="swiper-wrapper">
+                <?php if (!empty($gallery_images)): 
+                  foreach ($gallery_images as $img): ?>
+                    <div class="swiper-slide pdp-main-img">
+                      <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" style="width:100%; height:100%; object-fit:cover;">
+                    </div>
+                <?php endforeach; else: ?>
+                  <div class="swiper-slide pdp-main-img">
+                    <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; font-size:4rem;">🌱</div>
+                  </div>
+                <?php endif; ?>
+              </div>
+              <!-- Swiper Navigation -->
+              <div class="swiper-button-next" style="color:var(--leaf); background:rgba(255,255,255,0.8); border-radius:50%; width:40px; height:40px; right:10px;"></div>
+              <div class="swiper-button-prev" style="color:var(--leaf); background:rgba(255,255,255,0.8); border-radius:50%; width:40px; height:40px; left:10px;"></div>
+              <div class="swiper-pagination"></div>
             </div>
           </div>
 
