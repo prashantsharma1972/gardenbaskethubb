@@ -27,12 +27,14 @@ remove_action('wp_head', 'wp_shortlink_wp_head', 10);
 remove_action('wp_head', 'rel_shortlink');
 
 // Disable Dashicons
-function remove_dashicons_styles() {
+function remove_dashicons_styles()
+{
     wp_deregister_style('dashicons');
 }
 add_action('wp_print_styles', 'remove_dashicons_styles', 100);
 
-function add_image_insert_override($size) {
+function add_image_insert_override($size)
+{
     unset($size["thumbnail"]);
     unset($size["medium"]);
     unset($size["medium_large"]);
@@ -44,7 +46,8 @@ function add_image_insert_override($size) {
 add_action("intermediate_image_sizes_advanced", "add_image_insert_override");
 
 // Block endpoints for public users only on wp-json requests
-function allow_specific_rest_api_endpoints($endpoints) {
+function allow_specific_rest_api_endpoints($endpoints)
+{
     if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false) {
         $allowed_endpoints = [
             '/wp/v2/posts',
@@ -70,7 +73,8 @@ function allow_specific_rest_api_endpoints($endpoints) {
 }
 add_filter('rest_endpoints', 'allow_specific_rest_api_endpoints');
 
-function disable_search_redirect() {
+function disable_search_redirect()
+{
     if (is_search() && !empty($_GET['s'])) {
         wp_redirect(home_url('/404'));
         exit();
@@ -94,6 +98,27 @@ if (!defined('GBH_SHIPROCKET_PASSWORD'))
     define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@9414216343'));
 if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION'))
     define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Home'));
+
+// Authorized Developer / QA Tester Emails for Safe Staging Testing
+if (!defined('GBH_TESTER_EMAILS')) {
+    define('GBH_TESTER_EMAILS', serialize(array(
+        'gbhtesting@gmail.com',
+        'testinggbh@gmail.com',
+        'testing@gardenbaskethubb.com',
+        'secrettestinggardenbaskethubb@gmail.com'
+    )));
+}
+
+/**
+ * Check if a given email is an authorized tester
+ */
+function gbh_is_tester_email($email)
+{
+    if (empty($email))
+        return false;
+    $testers = defined('GBH_TESTER_EMAILS') ? unserialize(GBH_TESTER_EMAILS) : array();
+    return in_array(strtolower(trim($email)), array_map('strtolower', (array) $testers), true);
+}
 
 /* ============================================================
    2. LOAD MODULAR SUBSYSTEMS (/inc/ & /helpers/)
@@ -130,7 +155,8 @@ function gbh_theme_setup()
 add_action('after_setup_theme', 'gbh_theme_setup');
 
 // Register Custom Menus
-function gbh_register_menus() {
+function gbh_register_menus()
+{
     register_nav_menus(array(
         'primary-menu' => __('Primary Menu', 'gardenbaskethubb'),
         'footer-menu' => __('Footer Menu', 'gardenbaskethubb')
@@ -216,12 +242,13 @@ add_action('init', function () {
     }
 }, 99);
 add_action('pre_get_posts', 'gbh_archive_queries');
-function gbh_archive_queries($query) {
-  if (!is_admin() && $query->is_main_query()) {
-    if (is_post_type_archive('reels') || is_post_type_archive('product') || is_home()) {
-      $query->set('posts_per_page', -1);
-      $query->set('orderby', 'date');
-      $query->set('order', 'DESC');
+function gbh_archive_queries($query)
+{
+    if (!is_admin() && $query->is_main_query()) {
+        if (is_post_type_archive('reels') || is_post_type_archive('product') || is_home()) {
+            $query->set('posts_per_page', -1);
+            $query->set('orderby', 'date');
+            $query->set('order', 'DESC');
+        }
     }
-  }
 }

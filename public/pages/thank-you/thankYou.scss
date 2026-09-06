@@ -4,95 +4,408 @@
 @import '../../scss-utilities/footer';
 
 /* Thank You Order Confirmation Styles */
-.thank-you-card {
-    max-width: 680px;
-    margin: 60px auto;
-    background: #fff;
-    border-radius: 16px;
-    padding: 48px 32px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    text-align: center;
-}
-
 .thankyou-section {
-    padding-top: 160px;
-    min-height: 70vh;
+    padding-top: 140px;
+    padding-bottom: 80px;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--sand, #F5EFE6);
+}
+
+.thank-you-card,
+.thankyou-box {
+    max-width: 720px;
+    width: 90%;
+    margin: 40px auto;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 48px 36px;
+    box-shadow: 0 10px 30px rgba(44, 26, 14, 0.08);
+    text-align: center;
+    border: 1px solid rgba(44, 26, 14, 0.06);
+
+    @include mobile {
+        padding: 32px 18px;
+        width: 94%;
+        margin: 20px auto;
+    }
 }
 
 .thankyou-icon {
-    font-size: 4rem;
-    margin-bottom: 12px;
+    font-size: 3.5rem;
+    margin-bottom: 14px;
+    line-height: 1;
+}
+
+.thankyou-badge-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.order-id-badge {
+    display: inline-block;
+    font-family: var(--f-mono, monospace);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--soil, #2C1A0E);
+    background: rgba(44, 26, 14, 0.06);
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.badge-test {
+    font-family: var(--f-mono, monospace);
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 5px 12px;
+    border-radius: 20px;
+}
+
+.badge-payment {
+    font-family: var(--f-mono, monospace);
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+
+    &.badge-paid {
+        color: #15803d;
+        background: #dcfce7;
+        border: 1px solid #bbf7d0;
+    }
+
+    &.badge-cod {
+        color: #854d0e;
+        background: #fef9c3;
+        border: 1px solid #fef08a;
+    }
 }
 
 .thankyou-heading {
-    font-family: var(--f-display);
-    font-size: 2.4rem;
-    color: var(--soil);
+    font-family: var(--f-display, serif);
+    font-size: 2.2rem;
+    color: var(--soil, #2C1A0E);
     margin-bottom: 12px;
+    line-height: 1.25;
+
+    @include mobile {
+        font-size: 1.7rem;
+    }
 }
 
 .thankyou-paragraph {
-    font-size: 1.05rem;
-    color: var(--clay);
-    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--clay, #7A6050);
+    line-height: 1.6;
     margin-bottom: 28px;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .email-note {
+        display: inline-block;
+        margin-top: 6px;
+        font-size: 0.9rem;
+        color: var(--soil, #2C1A0E);
+    }
 }
 
+/* 3-Step Order Progress Tracker */
+.order-tracker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 28px auto 36px;
+    max-width: 500px;
+    position: relative;
+
+    .tracker-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 2;
+        width: 100px;
+
+        .tracker-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .tracker-label {
+            font-family: var(--f-mono, monospace);
+            font-size: 0.72rem;
+            color: var(--clay, #7A6050);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        &.step-completed .tracker-circle {
+            background: var(--leaf, #3A6B35);
+            color: #FFFFFF;
+        }
+
+        &.step-active {
+            .tracker-circle {
+                background: #fef08a;
+                border: 2px solid var(--leaf, #3A6B35);
+                color: var(--leaf, #3A6B35);
+            }
+            .tracker-label {
+                color: var(--soil, #2C1A0E);
+                font-weight: 700;
+            }
+        }
+    }
+
+    .tracker-line {
+        flex: 1;
+        height: 3px;
+        background: #e5e7eb;
+        margin: 0 -10px 22px;
+        z-index: 1;
+
+        &.active {
+            background: var(--leaf, #3A6B35);
+        }
+    }
+}
+
+/* Common Section Titles */
+.card-section-title {
+    font-family: var(--f-display, serif);
+    font-size: 1.15rem;
+    color: var(--soil, #2C1A0E);
+    margin-bottom: 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+    padding-bottom: 8px;
+}
+
+/* Purchased Items Breakdown Card */
+.thankyou-items-card {
+    background: #faf8f5;
+    padding: 20px 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(44, 26, 14, 0.08);
+    margin-bottom: 24px;
+    text-align: left;
+
+    @include mobile {
+        padding: 16px;
+    }
+}
+
+.thankyou-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.thankyou-item-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(44, 26, 14, 0.08);
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .item-img-col {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 6px;
+        overflow: hidden;
+        background: #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .thankyou-item-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thankyou-item-thumb-placeholder {
+            font-size: 1.5rem;
+        }
+    }
+
+    .item-info-col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .item-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--soil, #2C1A0E);
+            line-height: 1.3;
+        }
+
+        .item-meta {
+            font-size: 0.8rem;
+            color: var(--clay, #7A6050);
+            margin-top: 2px;
+        }
+    }
+
+    .item-price-col {
+        font-family: var(--f-mono, monospace);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--soil, #2C1A0E);
+    }
+}
+
+/* Order & Delivery Details Card */
 .thankyou-details-card {
-    background: var(--white);
+    background: #FFFFFF;
     padding: 24px;
-    border-radius: 4px;
+    border-radius: 8px;
     text-align: left;
     margin-bottom: 32px;
     border: 1px solid rgba(44, 26, 14, 0.1);
+
+    @include mobile {
+        padding: 16px;
+    }
 }
 
 .thankyou-details-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 16px;
+
+    @include mobile {
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 12px;
+    }
 }
 
 .thankyou-details-label {
-    font-family: var(--f-mono);
+    font-family: var(--f-mono, monospace);
     font-size: 0.75rem;
-    color: var(--clay);
+    color: var(--clay, #7A6050);
     text-transform: uppercase;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
 }
 
 .thankyou-details-val {
     font-size: 0.9rem;
-    color: var(--soil);
+    color: var(--soil, #2C1A0E);
+    text-align: right;
+
+    @include mobile {
+        text-align: left;
+    }
+
+    .ref-id {
+        display: block;
+        font-family: var(--f-mono, monospace);
+        font-size: 0.75rem;
+        color: var(--clay, #7A6050);
+        margin-top: 2px;
+    }
 }
 
 .thankyou-details-val-leaf {
     font-size: 0.9rem;
-    color: var(--leaf);
+    color: var(--leaf, #3A6B35);
     font-weight: bold;
+    text-align: right;
+
+    @include mobile {
+        text-align: left;
+    }
 }
 
 .total-row {
-    border-top: 1px solid rgba(44, 26, 14, 0.08);
-    padding-top: 12px;
+    border-top: 1px solid rgba(44, 26, 14, 0.12);
+    padding-top: 16px;
+    margin-top: 8px;
+    align-items: center;
+
+    @include mobile {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.total-val-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .penny-test-note {
+        font-family: var(--f-mono, monospace);
+        font-size: 0.75rem;
+        color: #b45309;
+        margin-top: 2px;
+    }
 }
 
 .thankyou-details-val-total {
-    font-family: var(--f-display);
-    font-size: 1.2rem;
-    color: var(--soil);
+    font-family: var(--f-display, serif);
+    font-size: 1.4rem;
+    color: var(--soil, #2C1A0E);
     font-weight: bold;
 }
 
+/* Action Buttons */
 .thankyou-actions {
     display: flex;
     gap: 14px;
     justify-content: center;
     flex-wrap: wrap;
-}
 
-.btn-leaf {
-    background: var(--leaf);
+    .btn-primary {
+        padding: 12px 28px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 26, 14, 0.15);
+        }
+    }
+
+    .btn-leaf {
+        background: #25D366 !important;
+        color: #FFFFFF !important;
+    }
 }
