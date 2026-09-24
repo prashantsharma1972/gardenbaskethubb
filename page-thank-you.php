@@ -72,137 +72,152 @@
      THANK YOU / ORDER CONFIRMATION
      ============================================================ -->
     <section class="thankyou-section">
-      <div class="thankyou-box thank-you-card">
-        <div class="thankyou-icon">🌱 🎉</div>
-
-        <div class="thankyou-badge-row">
-          <span class="order-id-badge">Order #<?php echo esc_html($order_num); ?></span>
-          <?php if ($is_test): ?>
-            <span class="badge-test">🧪 Staging Test Order</span>
-          <?php endif; ?>
-          <?php if ($is_cod): ?>
-            <span class="badge-payment badge-cod">💵 Cash on Delivery</span>
-          <?php else: ?>
-            <span class="badge-payment badge-paid">✅ Payment Verified</span>
-          <?php endif; ?>
-        </div>
-
-        <h1 class="thankyou-heading">
-          Thank You, <?php echo esc_html($customer_name); ?>!
-        </h1>
-
-        <p class="thankyou-paragraph">
-          Your garden order has been placed successfully. We are carefully packing your nursery plants & supplies at our Jaipur nursery.
-          <?php if ($customer_email): ?>
-            <br><span class="email-note">A confirmation receipt has been sent to <strong><?php echo esc_html($customer_email); ?></strong>.</span>
-          <?php endif; ?>
-        </p>
-
-        <!-- Visual 3-Step Order Progress Tracker -->
-        <div class="order-tracker">
-          <div class="tracker-step step-completed">
-            <div class="tracker-circle">✓</div>
-            <div class="tracker-label">Confirmed</div>
-          </div>
-          <div class="tracker-line active"></div>
-          <div class="tracker-step step-active">
-            <div class="tracker-circle">🌱</div>
-            <div class="tracker-label">Packing</div>
-          </div>
-          <div class="tracker-line"></div>
-          <div class="tracker-step">
-            <div class="tracker-circle">🚚</div>
-            <div class="tracker-label">Dispatched</div>
-          </div>
-        </div>
-
-        <!-- Ordered Items Breakdown -->
-        <?php if (!empty($items) && is_array($items)): ?>
-          <div class="thankyou-items-card">
-            <h3 class="card-section-title">Purchased Items</h3>
-            <div class="thankyou-items-list">
-              <?php foreach ($items as $item): 
-                $item_title = isset($item['title']) ? $item['title'] : 'Gardening Product';
-                $item_qty = isset($item['qty']) ? intval($item['qty']) : (isset($item['quantity']) ? intval($item['quantity']) : 1);
-                $item_price = isset($item['price']) ? floatval($item['price']) : 0;
-                $item_img = isset($item['image']) ? $item['image'] : '';
-                $item_total = $item_price * $item_qty;
-              ?>
-                <div class="thankyou-item-row">
-                  <div class="item-img-col">
-                    <?php if ($item_img): ?>
-                      <img src="<?php echo esc_url($item_img); ?>" alt="<?php echo esc_attr($item_title); ?>" class="thankyou-item-thumb">
-                    <?php else: ?>
-                      <div class="thankyou-item-thumb-placeholder">🌿</div>
-                    <?php endif; ?>
-                  </div>
-                  <div class="item-info-col">
-                    <span class="item-title"><?php echo esc_html($item_title); ?></span>
-                    <span class="item-meta">Qty: <?php echo esc_html($item_qty); ?> · ₹<?php echo esc_html(number_format($item_price, 0)); ?> each</span>
-                  </div>
-                  <div class="item-price-col">
-                    ₹<?php echo esc_html(number_format($item_total, 0)); ?>
-                  </div>
-                </div>
-              <?php endforeach; ?>
+      <div class="thankyou-layout-card">
+        
+        <!-- LEFT COLUMN: Order Status, Progress, Delivery Info & Actions -->
+        <div class="thankyou-col-left">
+          <div class="thankyou-header-status">
+            <div class="thankyou-icon">🌱 🎉</div>
+            <div class="thankyou-badge-row">
+              <span class="order-id-badge">Order #<?php echo esc_html($order_num); ?></span>
+              <?php if ($is_test): ?>
+                <span class="badge-test">🧪 Staging Test</span>
+              <?php endif; ?>
+              <?php if ($is_cod): ?>
+                <span class="badge-payment badge-cod">💵 Cash on Delivery</span>
+              <?php else: ?>
+                <span class="badge-payment badge-paid">✅ Paid Online</span>
+              <?php endif; ?>
             </div>
           </div>
-        <?php endif; ?>
 
-        <!-- Order & Delivery Details Summary Card -->
-        <div class="thankyou-details-card">
-          <h3 class="card-section-title">Order & Delivery Details</h3>
+          <h1 class="thankyou-heading">
+            Thank You, <?php echo esc_html($customer_name); ?>!
+          </h1>
 
-          <div class="thankyou-details-row">
-            <span class="thankyou-details-label">Delivery Address</span>
-            <span class="thankyou-details-val">
-              <?php echo esc_html($shipping_address); ?><?php echo ($city || $pincode) ? ', ' . esc_html($city) . ' (' . esc_html($pincode) . ')' : ''; ?>
-            </span>
+          <p class="thankyou-paragraph">
+            Your garden order has been placed successfully. We are hand-packing your seeds & saplings at our Jaipur nursery.
+            <?php if ($customer_email): ?>
+              <span class="email-note">Confirmation receipt sent to <strong><?php echo esc_html($customer_email); ?></strong>.</span>
+            <?php endif; ?>
+          </p>
+
+          <!-- Visual 3-Step Order Progress Tracker -->
+          <div class="order-tracker">
+            <div class="tracker-step step-completed">
+              <div class="tracker-circle">✓</div>
+              <div class="tracker-label">Confirmed</div>
+            </div>
+            <div class="tracker-line active"></div>
+            <div class="tracker-step step-active">
+              <div class="tracker-circle">🌱</div>
+              <div class="tracker-label">Packing</div>
+            </div>
+            <div class="tracker-line"></div>
+            <div class="tracker-step">
+              <div class="tracker-circle">🚚</div>
+              <div class="tracker-label">Dispatched</div>
+            </div>
           </div>
 
-          <div class="thankyou-details-row">
-            <span class="thankyou-details-label">Scheduled Slot</span>
-            <span class="thankyou-details-val-leaf"><?php echo esc_html($delivery_slot); ?></span>
+          <!-- Compact Delivery & Contact Card -->
+          <div class="thankyou-delivery-card">
+            <div class="delivery-card-row">
+              <span class="delivery-label">Delivery Address</span>
+              <span class="delivery-val">
+                <?php echo esc_html($shipping_address); ?><?php echo ($city || $pincode) ? ', ' . esc_html($city) . ' (' . esc_html($pincode) . ')' : ''; ?>
+              </span>
+            </div>
+
+            <div class="delivery-card-row">
+              <span class="delivery-label">Scheduled Slot</span>
+              <span class="delivery-val-leaf"><?php echo esc_html($delivery_slot); ?></span>
+            </div>
+
+            <?php if ($customer_phone): ?>
+              <div class="delivery-card-row">
+                <span class="delivery-label">Contact Phone</span>
+                <span class="delivery-val"><?php echo esc_html($customer_phone); ?></span>
+              </div>
+            <?php endif; ?>
           </div>
 
-          <div class="thankyou-details-row">
-            <span class="thankyou-details-label">Payment Method</span>
-            <span class="thankyou-details-val">
-              <?php echo esc_html($payment_method); ?>
+          <!-- Action Buttons -->
+          <div class="thankyou-actions">
+            <a href="/shop/" class="btn-primary">
+              Continue Shopping
+            </a>
+            <a href="https://wa.me/919876543210?text=Hi%20Garden%20Basket%20Hub,%20I%20have%20an%20inquiry%20about%20Order%20<?php echo urlencode($order_num); ?>"
+              target="_blank" class="btn-primary btn-leaf">
+              💬 Track via WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Order Summary & Itemized Receipt -->
+        <div class="thankyou-col-right">
+          <div class="receipt-box">
+            <h3 class="receipt-heading">Order Summary</h3>
+
+            <?php if (!empty($items) && is_array($items)): ?>
+              <div class="receipt-items-scroll">
+                <?php foreach ($items as $item): 
+                  $item_title = isset($item['title']) ? $item['title'] : 'Gardening Product';
+                  $item_qty = isset($item['qty']) ? intval($item['qty']) : (isset($item['quantity']) ? intval($item['quantity']) : 1);
+                  $item_price = isset($item['price']) ? floatval($item['price']) : 0;
+                  $item_img = isset($item['image']) ? $item['image'] : '';
+                  $item_total = $item_price * $item_qty;
+                ?>
+                  <div class="receipt-item-line">
+                    <div class="item-thumb-wrapper">
+                      <?php if ($item_img): ?>
+                        <img src="<?php echo esc_url($item_img); ?>" alt="<?php echo esc_attr($item_title); ?>" class="receipt-thumb">
+                      <?php else: ?>
+                        <span class="receipt-thumb-fallback">🌿</span>
+                      <?php endif; ?>
+                    </div>
+                    <div class="item-name-qty">
+                      <span class="item-title"><?php echo esc_html($item_title); ?></span>
+                      <span class="item-qty-tag">Qty: <?php echo esc_html($item_qty); ?> · ₹<?php echo esc_html(number_format($item_price, 0)); ?></span>
+                    </div>
+                    <div class="item-line-total">
+                      ₹<?php echo esc_html(number_format($item_total, 0)); ?>
+                    </div>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            <?php endif; ?>
+
+            <!-- Financial Receipt Breakdown -->
+            <div class="receipt-breakdown">
+              <div class="breakdown-row">
+                <span>Payment Method</span>
+                <span class="val-payment"><?php echo esc_html($payment_method); ?></span>
+              </div>
               <?php if ($razorpay_payment_id): ?>
-                <span class="ref-id">Ref: <?php echo esc_html($razorpay_payment_id); ?></span>
+                <div class="breakdown-row">
+                  <span>Transaction Ref</span>
+                  <span class="val-ref"><?php echo esc_html($razorpay_payment_id); ?></span>
+                </div>
               <?php endif; ?>
-            </span>
-          </div>
-
-          <?php if ($customer_phone): ?>
-            <div class="thankyou-details-row">
-              <span class="thankyou-details-label">Contact Phone</span>
-              <span class="thankyou-details-val"><?php echo esc_html($customer_phone); ?></span>
+              <div class="breakdown-row">
+                <span>Delivery Charges</span>
+                <span class="val-free">FREE</span>
+              </div>
+              <div class="breakdown-row grand-total-row">
+                <span>Total Amount</span>
+                <div class="total-col">
+                  <span class="total-number">₹<?php echo esc_html(number_format(floatval($total_amount), 0)); ?></span>
+                  <?php if ($is_test && floatval($paid_amount) == 1.00): ?>
+                    <span class="test-amount-tag">₹1.00 Paid (Penny Test)</span>
+                  <?php endif; ?>
+                </div>
+              </div>
             </div>
-          <?php endif; ?>
 
-          <div class="thankyou-details-row total-row">
-            <span class="thankyou-details-label">Total Amount</span>
-            <div class="total-val-wrapper">
-              <span class="thankyou-details-val-total">₹<?php echo esc_html(number_format(floatval($total_amount), 0)); ?></span>
-              <?php if ($is_test && floatval($paid_amount) == 1.00): ?>
-                <span class="penny-test-note">(₹1.00 Verification Paid)</span>
-              <?php endif; ?>
-            </div>
           </div>
         </div>
 
-        <!-- Action CTAs -->
-        <div class="thankyou-actions">
-          <a href="/shop/" class="btn-primary">
-            Continue Shopping
-          </a>
-          <a href="https://wa.me/919876543210?text=Hi%20Garden%20Basket%20Hub,%20I%20have%20an%20inquiry%20about%20Order%20<?php echo urlencode($order_num); ?>"
-            target="_blank" class="btn-primary btn-leaf">
-            💬 Track via WhatsApp
-          </a>
-        </div>
       </div>
     </section>
 

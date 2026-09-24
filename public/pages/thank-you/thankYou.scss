@@ -3,79 +3,103 @@
 @import '../../scss-utilities/header';
 @import '../../scss-utilities/footer';
 
-/* Thank You Order Confirmation Styles */
+/* ============================================================
+   THANK YOU / ORDER CONFIRMATION 2-COLUMN PREMIUM COMPACT LAYOUT
+   ============================================================ */
 .thankyou-section {
-    padding-top: 140px;
-    padding-bottom: 80px;
-    min-height: 80vh;
+    padding-top: 130px;
+    padding-bottom: 60px;
+    min-height: calc(100vh - 100px);
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--sand, #F5EFE6);
-}
-
-.thank-you-card,
-.thankyou-box {
-    max-width: 720px;
-    width: 90%;
-    margin: 40px auto;
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 48px 36px;
-    box-shadow: 0 10px 30px rgba(44, 26, 14, 0.08);
-    text-align: center;
-    border: 1px solid rgba(44, 26, 14, 0.06);
 
     @include mobile {
-        padding: 32px 18px;
-        width: 94%;
-        margin: 20px auto;
+        padding-top: 110px;
+        padding-bottom: 40px;
+        align-items: flex-start;
     }
 }
 
+.thankyou-layout-card {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 36px;
+    max-width: 1060px;
+    width: 92%;
+    margin: 20px auto;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 38px 42px;
+    box-shadow: 0 12px 36px rgba(44, 26, 14, 0.08);
+    border: 1px solid rgba(44, 26, 14, 0.06);
+    box-sizing: border-box;
+
+    @media (max-width: 960px) {
+        grid-template-columns: 1fr;
+        padding: 28px 20px;
+        gap: 28px;
+        width: 94%;
+        margin: 10px auto;
+    }
+}
+
+/* LEFT COLUMN: Status, Progress, Delivery, CTAs */
+.thankyou-col-left {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.thankyou-header-status {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
 .thankyou-icon {
-    font-size: 3.5rem;
-    margin-bottom: 14px;
+    font-size: 2.4rem;
     line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .thankyou-badge-row {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 18px;
 }
 
 .order-id-badge {
     display: inline-block;
     font-family: var(--f-mono, monospace);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--soil, #2C1A0E);
     background: rgba(44, 26, 14, 0.06);
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 20px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
 }
 
 .badge-test {
     font-family: var(--f-mono, monospace);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: bold;
     color: #b45309;
     background: #fef3c7;
     border: 1px solid #fde68a;
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 20px;
 }
 
 .badge-payment {
     font-family: var(--f-mono, monospace);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: bold;
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 20px;
 
     &.badge-paid {
@@ -93,29 +117,26 @@
 
 .thankyou-heading {
     font-family: var(--f-display, serif);
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: var(--soil, #2C1A0E);
-    margin-bottom: 12px;
-    line-height: 1.25;
+    margin: 4px 0 10px 0;
+    line-height: 1.2;
 
     @include mobile {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
 }
 
 .thankyou-paragraph {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--clay, #7A6050);
-    line-height: 1.6;
-    margin-bottom: 28px;
-    max-width: 580px;
-    margin-left: auto;
-    margin-right: auto;
+    line-height: 1.55;
+    margin-bottom: 22px;
 
     .email-note {
-        display: inline-block;
-        margin-top: 6px;
-        font-size: 0.9rem;
+        display: block;
+        margin-top: 4px;
+        font-size: 0.88rem;
         color: var(--soil, #2C1A0E);
     }
 }
@@ -125,8 +146,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 28px auto 36px;
-    max-width: 500px;
+    margin: 4px 0 24px 0;
+    max-width: 440px;
     position: relative;
 
     .tracker-step {
@@ -134,35 +155,37 @@
         flex-direction: column;
         align-items: center;
         z-index: 2;
-        width: 100px;
+        width: 80px;
 
         .tracker-circle {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
-            background: #e5e7eb;
+            background: #f3f4f6;
             color: #9ca3af;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             font-weight: bold;
             margin-bottom: 6px;
             transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
         }
 
         .tracker-label {
             font-family: var(--f-mono, monospace);
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             color: var(--clay, #7A6050);
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
+            letter-spacing: 0.4px;
         }
 
         &.step-completed .tracker-circle {
             background: var(--leaf, #3A6B35);
             color: #FFFFFF;
+            border-color: var(--leaf, #3A6B35);
         }
 
         &.step-active {
@@ -180,9 +203,9 @@
 
     .tracker-line {
         flex: 1;
-        height: 3px;
+        height: 2px;
         background: #e5e7eb;
-        margin: 0 -10px 22px;
+        margin: 0 -8px 20px;
         z-index: 1;
 
         &.active {
@@ -191,221 +214,283 @@
     }
 }
 
-/* Common Section Titles */
-.card-section-title {
-    font-family: var(--f-display, serif);
-    font-size: 1.15rem;
-    color: var(--soil, #2C1A0E);
-    margin-bottom: 16px;
-    text-align: left;
-    border-bottom: 1px solid rgba(44, 26, 14, 0.08);
-    padding-bottom: 8px;
-}
-
-/* Purchased Items Breakdown Card */
-.thankyou-items-card {
-    background: #faf8f5;
-    padding: 20px 24px;
-    border-radius: 8px;
-    border: 1px solid rgba(44, 26, 14, 0.08);
+/* Delivery & Customer Info Card */
+.thankyou-delivery-card {
+    background: #FAF8F5;
+    border: 1px solid rgba(44, 26, 14, 0.07);
+    border-radius: 12px;
+    padding: 16px 20px;
     margin-bottom: 24px;
-    text-align: left;
 
-    @include mobile {
-        padding: 16px;
-    }
-}
-
-.thankyou-items-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.thankyou-item-row {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed rgba(44, 26, 14, 0.08);
-
-    &:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    .item-img-col {
-        flex-shrink: 0;
-        width: 48px;
-        height: 48px;
-        border-radius: 6px;
-        overflow: hidden;
-        background: #eee;
+    .delivery-card-row {
         display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .thankyou-item-thumb {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .thankyou-item-thumb-placeholder {
-            font-size: 1.5rem;
-        }
-    }
-
-    .item-info-col {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-
-        .item-title {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--soil, #2C1A0E);
-            line-height: 1.3;
-        }
-
-        .item-meta {
-            font-size: 0.8rem;
-            color: var(--clay, #7A6050);
-            margin-top: 2px;
-        }
-    }
-
-    .item-price-col {
-        font-family: var(--f-mono, monospace);
-        font-size: 0.95rem;
-        font-weight: 700;
-        color: var(--soil, #2C1A0E);
-    }
-}
-
-/* Order & Delivery Details Card */
-.thankyou-details-card {
-    background: #FFFFFF;
-    padding: 24px;
-    border-radius: 8px;
-    text-align: left;
-    margin-bottom: 32px;
-    border: 1px solid rgba(44, 26, 14, 0.1);
-
-    @include mobile {
-        padding: 16px;
-    }
-}
-
-.thankyou-details-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 14px;
-    gap: 16px;
-
-    @include mobile {
-        flex-direction: column;
-        gap: 4px;
-        margin-bottom: 12px;
-    }
-}
-
-.thankyou-details-label {
-    font-family: var(--f-mono, monospace);
-    font-size: 0.75rem;
-    color: var(--clay, #7A6050);
-    text-transform: uppercase;
-    flex-shrink: 0;
-    letter-spacing: 0.5px;
-}
-
-.thankyou-details-val {
-    font-size: 0.9rem;
-    color: var(--soil, #2C1A0E);
-    text-align: right;
-
-    @include mobile {
-        text-align: left;
-    }
-
-    .ref-id {
-        display: block;
-        font-family: var(--f-mono, monospace);
-        font-size: 0.75rem;
-        color: var(--clay, #7A6050);
-        margin-top: 2px;
-    }
-}
-
-.thankyou-details-val-leaf {
-    font-size: 0.9rem;
-    color: var(--leaf, #3A6B35);
-    font-weight: bold;
-    text-align: right;
-
-    @include mobile {
-        text-align: left;
-    }
-}
-
-.total-row {
-    border-top: 1px solid rgba(44, 26, 14, 0.12);
-    padding-top: 16px;
-    margin-top: 8px;
-    align-items: center;
-
-    @include mobile {
-        flex-direction: row;
         justify-content: space-between;
+        align-items: baseline;
+        padding: 5px 0;
+        font-size: 0.88rem;
+        border-bottom: 1px dashed rgba(44, 26, 14, 0.06);
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        &:first-child {
+            padding-top: 0;
+        }
+
+        @include mobile {
+            flex-direction: column;
+            gap: 2px;
+            padding: 6px 0;
+        }
     }
-}
 
-.total-val-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-
-    .penny-test-note {
+    .delivery-label {
         font-family: var(--f-mono, monospace);
-        font-size: 0.75rem;
-        color: #b45309;
-        margin-top: 2px;
+        font-size: 0.72rem;
+        color: var(--clay, #7A6050);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        flex-shrink: 0;
     }
-}
 
-.thankyou-details-val-total {
-    font-family: var(--f-display, serif);
-    font-size: 1.4rem;
-    color: var(--soil, #2C1A0E);
-    font-weight: bold;
+    .delivery-val {
+        color: var(--soil, #2C1A0E);
+        font-weight: 500;
+        text-align: right;
+        word-break: break-word;
+
+        @include mobile {
+            text-align: left;
+        }
+    }
+
+    .delivery-val-leaf {
+        color: var(--leaf, #3A6B35);
+        font-weight: 700;
+        text-align: right;
+
+        @include mobile {
+            text-align: left;
+        }
+    }
 }
 
 /* Action Buttons */
 .thankyou-actions {
     display: flex;
-    gap: 14px;
-    justify-content: center;
+    gap: 12px;
+    align-items: center;
     flex-wrap: wrap;
 
     .btn-primary {
-        padding: 12px 28px;
+        padding: 11px 24px;
         border-radius: 30px;
         text-decoration: none;
+        font-size: 0.88rem;
         font-weight: 600;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        background: var(--soil, #2C1A0E);
+        color: #FFFFFF;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
 
         &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(44, 26, 14, 0.15);
+            box-shadow: 0 4px 14px rgba(44, 26, 14, 0.15);
         }
     }
 
     .btn-leaf {
         background: #25D366 !important;
         color: #FFFFFF !important;
+
+        &:hover {
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
+        }
+    }
+}
+
+/* RIGHT COLUMN: Order Summary & Itemized Receipt */
+.thankyou-col-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.receipt-box {
+    background: #FBF9F6;
+    border: 1px solid rgba(44, 26, 14, 0.08);
+    border-radius: 16px;
+    padding: 24px 22px;
+    box-sizing: border-box;
+}
+
+.receipt-heading {
+    font-family: var(--f-display, serif);
+    font-size: 1.15rem;
+    color: var(--soil, #2C1A0E);
+    margin: 0 0 16px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+    letter-spacing: 0.2px;
+}
+
+.receipt-items-scroll {
+    max-height: 240px;
+    overflow-y: auto;
+    padding-right: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    /* Custom scrollbar */
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(44, 26, 14, 0.15);
+        border-radius: 4px;
+    }
+}
+
+.receipt-item-line {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(44, 26, 14, 0.06);
+
+    &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .item-thumb-wrapper {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f0ede8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        .receipt-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .receipt-thumb-fallback {
+            font-size: 1.3rem;
+        }
+    }
+
+    .item-name-qty {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+
+        .item-title {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--soil, #2C1A0E);
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-qty-tag {
+            font-size: 0.76rem;
+            color: var(--clay, #7A6050);
+            margin-top: 2px;
+            font-family: var(--f-mono, monospace);
+        }
+    }
+
+    .item-line-total {
+        font-family: var(--f-mono, monospace);
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--soil, #2C1A0E);
+        flex-shrink: 0;
+    }
+}
+
+/* Receipt Breakdown & Total */
+.receipt-breakdown {
+    border-top: 1px solid rgba(44, 26, 14, 0.1);
+    padding-top: 14px;
+
+    .breakdown-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.84rem;
+        color: var(--clay, #7A6050);
+        margin-bottom: 8px;
+
+        .val-payment {
+            color: var(--soil, #2C1A0E);
+            font-weight: 600;
+        }
+
+        .val-ref {
+            font-family: var(--f-mono, monospace);
+            font-size: 0.76rem;
+            color: var(--clay, #7A6050);
+            background: rgba(44, 26, 14, 0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .val-free {
+            color: var(--leaf, #3A6B35);
+            font-weight: 700;
+        }
+    }
+
+    .grand-total-row {
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(44, 26, 14, 0.12);
+        margin-bottom: 0;
+        align-items: baseline;
+
+        span:first-child {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--soil, #2C1A0E);
+        }
+
+        .total-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .total-number {
+            font-family: var(--f-display, serif);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--soil, #2C1A0E);
+            line-height: 1;
+        }
+
+        .test-amount-tag {
+            font-family: var(--f-mono, monospace);
+            font-size: 0.72rem;
+            color: #b45309;
+            margin-top: 4px;
+        }
     }
 }

@@ -109,6 +109,7 @@ function gbh_shiprocket_create_order($order_id)
         'payment_method' => (strtolower($payment_method) === 'cod') ? 'COD' : 'Prepaid',
         'sub_total' => floatval($total),
         'length' => 15,
+        'breadth' => 15,
         'width' => 15,
         'height' => 15,
         'weight' => 0.5

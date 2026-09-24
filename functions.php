@@ -87,15 +87,15 @@ add_action('template_redirect', 'disable_search_redirect');
    ============================================================ */
 // Razorpay Credentials (Plug keys directly here when received)
 if (!defined('GBH_RAZORPAY_KEY_ID'))
-    define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_SqkT1XkdPBznc5'));
+    define('GBH_RAZORPAY_KEY_ID', get_option('gbh_razorpay_key_id', 'rzp_live_TZ3GSyRbtoKVyU'));
 if (!defined('GBH_RAZORPAY_KEY_SECRET'))
-    define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'C4lgkZpvpvNwgLYCoT82gZKH'));
+    define('GBH_RAZORPAY_KEY_SECRET', get_option('gbh_razorpay_key_secret', 'CI3pKXUu9mFRU84u4rTl6i9N'));
 
 // Shiprocket Credentials
 if (!defined('GBH_SHIPROCKET_EMAIL'))
-    define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant753@gmail.com'));
+    define('GBH_SHIPROCKET_EMAIL', get_option('gbh_shiprocket_email', 'prashant9414216343@gmail.com'));
 if (!defined('GBH_SHIPROCKET_PASSWORD'))
-    define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'Snow@9414216343'));
+    define('GBH_SHIPROCKET_PASSWORD', get_option('gbh_shiprocket_password', 'uG5Jz1&b@PaQ#!M#*OIBdWz9EcVx7TJQ'));
 if (!defined('GBH_SHIPROCKET_PICKUP_LOCATION'))
     define('GBH_SHIPROCKET_PICKUP_LOCATION', get_option('gbh_shiprocket_pickup_location', 'Home'));
 
@@ -104,7 +104,7 @@ if (!defined('GBH_TESTER_EMAILS')) {
     define('GBH_TESTER_EMAILS', serialize(array(
         'gbhtesting@gmail.com',
         'testinggbh@gmail.com',
-        'testing@gardenbaskethubb.com',
+        'test@gardenbaskethubb.com',
         'secrettestinggardenbaskethubb@gmail.com'
     )));
 }
