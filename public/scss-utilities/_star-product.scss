@@ -1,0 +1,574 @@
+@import './breakpoints';
+@import './variables';
+
+/* ============================================================
+   CR §6: STAR FEATURED PRODUCT — ORGANIC PLANT BOOSTER SHOWCASE
+   ============================================================ */
+
+.star-product-section {
+    padding: 70px 24px;
+    background: linear-gradient(180deg, rgba(247, 242, 232, 0.4) 0%, rgba(235, 244, 235, 0.6) 100%);
+    position: relative;
+    overflow: hidden;
+
+    @include mobile {
+        padding: 40px 16px;
+    }
+
+    .container {
+        max-width: 1120px;
+        margin: 0 auto;
+    }
+}
+
+.star-product-card {
+    background: #FFFFFF;
+    border: 1.5px solid rgba(45, 106, 40, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(44, 26, 14, 0.08), 0 0 0 1px rgba(45, 106, 40, 0.05);
+    padding: 48px;
+    position: relative;
+
+    @include tablet {
+        padding: 32px 24px;
+        border-radius: 12px;
+    }
+
+    @include mobile {
+        padding: 24px 18px;
+        border-radius: 10px;
+    }
+}
+
+.star-product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    align-items: center;
+
+    @include tablet {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+}
+
+/* Media Column */
+.star-product-media {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    .star-badge-glow {
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        z-index: 5;
+        background: linear-gradient(135deg, #E8942A, #C87515);
+        color: #FFFFFF;
+        font-family: var(--f-mono);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border-radius: 20px;
+        box-shadow: 0 4px 12px rgba(232, 148, 42, 0.4);
+    }
+}
+
+.star-img-wrapper {
+    width: 100%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at center, #EBF4EB 0%, #DCECDC 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(45, 106, 40, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.star-img-display {
+    font-size: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    animation: gbhFloat 4s ease-in-out infinite;
+
+    img {
+        max-width: 85%;
+        max-height: 85%;
+        object-fit: contain;
+        filter: drop-shadow(0 12px 24px rgba(44, 26, 14, 0.15));
+    }
+}
+
+@keyframes gbhFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.star-organic-seal {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--leaf);
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.1;
+    box-shadow: 0 6px 18px rgba(45, 106, 40, 0.35);
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+
+    span {
+        font-family: var(--f-mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    strong {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+}
+
+.star-media-thumbnails {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .star-thumb {
+        background: #F7F2E8;
+        border: 1px solid rgba(44, 26, 14, 0.12);
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.78rem;
+        color: var(--clay);
+        font-weight: 500;
+
+        &.active {
+            background: rgba(45, 106, 40, 0.1);
+            border-color: var(--leaf);
+            color: var(--leaf);
+            font-weight: 600;
+        }
+    }
+}
+
+/* Content Column */
+.star-product-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.star-kicker {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+
+    .star-rating {
+        color: #E8942A;
+        font-size: 0.88rem;
+        font-weight: 600;
+    }
+
+    .star-tag {
+        font-family: var(--f-mono);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        background: rgba(45, 106, 40, 0.1);
+        color: var(--leaf);
+        padding: 2px 8px;
+        border-radius: 3px;
+        font-weight: 600;
+    }
+}
+
+.star-title {
+    font-family: var(--f-display);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--soil);
+    line-height: 1.2;
+    margin-bottom: 6px;
+
+    .star-size {
+        font-size: 1.2rem;
+        color: var(--clay);
+        font-weight: 400;
+    }
+}
+
+.star-subtitle {
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: var(--leaf);
+    margin-bottom: 12px;
+}
+
+.star-desc {
+    font-size: 0.92rem;
+    color: #6E5343;
+    line-height: 1.65;
+    margin-bottom: 20px;
+}
+
+/* 4 Feature Badges Grid */
+.star-features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(247, 242, 232, 0.5);
+    border-radius: 8px;
+    border: 1px solid rgba(44, 26, 14, 0.06);
+
+    @include mobile {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+}
+
+.star-feat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .feat-ic {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.25;
+
+        strong {
+            font-size: 0.85rem;
+            color: var(--soil);
+        }
+
+        span {
+            font-size: 0.76rem;
+            color: var(--clay);
+        }
+    }
+}
+
+/* Price Box */
+.star-price-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: #FAFAF8;
+    border-radius: 8px;
+    border: 1px solid rgba(44, 26, 14, 0.1);
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .star-price-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .star-price-curr {
+        font-family: var(--f-display);
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--soil);
+    }
+
+    .star-price-mrp {
+        font-size: 1.05rem;
+        color: var(--clay);
+        text-decoration: line-through;
+    }
+
+    .star-save-pill {
+        background: #E8942A;
+        color: #1A1008;
+        font-family: var(--f-mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+
+    .star-stock-indicator {
+        font-size: 0.8rem;
+        color: var(--leaf);
+        font-weight: 600;
+    }
+}
+
+/* Quantity Stepper & CTA Action Bar */
+.star-action-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+
+    @include mobile {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.star-qty-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+        font-family: var(--f-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--clay);
+        font-weight: 600;
+    }
+
+    .star-stepper {
+        display: flex;
+        align-items: center;
+        border: 1.5px solid rgba(44, 26, 14, 0.2);
+        border-radius: 6px;
+        background: #FFFFFF;
+        height: 48px;
+
+        button {
+            background: transparent;
+            border: none;
+            width: 40px;
+            height: 100%;
+            font-size: 1.3rem;
+            color: var(--soil);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.15s;
+
+            &:hover {
+                background: rgba(45, 106, 40, 0.1);
+                color: var(--leaf);
+            }
+        }
+
+        input {
+            width: 46px;
+            text-align: center;
+            border: none;
+            font-family: var(--f-body);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--soil);
+            background: transparent;
+            cursor: default;
+        }
+    }
+}
+
+.star-cta-group {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+
+    @include mobile {
+        flex-direction: column;
+    }
+
+    .btn-star-add {
+        flex: 1.3;
+        padding: 14px 20px;
+        font-size: 0.98rem;
+        font-weight: 600;
+        background: var(--leaf);
+        color: #FFFFFF;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(45, 106, 40, 0.25);
+
+        &:hover {
+            background: var(--soil);
+            transform: translateY(-1px);
+        }
+    }
+
+    .btn-star-buy-now {
+        flex: 1;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        background: #F7F2E8;
+        color: var(--soil);
+        border: 1.5px solid rgba(44, 26, 14, 0.2);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        text-align: center;
+
+        &:hover {
+            background: var(--soil);
+            color: #FFFFFF;
+            border-color: var(--soil);
+        }
+    }
+}
+
+/* Trust Strip */
+.star-trust-strip {
+    display: flex;
+    gap: 18px;
+    font-size: 0.8rem;
+    color: var(--clay);
+    border-top: 1px solid rgba(44, 26, 14, 0.08);
+    padding-top: 14px;
+    flex-wrap: wrap;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+/* ============================================================
+   CR §8: ORDER TRACKING MODAL & WIDGET
+   ============================================================ */
+.track-order-modal-card {
+    max-width: 520px;
+}
+
+.track-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+
+    @include mobile {
+        flex-direction: column;
+    }
+
+    input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1.5px solid rgba(44, 26, 14, 0.2);
+        border-radius: 6px;
+        font-family: var(--f-body);
+        font-size: 0.95rem;
+        background: #FFFFFF;
+        color: var(--soil);
+        text-transform: uppercase;
+
+        &:focus {
+            border-color: var(--leaf);
+        }
+    }
+
+    button {
+        padding: 12px 24px;
+        background: var(--leaf);
+        color: #FFFFFF;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+
+        &:hover {
+            background: var(--soil);
+        }
+    }
+}
+
+.track-result-box {
+    display: none;
+    background: #FFFFFF;
+    border: 1px solid rgba(44, 26, 14, 0.12);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    animation: gbhFadeIn 0.3s ease-out;
+
+    .track-status-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(44, 26, 14, 0.08);
+
+        .track-order-title {
+            font-family: var(--f-display);
+            font-size: 1.1rem;
+            color: var(--soil);
+            font-weight: 700;
+        }
+
+        .track-badge {
+            background: rgba(45, 106, 40, 0.12);
+            color: var(--leaf);
+            font-family: var(--f-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+    }
+
+    .track-details-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.88rem;
+        color: #5C4033;
+        margin-bottom: 16px;
+    }
+
+    .track-live-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        background: #3A6B35;
+        color: #FFFFFF;
+        padding: 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.92rem;
+        transition: background 0.2s;
+
+        &:hover {
+            background: #2C1A0E;
+        }
+    }
+}

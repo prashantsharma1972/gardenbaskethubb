@@ -34,6 +34,14 @@ import './singleProduct.scss';
         e.preventDefault();
         e.stopPropagation();
         const $btn      = $(this);
+
+        if ($btn.hasClass('sapling-restricted')) {
+            if (window.gbh && window.gbh.openSaplingModal) {
+                window.gbh.openSaplingModal();
+            }
+            return;
+        }
+
         const productId = $btn.data('product-id') || $btn.closest('[data-product-id]').data('product-id');
         const $stepper  = $('.qty-stepper input');
         const quantity  = $stepper.length ? (parseInt($stepper.val()) || 1) : 1;
@@ -80,6 +88,14 @@ import './singleProduct.scss';
         e.preventDefault();
         e.stopPropagation();
         const $btn      = $(this);
+
+        if ($btn.hasClass('sapling-restricted')) {
+            if (window.gbh && window.gbh.openSaplingModal) {
+                window.gbh.openSaplingModal();
+            }
+            return;
+        }
+
         const productId = $btn.data('product-id') || $btn.closest('[data-product-id]').data('product-id');
         const $stepper  = $('.qty-stepper input');
         const quantity  = $stepper.length ? (parseInt($stepper.val()) || 1) : 1;
@@ -159,24 +175,46 @@ import './singleProduct.scss';
     });
 
     // ============================================================
-    // 7. Check Pincode Delivery
+    // 7. Check Pincode Delivery Availability (CR §5.2)
     // ============================================================
-    $(document).on('click', '.pincode-check button', function(e) {
+    $(document).on('click', '#gbh-pincode-check-btn, .pincode-check button', function(e) {
         e.preventDefault();
-        const pincode = $(this).siblings('input').val().trim();
-        if (!pincode) {
-            if (window.gbh && window.gbh.showToast) window.gbh.showToast('Please enter a pincode.', 'error');
+        const $input = $('#gbh-pincode-input').length ? $('#gbh-pincode-input') : $(this).siblings('input');
+        const pincode = ($input.val() || '').trim();
+        const $result = $('#gbh-pincode-result');
+        const isSapling = $('[data-is-sapling="1"]').length > 0 || $('.product-card[data-is-sapling="1"]').length > 0;
+
+        if (!pincode || pincode.length !== 6 || !/^\d{6}$/.test(pincode)) {
+            if (window.gbh && window.gbh.showToast) window.gbh.showToast('Please enter a valid 6-digit Indian pincode.', 'warning');
+            if ($result.length) {
+                $result.css({ 'color': '#8B4A2B', 'display': 'block' }).html('⚠️ Please enter a valid 6-digit pincode.');
+            }
             return;
         }
-        $.ajax({
-            url: ajaxUrl,
-            type: 'POST',
-            data: { action: 'gbh_check_pincode', pincode: pincode },
-            success: function(res) {
-                const type = res.success ? 'success' : 'error';
-                if (window.gbh && window.gbh.showToast) window.gbh.showToast(res.data.message, type);
+
+        const isJaipurPin = /^(302|303)/.test(pincode);
+
+        if (isJaipurPin) {
+            let msg = '✅ <strong>Delivery Available:</strong> Same-day / Next-day hand delivery in Jaipur (' + pincode + ').';
+            if ($result.length) {
+                $result.css({ 'color': '#2D6A28', 'display': 'block' }).html(msg);
             }
-        });
+            if (window.gbh && window.gbh.showToast) window.gbh.showToast('Great! Jaipur same-day delivery available for ' + pincode, 'success');
+        } else {
+            if (isSapling) {
+                let msg = '⚠️ <strong>Jaipur Only:</strong> Live saplings cannot be shipped to ' + pincode + ' to prevent plant transit damage. Seeds &amp; supplies ship pan-India!';
+                if ($result.length) {
+                    $result.css({ 'color': '#8B4A2B', 'display': 'block' }).html(msg);
+                }
+                if (window.gbh && window.gbh.showToast) window.gbh.showToast('Live saplings are delivered in Jaipur only.', 'warning');
+            } else {
+                let msg = '✅ <strong>Delivery Available:</strong> Express Pan-India Shipping to ' + pincode + ' (3–5 business days).';
+                if ($result.length) {
+                    $result.css({ 'color': '#2D6A28', 'display': 'block' }).html(msg);
+                }
+                if (window.gbh && window.gbh.showToast) window.gbh.showToast('Standard Pan-India delivery available for ' + pincode, 'success');
+            }
+        }
     });
 
 })(jQuery);

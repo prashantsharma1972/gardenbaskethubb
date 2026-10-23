@@ -42,7 +42,7 @@
                     <div class="empty-cart-view-container">
                         <div class="empty-icon">🛒 🌿</div>
                         <h2 class="empty-title">Your garden bag is empty</h2>
-                        <p class="empty-desc">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
+                        <p class="empty-desc">You haven't added any seeds, saplings, or gardening supplies to your bag yet.</p>
                         <a href="${gbh_ajax_obj.cart_url.replace('/cart/', '/shop/')}" class="btn-primary empty-btn">
                             Explore Nursery Shop ➔
                         </a>

@@ -42,11 +42,12 @@
       $img_3 = function_exists('get_field') ? get_field('product_image_3') : '';
       
       $gallery_images = array_filter(array($main_img, $img_1, $img_2, $img_3));
+      $is_pdp_sapling = function_exists('gbh_is_sapling_product') ? gbh_is_sapling_product($product_id) : false;
       ?>
 
       <!-- MAIN PDP SECTION -->
       <section>
-        <div class="pdp">
+        <div class="pdp" data-product-id="<?php echo esc_attr($product_id); ?>" data-is-sapling="<?php echo $is_pdp_sapling ? '1' : '0'; ?>">
 
           <!-- Gallery Column -->
           <div class="pdp-gallery" style="position: relative; overflow: hidden; width: 100%;">
@@ -100,10 +101,10 @@
             </div>
 
             <div class="pdp-cta">
-              <button class="btn-primary add-btn" data-product-id="<?php echo esc_attr($product_id); ?>">
+              <button class="btn-primary add-btn" data-product-id="<?php echo esc_attr($product_id); ?>" data-is-sapling="<?php echo $is_pdp_sapling ? '1' : '0'; ?>">
                 Add to Bag
               </button>
-              <button class="btn-secondary btn-buy-now" data-product-id="<?php echo esc_attr($product_id); ?>">
+              <button class="btn-secondary btn-buy-now" data-product-id="<?php echo esc_attr($product_id); ?>" data-is-sapling="<?php echo $is_pdp_sapling ? '1' : '0'; ?>">
                 Buy Now
               </button>
             </div>
@@ -111,9 +112,10 @@
             <div class="pincode-check">
               <label>Check delivery availability in your area</label>
               <div class="row">
-                <input type="text" placeholder="Enter 6-digit Pincode (e.g. 302001)">
-                <button>Check</button>
+                <input type="text" id="gbh-pincode-input" maxlength="6" placeholder="Enter 6-digit Pincode (e.g. 302001)">
+                <button type="button" id="gbh-pincode-check-btn">Check</button>
               </div>
+              <div id="gbh-pincode-result" style="margin-top:10px; font-size:0.85rem; display:none;"></div>
             </div>
 
             <div class="pdp-trust">

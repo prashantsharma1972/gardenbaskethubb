@@ -69,7 +69,10 @@ function gbh_send_order_confirmation_email($order_id)
     }
 
     // Also notify store admin with test tag in subject if applicable
-    $admin_email = get_option('admin_email', 'hello@gardenbaskethubb.com');
+    $admin_email = get_option('admin_email', 'prashant753@gmail.com');
+    if (empty($admin_email) || $admin_email === 'hello@gardenbaskethubb.com') {
+        $admin_email = 'prashant753@gmail.com';
+    }
     $admin_subject = ($is_tester ? '🧪 [TEST ORDER] ' : '🔔 ') . 'New Order Received #' . $order_id;
     $sent_admin = wp_mail($admin_email, $admin_subject, $message, $headers);
     error_log('[GBH Email] Admin notification sent to ' . $admin_email . ': ' . ($sent_admin ? 'SUCCESS' : 'FAILED'));

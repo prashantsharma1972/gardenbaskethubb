@@ -18,8 +18,25 @@
             margin-bottom: 60px;
         }
 
-        .footer-brand .nav-logo {
-            color: var(--sand);
+        .footer-logo-badge {
+            display: inline-block;
+            background: #FDFAF5;
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease;
+
+            .footer-logo-img {
+                height: 48px;
+                width: auto;
+                max-width: 170px;
+                object-fit: contain;
+                display: block;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+            }
         }
 
         .footer-brand p {

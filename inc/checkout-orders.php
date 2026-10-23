@@ -34,8 +34,38 @@ function gbh_ajax_place_order()
         wp_send_json_error(array('message' => 'Please fill in all required contact and delivery fields.'));
     }
 
+    // CR §5.2: Checkout Guard for Saplings
+    if (function_exists('gbh_cart_has_saplings') && gbh_cart_has_saplings()) {
+        $is_jaipur_city = (stripos($city, 'jaipur') !== false);
+        $is_jaipur_pin  = preg_match('/^(302|303)/', trim($pincode));
+        if (!$is_jaipur_city && !$is_jaipur_pin) {
+            wp_send_json_error(array(
+                'message' => 'Your cart contains live saplings which can only be hand-delivered within Jaipur. Please remove the saplings or provide a Jaipur delivery address to proceed.',
+                'is_sapling_restriction' => true
+            ));
+        }
+    }
+
+    // Determine if payment is COD or Online (Razorpay / UPI)
+    $is_cod = (strtolower($payment_method) === 'cod' || stripos($payment_method, 'cash') !== false);
+    if ($is_cod) {
+        wp_send_json_error(array('message' => 'Cash on Delivery is no longer available. All orders must be paid securely online.'));
+    }
+
+    // Online Payment Flow (Razorpay / UPI)
+    $payment_id = isset($_POST['razorpay_payment_id']) ? sanitize_text_field($_POST['razorpay_payment_id']) : '';
+    $razorpay_order_id = isset($_POST['razorpay_order_id']) ? sanitize_text_field($_POST['razorpay_order_id']) : '';
+    $signature = isset($_POST['razorpay_signature']) ? sanitize_text_field($_POST['razorpay_signature']) : '';
+
+    if (empty($payment_id)) {
+        error_log('[GBH Checkout] Error: Online payment chosen but razorpay_payment_id is missing.');
+        wp_send_json_error(array('message' => 'Online payment was not completed. Please try again with UPI, Cards, or Net Banking.'));
+    }
+
     $is_tester = function_exists('gbh_is_tester_email') && gbh_is_tester_email($email);
     $order_num = ($is_tester ? 'TEST-' : 'GBH-') . strtoupper(wp_generate_password(6, false));
+
+    error_log('[GBH Checkout] Processing order placement: ' . $order_num . ' | Method: ' . $payment_method . ' | Tester: ' . ($is_tester ? 'YES' : 'NO'));
 
     // Create Order Post
     $order_title = ($is_tester ? '[TEST ORDER] ' : '') . 'Order ' . $order_num . ' — ' . $first_name . ' ' . $last_name;
@@ -79,29 +109,10 @@ function gbh_ajax_place_order()
     update_post_meta($order_id, '_order_total', $cart_data['total']);
     update_post_meta($order_id, '_delivery_slot', $delivery_slot);
 
-    // Determine if payment is COD or Online (Razorpay / UPI)
-    $is_cod = (strtolower($payment_method) === 'cod' || stripos($payment_method, 'cash on delivery') !== false);
-
-    error_log('[GBH Checkout] Processing order placement: ' . $order_num . ' | Method: ' . $payment_method . ' | Tester: ' . ($is_tester ? 'YES' : 'NO'));
-
-    if (!$is_cod) {
-        // Online Payment Flow (Razorpay / UPI)
-        $payment_id = isset($_POST['razorpay_payment_id']) ? sanitize_text_field($_POST['razorpay_payment_id']) : '';
-        $razorpay_order_id = isset($_POST['razorpay_order_id']) ? sanitize_text_field($_POST['razorpay_order_id']) : '';
-        $signature = isset($_POST['razorpay_signature']) ? sanitize_text_field($_POST['razorpay_signature']) : '';
-
-        if (empty($payment_id)) {
-            error_log('[GBH Checkout] Error: Online payment chosen but razorpay_payment_id is missing.');
-            update_post_meta($order_id, '_payment_status', 'Failed');
-            update_post_meta($order_id, '_gbh_order_status', 'Payment Incomplete');
-            update_post_meta($order_id, '_payment_error', 'Online payment selected but no transaction ID received.');
-            wp_send_json_error(array('message' => 'Online payment was not completed. Please try again or choose Cash on Delivery.'));
-        }
-
-        update_post_meta($order_id, '_razorpay_payment_id', $payment_id);
-        update_post_meta($order_id, '_razorpay_order_id', $razorpay_order_id);
-        update_post_meta($order_id, '_razorpay_signature', $signature);
-        update_post_meta($order_id, '_gbh_paid_amount', $is_tester ? 1.00 : $cart_data['total']);
+    update_post_meta($order_id, '_razorpay_payment_id', $payment_id);
+    update_post_meta($order_id, '_razorpay_order_id', $razorpay_order_id);
+    update_post_meta($order_id, '_razorpay_signature', $signature);
+    update_post_meta($order_id, '_gbh_paid_amount', $is_tester ? 1.00 : $cart_data['total']);
 
         $signature_valid = false;
         if (function_exists('gbh_verify_razorpay_signature')) {
@@ -136,23 +147,6 @@ function gbh_ajax_place_order()
                 'order_num' => $order_num
             ));
         }
-    } else {
-        // Cash on Delivery (COD) Flow
-        update_post_meta($order_id, '_payment_status', 'COD');
-        update_post_meta($order_id, '_signature_verified', 'N/A');
-        update_post_meta($order_id, '_gbh_order_status', $is_tester ? 'Test Processing (COD)' : 'Pending (COD)');
-        error_log('[GBH Checkout] COD Order placed for Order #' . $order_id);
-
-        // Auto-trigger Shiprocket Logistics Order Push for COD
-        if (function_exists('gbh_shiprocket_create_order')) {
-            gbh_shiprocket_create_order($order_id);
-        }
-
-        // Auto-trigger Customer & Admin Transactional HTML Email Confirmation
-        if (function_exists('gbh_send_order_confirmation_email')) {
-            gbh_send_order_confirmation_email($order_id);
-        }
-    }
 
     // Clear Cart in Session & Cookie upon successful verification / placement
     $_SESSION['gbh_cart'] = array();

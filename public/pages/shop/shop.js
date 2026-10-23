@@ -5,71 +5,37 @@ import './shop.scss';
 (function($) {
     'use strict';
 
-    // 1. AJAX Add to Cart / Buy Now Button
-    $(document).on('click', '.add-btn, .btn-add-to-cart, .btn-buy-now', function(e) {
-        e.preventDefault();
-        let $btn = $(this);
-        let isBuyNow = $btn.hasClass('btn-buy-now') || $btn.text().trim().toLowerCase() === 'buy now';
-        let productId = $btn.data('product-id') || $btn.closest('[data-product-id]').data('product-id');
-        let quantity = parseInt($('.qty-stepper input').val()) || 1;
-        let variant = $('.opt-pill.selected').text().trim() || '';
-
-        if (!productId) {
-            if(window.gbh && window.gbh.showToast) window.gbh.showToast('Please select a valid product', 'error');
-            return;
-        }
-
-        $btn.prop('disabled', true).css('opacity', '0.7').text('Adding...');
-
-        $.ajax({
-            url: (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.ajax_url : '/wp-admin/admin-ajax.php',
-            type: 'POST',
-            data: {
-                action: 'gbh_add_to_cart',
-                nonce: (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.nonce : '',
-                product_id: productId,
-                quantity: quantity,
-                variant: variant
-            },
-            success: function(response) {
-                $btn.prop('disabled', false).css('opacity', '1').text('Add to bag');
-                if (response.success) {
-                    if(window.gbh && window.gbh.updateCartDOM) window.gbh.updateCartDOM(response.data.cart);
-                    if (isBuyNow) {
-                        window.location.href = (typeof gbh_ajax_obj !== 'undefined') ? gbh_ajax_obj.checkout_url : '/checkout';
-                    } else {
-                        if(window.gbh && window.gbh.showToast) window.gbh.showToast(response.data.message, 'success');
-                        else alert("Added to cart!");
-                    }
-                } else {
-                    if(window.gbh && window.gbh.showToast) window.gbh.showToast(response.data.message || 'Error adding to cart', 'error');
-                }
-            },
-            error: function() {
-                $btn.prop('disabled', false).css('opacity', '1').text('Add to bag');
-                if(window.gbh && window.gbh.showToast) window.gbh.showToast('Network error. Please try again.', 'error');
-            }
-        });
-    });
+    // 1. Filtering, Searching, and Sorting
 
     // 2. Pure JS Filtering, Searching, and Sorting
     function runFilters() {
-        let searchQuery = $('#search-products').val().toLowerCase().trim();
-        let selectedCategory = $('.filter.active').data('title'); // e.g. "Seedlings"
-        if (selectedCategory) {
-            selectedCategory = selectedCategory.toLowerCase();
-        }
+        let searchQuery = ($('#search-products').val() || '').toLowerCase().trim();
+        let $activeFilter = $('.filter-container .filter.active');
+        let selectedSlug = ($activeFilter.data('slug') || '').toLowerCase().trim();
+        let selectedTitle = ($activeFilter.data('title') || '').toLowerCase().trim();
+
+        // If no filter or 'all' is selected
+        let isAll = !selectedSlug || selectedSlug === 'all';
 
         let $cards = $('#gbh-product-grid .product-card');
         let visibleCount = 0;
 
         $cards.each(function() {
             let $card = $(this);
-            let cat = ($card.data('category') || '').toLowerCase();
+            let catTokens = ($card.data('category') || '').toLowerCase();
             let title = ($card.data('title') || '').toLowerCase();
-            
-            let matchCat = !selectedCategory || cat.includes(selectedCategory);
-            let matchSearch = !searchQuery || title.includes(searchQuery);
+
+            // Match category by slug or title
+            let matchCat = isAll;
+            if (!isAll) {
+                if (selectedSlug && catTokens.indexOf(selectedSlug) !== -1) {
+                    matchCat = true;
+                } else if (selectedTitle && catTokens.indexOf(selectedTitle) !== -1) {
+                    matchCat = true;
+                }
+            }
+
+            let matchSearch = !searchQuery || title.indexOf(searchQuery) !== -1;
 
             if (matchCat && matchSearch) {
                 $card.show();
@@ -79,26 +45,70 @@ import './shop.scss';
             }
         });
 
+        // Update toolbar results count text
+        if (isAll && !searchQuery) {
+            $('.shop-toolbar .results').text('Showing all products (' + visibleCount + ')');
+        } else {
+            $('.shop-toolbar .results').text('Found ' + visibleCount + ' product' + (visibleCount === 1 ? '' : 's'));
+        }
+
         // Toggle "No products found" message if needed
         if (visibleCount === 0) {
             if ($('#no-products-msg').length === 0) {
-                $('#gbh-product-grid').append('<p id="no-products-msg" style="grid-column: 1/-1; text-align: center; padding: 2rem;">No products match your criteria.</p>');
+                $('#gbh-product-grid').append(
+                    '<div id="no-products-msg" style="grid-column: 1/-1; text-align: center; padding: 48px 20px; background: #faf8f5; border-radius: 8px; border: 1px dashed rgba(44,26,14,0.15);">' +
+                        '<p style="font-size: 1.15rem; color: #432818; margin-bottom: 8px; font-weight: 500;">No products match this selection.</p>' +
+                        '<p style="font-size: 0.9rem; color: #7a6050; margin-bottom: 20px;">Explore all gardening essentials or search for other items.</p>' +
+                        '<button type="button" class="reset-filter-btn" style="background:#2d6a4f; color:#fff; border:none; padding:10px 22px; border-radius:4px; font-size:0.88rem; font-weight:600; cursor:pointer;">View All Products</button>' +
+                    '</div>'
+                );
             }
         } else {
             $('#no-products-msg').remove();
         }
     }
 
-    // Category click
+    // Sync URL query params with active category
+    function updateCategoryUrl(slug) {
+        if (window.history && window.history.replaceState) {
+            let url = new URL(window.location.href);
+            if (slug && slug !== 'all') {
+                url.searchParams.set('category', slug);
+            } else {
+                url.searchParams.delete('category');
+            }
+            window.history.replaceState({}, '', url.toString());
+        }
+    }
+
+    // Category click handler
     $(document).on('click', '.filter-container .filter', function() {
         let $this = $(this);
-        if ($this.hasClass('active')) {
-            $this.removeClass('active');
+        let slug = ($this.data('slug') || '').toLowerCase();
+
+        if ($this.hasClass('active') && slug !== 'all') {
+            // Uncheck back to All Products
+            $('.filter-container .filter').removeClass('active');
+            $('.filter-container .filter[data-slug="all"]').addClass('active');
+            updateCategoryUrl('all');
         } else {
             $('.filter-container .filter').removeClass('active');
             $this.addClass('active');
+            updateCategoryUrl(slug);
         }
+
+        // Auto collapse mobile drawer if open
+        if (window.innerWidth <= 900) {
+            $('#mobile-filter-toggle').prop('checked', false);
+        }
+
         runFilters();
+    });
+
+    // Reset button inside empty state
+    $(document).on('click', '.reset-filter-btn', function(e) {
+        e.preventDefault();
+        $('.filter-btns .clear').trigger('click');
     });
 
     // Search input
@@ -109,7 +119,17 @@ import './shop.scss';
     // Clear All
     $('.filter-btns .clear').on('click', function() {
         $('.filter-container .filter').removeClass('active');
+        $('.filter-container .filter[data-slug="all"]').addClass('active');
         $('#search-products').val('');
+        updateCategoryUrl('all');
+        runFilters();
+    });
+
+    // Show Results button (useful on mobile to close filter drawer)
+    $('.filter-btns .results').on('click', function() {
+        if (window.innerWidth <= 900) {
+            $('#mobile-filter-toggle').prop('checked', false);
+        }
         runFilters();
     });
 
@@ -149,8 +169,54 @@ import './shop.scss';
     });
     
     // Toggle sort dropdown
-    $('.sort-by-heading').on('click', function() {
+    $('.sort-by-heading').on('click', function(e) {
+        e.stopPropagation();
         $('.sorting').toggle();
+    });
+
+    $(document).on('click', function() {
+        $('.sorting').hide();
+    });
+
+    // Parse URL on initialization (e.g. ?category=seeds or ?search=tomato)
+    function applyUrlParams() {
+        let urlParams = new URLSearchParams(window.location.search);
+        let catParam = urlParams.get('category');
+        let searchParam = urlParams.get('s') || urlParams.get('search');
+
+        if (searchParam) {
+            $('#search-products').val(searchParam);
+        }
+
+        if (catParam) {
+            let targetSlug = catParam.toLowerCase().trim();
+            let $target = $('.filter-container .filter[data-slug="' + targetSlug + '"]');
+            
+            if ($target.length) {
+                $('.filter-container .filter').removeClass('active');
+                $target.addClass('active');
+            } else {
+                // Try matching by data-title
+                $('.filter-container .filter').each(function() {
+                    let s = ($(this).data('slug') || '').toLowerCase();
+                    let t = ($(this).data('title') || '').toLowerCase();
+                    if (s === targetSlug || t === targetSlug) {
+                        $('.filter-container .filter').removeClass('active');
+                        $(this).addClass('active');
+                        return false;
+                    }
+                });
+            }
+        }
+        runFilters();
+    }
+
+    $(document).ready(function() {
+        applyUrlParams();
+    });
+
+    window.addEventListener('popstate', function() {
+        applyUrlParams();
     });
 
 })(jQuery);

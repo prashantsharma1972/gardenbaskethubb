@@ -121,7 +121,7 @@ import './checkout.scss';
                         rzp1.open();
                     } else {
                         $btn.prop('disabled', false).text('Place Order');
-                        let errMsg = (res.data && res.data.message) ? res.data.message : 'Unable to initiate payment gateway. Please try again or choose COD.';
+                        let errMsg = (res.data && res.data.message) ? res.data.message : 'Unable to initiate payment gateway. Please try again with UPI or Card.';
                         console.error('[GBH Checkout] Razorpay initialization failed:', errMsg);
                         window.gbh.showToast(errMsg, 'error');
                     }
@@ -133,9 +133,8 @@ import './checkout.scss';
                 }
             });
         } else {
-            // COD / Direct Order Placement
-            console.log('[GBH Checkout] Processing Cash on Delivery order.');
-            processFinalOrderPlacement([]);
+            $btn.prop('disabled', false).text('Place Order');
+            window.gbh.showToast('Please complete online payment via UPI, Cards, or Net Banking.', 'warning');
         }
     });
 

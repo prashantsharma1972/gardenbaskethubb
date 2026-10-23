@@ -4,48 +4,62 @@
     <footer>
         <div class="footer-top">
             <div class="footer-brand">
-                <a href="<?php echo esc_url(home_url('/')); ?>" class="nav-logo" style="color:var(--sand)">Garden <span>Basket</span> Hub</a>
-                <p>Rooted in Jaipur. Growing things — and the community around them — one seed at a time.</p>
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="footer-logo-badge" title="Garden Basket Hub">
+                    <img src="/wp-content/uploads/2026/10/garden-basket-hub-official-logo.webp" alt="Garden Basket Hub" class="footer-logo-img">
+                </a>
+                <p>Rooted in Jaipur since 2019. Growing healthy plants, heirloom seeds, and green spaces one garden at a time.</p>
             </div>
 
             <div class="footer-col">
-                <h4>Shop</h4>
+                <h4>Shop Essentials</h4>
                 <ul>
                     <li><a href="/shop/">Seeds</a></li>
-                    <li><a href="/shop/">Seedlings</a></li>
-                    <li><a href="/shop/">Compost & Soil</a></li>
-                    <li><a href="/shop/">Tools & Machines</a></li>
-                    <li><a href="/shop/">Bundles</a></li>
+                    <li><a href="/shop/">Saplings</a></li>
+                    <li><a href="/shop/">Bulbs</a></li>
+                    <li><a href="/shop/">Manures & Fertilizers</a></li>
+                    <li><a href="/shop/">Grow Bags & Pots</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Info</h4>
+                <h4>Information</h4>
                 <ul>
-                    <li><a href="/about-us/">Our Story</a></li>
+                    <li><a href="#track-order" class="open-track-modal-btn">🚚 Track Your Order</a></li>
+                    <li><a href="/about-us/">Our Story (Est. 2019)</a></li>
                     <li><a href="/refund-policy/">Refund Policy</a></li>
                     <li><a href="/privacy-policy/">Privacy Policy</a></li>
                     <li><a href="/terms-and-conditions/">Terms & Conditions</a></li>
                     <li><a href="/blog/">Plant Care Guides</a></li>
-                    <li><a href="/contact-us/">FAQ</a></li>
+                    <li><a href="/contact-us/">FAQ & Help</a></li>
                 </ul>
             </div>
             <div class="footer-col">
-                <h4>Contact</h4>
+                <h4>Contact our Shop</h4>
                 <ul>
-                    <li><a href="https://wa.me/919876543210" target="_blank">WhatsApp Us</a></li>
-                    <li><a href="#">Instagram DM</a></li>
-                    <li><a href="mailto:hello@gardenbaskethub.in">hello@gardenbaskethub.in</a></li>
-                    <li><a href="/contact-us/">Jaipur, Rajasthan</a></li>
-                    <li><a href="/contact-us/">Wholesale</a></li>
+                    <li><a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!" target="_blank" rel="noopener noreferrer">WhatsApp: +91 9414216343</a></li>
+                    <li><a href="https://www.instagram.com/garden_basket_hubb?stkn=cXloNG9mdjAxemYx" target="_blank" rel="noopener noreferrer">Instagram: @garden_basket_hubb</a></li>
+                    <li><a href="mailto:prashant753@gmail.com">prashant753@gmail.com</a></li>
+                    <li><a href="https://maps.app.goo.gl/PNbyJo98EydJKEWw7?g_st=ic" target="_blank" rel="noopener noreferrer">📍 Locate Shop on Maps</a></li>
+                    <li><a href="/contact-us/">Wholesale & Bulk Enquiries</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© <?php echo date('Y'); ?> Garden Basket Hub. All rights reserved. · Made in Jaipur with 🌿</p>
-            <div class="footer-socials">
-                <a href="#" title="Instagram">📷</a>
-                <a href="https://wa.me/919876543210" title="WhatsApp">💬</a>
-                <a href="#" title="YouTube">▶️</a>
+            <p>© <?php echo date('Y'); ?> Garden Basket Hub. All rights reserved. · Founded in 2019 in Jaipur 🌿</p>
+            <div class="footer-socials" style="display:flex;align-items:center;gap:14px;">
+                <!-- Instagram SVG -->
+                <a href="https://www.instagram.com/garden_basket_hubb?stkn=cXloNG9mdjAxemYx" target="_blank" rel="noopener noreferrer" title="Follow Garden Basket Hub on Instagram" style="display:inline-flex;align-items:center;color:var(--sand);text-decoration:none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+                <!-- WhatsApp SVG -->
+                <a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!" target="_blank" rel="noopener noreferrer" title="Chat on WhatsApp" style="display:inline-flex;align-items:center;color:var(--sand);text-decoration:none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </footer>
@@ -55,7 +69,7 @@
      Shows on every page — click opens WhatsApp chat
      ============================================================ -->
     <a id="gbh-whatsapp-float"
-       href="https://wa.me/919876543210?text=Hello%20Garden%20Basket%20Hub!%20I%20need%20help%20with%20my%20order%20%F0%9F%8C%BF"
+       href="https://wa.me/919414216343?text=Hello%20Garden%20Basket%20Hub!%20I%20need%20help%20with%20plants%20%F0%9F%8C%BF"
        target="_blank"
        rel="noopener noreferrer"
        aria-label="Chat with us on WhatsApp"

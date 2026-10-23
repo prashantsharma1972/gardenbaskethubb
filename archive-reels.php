@@ -63,7 +63,13 @@
           <?php while (have_posts()):
             the_post();
             $r_id = get_the_ID();
-            $video_url = get_field('video_url');
+            $video_url = '';
+            if (function_exists('get_field')) {
+                $video_url = get_field('reel_video_url') ?: (get_field('video_url') ?: get_field('instagram_url'));
+            }
+            if (!$video_url) {
+                $video_url = get_post_meta($r_id, 'reel_video_url', true) ?: (get_post_meta($r_id, 'video_url', true) ?: get_post_meta($r_id, 'instagram_url', true));
+            }
             $thumbnail = get_the_post_thumbnail_url($r_id, 'large');
             if (!$thumbnail && function_exists('get_field')) {
                 $thumbnail = get_field('thumbnail_image', $r_id) ?: (get_field('product_image', $r_id) ?: get_field('banner_image', $r_id));
@@ -74,9 +80,10 @@
             $cat_name = ($terms && !is_wp_error($terms)) ? esc_html($terms[0]->name) : 'Tutorial';
             ?>
             
-            <a href="<?php echo esc_url($video_url ? $video_url : '#'); ?>" class="reel-card" target="_blank"
+            <a href="<?php echo esc_url($video_url ? $video_url : get_permalink($r_id)); ?>" class="reel-card" target="_blank"
               style="<?php echo $style; ?>"
               data-reel-id="<?php echo esc_attr($r_id); ?>" 
+              data-video-url="<?php echo esc_url($video_url); ?>"
               data-category="<?php echo esc_attr(strtolower($cat_name)); ?>"
               data-title="<?php echo esc_attr(strtolower(get_the_title())); ?>">
                 

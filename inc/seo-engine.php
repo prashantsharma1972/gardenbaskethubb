@@ -136,7 +136,7 @@ function gbh_render_seo_meta_tags()
             'url' => home_url('/'),
             'logo' => $site_logo,
             'description' => $site_desc,
-            'telephone' => '+91-9876543210',
+            'telephone' => '+91-9414216343',
             'address' => array(
                 '@type' => 'PostalAddress',
                 'addressLocality' => 'Jaipur',

@@ -21,8 +21,8 @@
      ============================================================ -->
     <section class="page-hero about-hero">
         <p class="breadcrumb"><a href="/">Home</a> · Our Story</p>
-        <h1>Rooted in <em>Jaipur</em>,<br>growing happiness.</h1>
-        <p class="hero-sub">A family nursery with big dreams — fresh seedlings, heirloom seeds &amp; a love for the community that grows them.</p>
+        <h1>Rooted in <em>Jaipur</em>,<br>growing happiness since 2019.</h1>
+        <p class="hero-sub">Founded in 2019 — fresh saplings, heirloom non-GMO seeds, organic boosters &amp; a love for the gardening community.</p>
         <div class="hero-actions">
             <a href="/shop/" class="btn-primary">Explore Our Shop ➔</a>
             <a href="/contact-us/" class="btn-ghost">Talk to Us</a>
@@ -47,12 +47,86 @@
                 <div class="stat-divider"></div>
                 <div class="stat-item">
                     <span class="stat-n">60+</span>
-                    <span class="stat-l">Live Seedlings</span>
+                    <span class="stat-l">Live Saplings</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat-item">
                     <span class="stat-n">Same-Day</span>
                     <span class="stat-l">Jaipur Delivery</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+     CR §10: AUTHENTIC SHOP PHOTO COLLAGE & STORY
+     ============================================================ -->
+    <section class="about-shop-collage-section">
+        <div class="container">
+            <div class="shop-collage-grid">
+                <!-- Visual Collage Column -->
+                <div class="collage-visuals">
+                    <div class="collage-badge-floating">
+                        <span>📍 Est. 2019 in Jaipur</span>
+                    </div>
+                    <div class="collage-main-frame">
+                        <img src="/wp-content/uploads/2026/10/our-story-jaipur-shop-front.webp" 
+                             alt="Garden Basket Shop Storefront in Jaipur" 
+                             class="collage-img-main" loading="lazy">
+                        <div class="collage-caption">
+                            <span>🏡 Our Jaipur Nursery &amp; Shopfront</span>
+                        </div>
+                    </div>
+                    <div class="collage-sub-frames">
+                        <div class="sub-frame frame-entrance">
+                            <img src="/wp-content/uploads/2026/10/our-story-jaipur-shop-entrance.webp" 
+                                 alt="Garden Basket Shop Entrance" loading="lazy">
+                            <span class="sub-caption">Shop Entrance</span>
+                        </div>
+                        <div class="sub-frame frame-saplings">
+                            <img src="/wp-content/uploads/2026/10/our-story-fresh-saplings-rack.webp" 
+                                 alt="Fresh Saplings Nursery Rack" loading="lazy">
+                            <span class="sub-caption">Fresh Jaipur Saplings</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Story Narrative Column -->
+                <div class="collage-story-content">
+                    <p class="section-label">Real Local Roots</p>
+                    <h2 class="section-title">Step into our Jaipur nursery shop</h2>
+                    <p class="collage-lead">
+                        <strong>Garden Basket started in 2019</strong> with a simple mission: bringing authentic, thriving green life into urban Jaipur homes and balconies.
+                    </p>
+                    <p class="collage-text">
+                        What you see on our website comes directly from our physical nursery racks. Every potted sapling is hand-tended under Jaipur's natural sunlight, and every heirloom seed batch is personally germ-tested by our local team before dispatch.
+                    </p>
+                    
+                    <div class="collage-features">
+                        <div class="c-feat">
+                            <span class="c-feat-ic">🏡</span>
+                            <div>
+                                <strong>Physical Store in Jaipur</strong>
+                                <span>Visit us in person or order same-day hand delivery</span>
+                            </div>
+                        </div>
+                        <div class="c-feat">
+                            <span class="c-feat-ic">🌿</span>
+                            <div>
+                                <strong>No Warehouses, Direct Plants</strong>
+                                <span>100% healthy living roots nurtured since 2019</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="collage-cta-box">
+                        <a href="https://maps.app.goo.gl/PNbyJo98EydJKEWw7?g_st=ic" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            📍 Locate Our Shop on Google Maps ➔
+                        </a>
+                        <a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!%20I%20would%20like%20to%20visit%20your%20Jaipur%20shop" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+                            💬 WhatsApp the Shop
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,8 +148,8 @@
                 <div class="timeline-item">
                     <div class="timeline-icon">🌱</div>
                     <div class="timeline-body">
-                        <h3>A small nursery, big dreams</h3>
-                        <p>What began as selling seeds and saplings to neighbours in Jaipur grew into Garden Basket Hub — a full online nursery delivering freshness across the city and India.</p>
+                        <h3>Started in 2019 — Local Roots, Big Green Dreams</h3>
+                        <p>Founded in 2019 in Jaipur, what began as hand-raising saplings and providing quality seeds to neighbours has grown into Garden Basket Hub — a dedicated shop delivering guaranteed freshness, heirloom seeds, and garden supplies to passionate growers in Jaipur and across India.</p>
                     </div>
                 </div>
 
@@ -209,7 +283,7 @@
                         <span class="faq-icon">+</span>
                     </label>
                     <div class="faq-answer">
-                        <p>UPI (GPay, PhonePe, Paytm), Credit/Debit Cards, Net Banking — all via Razorpay. <strong>Cash on Delivery (COD)</strong> available for Jaipur orders.</p>
+                        <p>All major online payment options including UPI (Google Pay, PhonePe, Paytm, BHIM), Credit/Debit Cards, and Net Banking — powered securely by Razorpay. All orders are 100% prepaid for prompt packing and dispatch.</p>
                     </div>
                 </div>
 
@@ -220,7 +294,7 @@
                         <span class="faq-icon">+</span>
                     </label>
                     <div class="faq-answer">
-                        <p>Yes! We offer <strong>wholesale/bulk pricing</strong> for housing societies, schools, offices &amp; NGOs. Email <a href="mailto:hello@gardenbaskethubb.com" style="color:var(--leaf);font-weight:600;">hello@gardenbaskethubb.com</a> or WhatsApp us with your requirements.</p>
+                        <p>Yes! We offer <strong>wholesale/bulk pricing</strong> for housing societies, schools, offices &amp; NGOs. Email <a href="mailto:prashant753@gmail.com" style="color:var(--leaf);font-weight:600;">prashant753@gmail.com</a> or WhatsApp us at +91 9414216343 with your requirements.</p>
                     </div>
                 </div>
 

@@ -144,12 +144,15 @@
 
           <!-- Action Buttons -->
           <div class="thankyou-actions">
-            <a href="/shop/" class="btn-primary">
+            <button type="button" class="btn-primary open-track-modal-btn" data-order-num="<?php echo esc_attr($order_num); ?>" style="cursor:pointer;">
+              🚚 Track Live Status
+            </button>
+            <a href="/shop/" class="btn-primary btn-secondary" style="background:#F7F2E8;color:var(--soil);border:1px solid rgba(44,26,14,0.2);">
               Continue Shopping
             </a>
-            <a href="https://wa.me/919876543210?text=Hi%20Garden%20Basket%20Hub,%20I%20have%20an%20inquiry%20about%20Order%20<?php echo urlencode($order_num); ?>"
-              target="_blank" class="btn-primary btn-leaf">
-              💬 Track via WhatsApp
+            <a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub,%20I%20have%20an%20inquiry%20about%20Order%20<?php echo urlencode($order_num); ?>"
+              target="_blank" rel="noopener noreferrer" class="btn-primary btn-leaf">
+              💬 WhatsApp Support
             </a>
           </div>
         </div>

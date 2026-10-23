@@ -35,6 +35,72 @@ function gbh_save_cart($cart_data)
     }
 }
 
+/**
+ * Helper: Check if a product is a sapling (CR §5.2)
+ */
+function gbh_is_sapling_product($product_id)
+{
+    if (!$product_id)
+        return false;
+
+    // Check product_cat taxonomy terms
+    $terms = wp_get_post_terms($product_id, 'product_cat');
+    if ($terms && !is_wp_error($terms)) {
+        foreach ($terms as $t) {
+            if ($t->slug === 'saplings' || strtolower($t->name) === 'saplings' || $t->slug === 'seedlings' || strtolower($t->name) === 'seedlings') {
+                return true;
+            }
+            if ($t->parent) {
+                $parent_term = get_term($t->parent, 'product_cat');
+                if ($parent_term && !is_wp_error($parent_term) && ($parent_term->slug === 'saplings' || $parent_term->slug === 'seedlings')) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    // Check title / post meta fallback
+    $title = get_the_title($product_id);
+    if (stripos($title, 'sapling') !== false || stripos($title, 'seedling') !== false) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Helper: Check if active cart contains any saplings (CR §5.2)
+ */
+function gbh_cart_has_saplings()
+{
+    $cart = isset($_SESSION['gbh_cart']) ? $_SESSION['gbh_cart'] : array();
+    if (empty($cart))
+        return false;
+
+    foreach ($cart as $item) {
+        if (!empty($item['product_id']) && gbh_is_sapling_product($item['product_id'])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Helper: Get current user location ('jaipur' or 'outside_jaipur')
+ */
+function gbh_get_user_location()
+{
+    if (isset($_POST['user_location']) && !empty($_POST['user_location'])) {
+        return sanitize_text_field($_POST['user_location']);
+    }
+    if (isset($_COOKIE['gbh_location']) && !empty($_COOKIE['gbh_location'])) {
+        return sanitize_text_field($_COOKIE['gbh_location']);
+    }
+    if (isset($_SESSION['gbh_location']) && !empty($_SESSION['gbh_location'])) {
+        return sanitize_text_field($_SESSION['gbh_location']);
+    }
+    return 'jaipur'; // Default location
+}
+
 // 2. Server-side Cart Data Calculation
 function gbh_get_cart_data()
 {
@@ -127,6 +193,15 @@ function gbh_ajax_add_to_cart()
         wp_send_json_error(array('message' => 'Invalid product ID'));
     }
 
+    // CR §5.2: Location Guard for Live Saplings
+    $user_location = isset($_POST['user_location']) ? sanitize_text_field($_POST['user_location']) : gbh_get_user_location();
+    if (gbh_is_sapling_product($product_id) && $user_location === 'outside_jaipur') {
+        wp_send_json_error(array(
+            'message' => 'Live saplings are delivered exclusively within Jaipur for plant health. Please switch delivery location to Jaipur or explore our high-germination seeds and gardening supplies!',
+            'is_sapling_restriction' => true
+        ));
+    }
+
     if (!isset($_SESSION['gbh_cart']) || !is_array($_SESSION['gbh_cart'])) {
         $_SESSION['gbh_cart'] = array();
     }
@@ -205,24 +280,24 @@ function gbh_ajax_apply_coupon()
      * To add/change a coupon — just edit this array.
      */
     $valid_coupons = array(
-        'ORGANIC10'   => array('discount' => 100,  'label' => '₹100 Off on Organic Products'),
-        'MONSOON10'   => array('discount' => 120,  'label' => '₹120 Off Monsoon Special'),
-        'GARDEN10'    => array('discount' => 120,  'label' => '₹120 Off Garden Essentials'),
-        'JAIPUR100'   => array('discount' => 100,  'label' => '₹100 Off Jaipur Delivery Special'),
-        'MONSOON200'  => array('discount' => 200,  'label' => '₹200 Off Monsoon Bumper Sale'),
-        'WELCOME50'   => array('discount' => 50,   'label' => '₹50 Off Welcome Discount'),
-        'SEED15'      => array('discount' => 150,  'label' => '₹150 Off Seeds & Seedlings'),
+        'ORGANIC10' => array('discount' => 100, 'label' => '₹100 Off on Organic Products'),
+        'MONSOON10' => array('discount' => 120, 'label' => '₹120 Off Monsoon Special'),
+        'GARDEN10' => array('discount' => 120, 'label' => '₹120 Off Garden Essentials'),
+        'JAIPUR100' => array('discount' => 100, 'label' => '₹100 Off Jaipur Delivery Special'),
+        'MONSOON200' => array('discount' => 200, 'label' => '₹200 Off Monsoon Bumper Sale'),
+        'WELCOME50' => array('discount' => 50, 'label' => '₹50 Off Welcome Discount'),
+        'SEED15' => array('discount' => 150, 'label' => '₹150 Off Seeds & Seedlings'),
     );
 
     if (isset($valid_coupons[$coupon])) {
         $discount = $valid_coupons[$coupon]['discount'];
-        $label    = $valid_coupons[$coupon]['label'];
+        $label = $valid_coupons[$coupon]['label'];
 
         $_SESSION['gbh_discount'] = $discount;
 
         wp_send_json_success(array(
             'message' => '🎉 Coupon <strong>' . esc_html($coupon) . '</strong> applied! ' . esc_html($label),
-            'cart'    => gbh_get_cart_data()
+            'cart' => gbh_get_cart_data()
         ));
     } else {
         wp_send_json_error(array('message' => '❌ Invalid coupon code. Try <strong>ORGANIC10</strong> or <strong>MONSOON10</strong> for discounts!'));

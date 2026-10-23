@@ -13,11 +13,28 @@
     <?php while (have_posts()):
       the_post();
       $r_id = get_the_ID();
-      $video_url = get_post_meta($r_id, 'reel_video_url', true);
-      if (!$video_url && function_exists('get_field')) $video_url = get_field('reel_video_url');
+      $video_url = '';
+      if (function_exists('get_field')) {
+          $video_url = get_field('reel_video_url') ?: (get_field('video_url') ?: get_field('instagram_url'));
+      }
+      if (!$video_url) {
+          $video_url = get_post_meta($r_id, 'reel_video_url', true) ?: (get_post_meta($r_id, 'video_url', true) ?: get_post_meta($r_id, 'instagram_url', true));
+      }
 
-      $view_count = get_post_meta($r_id, 'reel_view_count', true);
-      if (!$view_count && function_exists('get_field')) $view_count = get_field('reel_view_count');
+      // Convert standard Instagram reel URL to embed format if needed
+      $embed_url = $video_url;
+      if ($embed_url && (strpos($embed_url, 'instagram.com/reel/') !== false || strpos($embed_url, 'instagram.com/p/') !== false)) {
+          $clean_ig = rtrim(explode('?', $embed_url)[0], '/');
+          $embed_url = $clean_ig . '/embed';
+      }
+
+      $view_count = '';
+      if (function_exists('get_field')) {
+          $view_count = get_field('reel_view_count') ?: get_field('view_count');
+      }
+      if (!$view_count) {
+          $view_count = get_post_meta($r_id, 'reel_view_count', true) ?: get_post_meta($r_id, 'view_count', true);
+      }
       if (!$view_count) $view_count = '3.4K views';
 
       $cover_img = get_the_post_thumbnail_url($r_id, 'large');
@@ -47,16 +64,16 @@
 
           <!-- VIDEO COLUMN -->
           <div class="single-reel-video-col">
-            <?php if ($video_url): ?>
+            <?php if ($embed_url): ?>
               <div class="single-reel-embed">
-                <iframe src="<?php echo esc_url($video_url); ?>" allowfullscreen></iframe>
+                <iframe src="<?php echo esc_url($embed_url); ?>" allowfullscreen frameborder="0" scrolling="no" allowtransparency="true"></iframe>
               </div>
             <?php else: ?>
               <div class="reel-placeholder" <?php echo $cover_img ? "style=\"background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('" . esc_url($cover_img) . "');\"" : ''; ?>>
                 <div class="reel-placeholder-icon">🎥 🌱</div>
                 <h3 class="reel-placeholder-title"><?php the_title(); ?></h3>
-                <p class="reel-placeholder-sub">Watch our full guide on YouTube &amp; Instagram</p>
-                <a href="https://youtube.com" target="_blank" class="btn-reel-watch">Watch Video Guide ➔</a>
+                <p class="reel-placeholder-sub">Watch our full gardening reels on Instagram</p>
+                <a href="https://www.instagram.com/garden_basket_hubb" target="_blank" rel="noopener noreferrer" class="btn-reel-watch">Watch on Instagram ➔</a>
               </div>
             <?php endif; ?>
           </div>

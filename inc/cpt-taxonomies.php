@@ -172,6 +172,12 @@ function gbh_template_redirect_override($template)
             return $file;
     }
 
+    if (is_tax('product_cat') || is_tax('product_season') || is_post_type_archive('product')) {
+        if (file_exists(get_template_directory() . '/archive-product.php')) {
+            return get_template_directory() . '/archive-product.php';
+        }
+    }
+
     if (isset($_GET['post_type'])) {
         if ($_GET['post_type'] === 'product' && file_exists(get_template_directory() . '/archive-product.php')) {
             return get_template_directory() . '/archive-product.php';
@@ -205,10 +211,10 @@ function gbh_seed_sample_content()
     if (isset($prod_count->publish) && intval($prod_count->publish) === 0) {
         $sample_products = array(
             array(
-                'title' => 'Tomato Seedling Tray (6 Plants)',
-                'excerpt' => '6 healthy, well-rooted hybrid cherry tomato seedlings, 3 weeks old. Ready for balcony pot transplanting.',
+                'title' => 'Tomato Sapling Tray (6 Live Plants)',
+                'excerpt' => '6 healthy, well-rooted hybrid cherry tomato saplings, 3 weeks old. Ready for balcony pot transplanting.',
                 'content' => 'Grown with organic vermicompost and neem cake in Jaipur nursery. Guaranteed high fruit yield within 60-70 days.',
-                'cat' => 'Seedlings',
+                'cat' => 'Saplings',
                 'season' => 'Monsoon',
                 'price' => '249',
                 'offer_price' => '199',
@@ -242,7 +248,7 @@ function gbh_seed_sample_content()
                 'title' => 'Premium Organic Vermicompost 5kg',
                 'excerpt' => '100% pure organic earthworm castings enriched with neem cake, bone meal & beneficial soil microbes.',
                 'content' => 'Odorless, weed-free, and rich in NPK nutrients for vigorous root development and leafy greens.',
-                'cat' => 'Compost & Soil',
+                'cat' => 'Manures & Fertilizers',
                 'season' => 'All Year',
                 'price' => '399',
                 'offer_price' => '299',
@@ -256,10 +262,10 @@ function gbh_seed_sample_content()
                 'level' => 'Essential Care'
             ),
             array(
-                'title' => 'Marigold Sapling Pack',
+                'title' => 'Marigold Flowering Sapling Pack',
                 'excerpt' => 'Pack of 4 fresh blooming saplings (Orange & Yellow varieties), ready to transplant.',
                 'content' => 'Marigolds repel garden pests and bring vibrant festive colors to your home garden.',
-                'cat' => 'Seedlings',
+                'cat' => 'Saplings',
                 'season' => 'Winter',
                 'price' => '199',
                 'offer_price' => '149',
@@ -424,3 +430,334 @@ function gbh_seed_sample_content()
     }
 }
 add_action('init', 'gbh_seed_sample_content', 20);
+
+// Helper: Get product post by title safely (replaces deprecated get_page_by_title)
+function gbh_get_product_by_title($title)
+{
+    $posts = get_posts(array(
+        'post_type'        => 'product',
+        'title'            => $title,
+        'post_status'      => 'any',
+        'numberposts'      => 1,
+        'suppress_filters' => false,
+    ));
+    return !empty($posts) ? $posts[0] : null;
+}
+
+// ============================================================
+// 5B. ENSURE STAR FEATURED PRODUCT EXISTS (CR §6)
+// ============================================================
+function gbh_ensure_star_product_exists()
+{
+    if (get_option('gbh_star_product_synced_v2')) {
+        return;
+    }
+
+    $booster = gbh_get_product_by_title('Garden Basket Organic Plant Booster (500ml)');
+    if (!$booster) {
+        $p_id = wp_insert_post(array(
+            'post_type'    => 'product',
+            'post_title'   => 'Garden Basket Organic Plant Booster (500ml)',
+            'post_name'    => 'garden-basket-organic-plant-booster-500ml',
+            'post_excerpt' => 'All-in-one organic liquid bio-nutrition booster formulated with seaweed kelp, humic acids, and micronutrients. Delivers visible greener leaves in 5 days and 3x more vibrant flower blooms.',
+            'post_content' => 'Garden Basket Organic Plant Booster is a 100% natural, laboratory-tested bio-stimulant formulated in Jaipur. Suitable for all balcony flowers, indoor foliage, terrace vegetables, and lawn grasses. Dilute 5ml per liter of water and spray or drench weekly.',
+            'post_status'  => 'publish',
+        ));
+
+        if ($p_id && !is_wp_error($p_id)) {
+            update_post_meta($p_id, 'product_price', '399');
+            update_post_meta($p_id, 'product_offer_price', '299');
+            update_post_meta($p_id, 'discount_label', '25% OFF');
+            update_post_meta($p_id, 'seed_type', 'Bio-Liquid Fertilizer (500ml)');
+            update_post_meta($p_id, 'growing_level', 'All Gardeners');
+            wp_set_object_terms($p_id, 'Manures & Fertilizers', 'product_cat');
+            wp_set_object_terms($p_id, 'All Year', 'product_season');
+        }
+    }
+    update_option('gbh_star_product_synced_v2', 1);
+}
+add_action('init', 'gbh_ensure_star_product_exists', 22);
+
+// ============================================================
+// 6. CLIENT AGREED 9-CATEGORY TREE DATA DEFINITION (CR §2)
+// ============================================================
+function gbh_get_client_category_tree()
+{
+    return array(
+        'seeds' => array(
+            'name' => 'Seeds',
+            'slug' => 'seeds',
+            'icon' => '🌱',
+            'subs' => array(
+                array('name' => 'Flowers', 'slug' => 'flower-seeds'),
+                array('name' => 'Vegetables', 'slug' => 'vegetable-seeds'),
+                array('name' => 'Exotic', 'slug' => 'exotic-seeds'),
+                array('name' => 'Forestry', 'slug' => 'forestry-seeds'),
+            )
+        ),
+        'saplings' => array(
+            'name' => 'Saplings',
+            'slug' => 'saplings',
+            'icon' => '🌿',
+            'badge' => 'Jaipur Only',
+            'subs' => array()
+        ),
+        'bulbs' => array(
+            'name' => 'Bulbs',
+            'slug' => 'bulbs',
+            'icon' => '🧅',
+            'subs' => array(
+                array('name' => 'Lily Bulbs', 'slug' => 'lily-bulbs'),
+            )
+        ),
+        'manures-fertilizers' => array(
+            'name' => 'Manures & Fertilizers',
+            'slug' => 'manures-fertilizers',
+            'icon' => '🪴',
+            'subs' => array()
+        ),
+        'combos' => array(
+            'name' => 'Combos',
+            'slug' => 'combos',
+            'icon' => '🎁',
+            'subs' => array(
+                array('name' => 'Vegetable Seed Combos', 'slug' => 'vegetable-seed-combos'),
+                array('name' => 'Forestry Seed Combos', 'slug' => 'forestry-seed-combos'),
+            )
+        ),
+        'sprayers' => array(
+            'name' => 'Sprayers',
+            'slug' => 'sprayers',
+            'icon' => '🚿',
+            'subs' => array()
+        ),
+        'tools' => array(
+            'name' => 'Tools',
+            'slug' => 'tools',
+            'icon' => '🛠️',
+            'subs' => array()
+        ),
+        'grow-bags' => array(
+            'name' => 'Grow Bags',
+            'slug' => 'grow-bags',
+            'icon' => '🛍️',
+            'subs' => array()
+        ),
+        'pots' => array(
+            'name' => 'Pots',
+            'slug' => 'pots',
+            'icon' => '🌸',
+            'subs' => array()
+        ),
+    );
+}
+
+// ============================================================
+// 7. AUTO-REGISTER & SYNC 9-CATEGORY TREE IN WORDPRESS (CR §2)
+// ============================================================
+function gbh_setup_client_category_tree()
+{
+    if (get_option('gbh_client_tree_synced_v2')) {
+        return;
+    }
+
+    // A. Rename legacy 'Seedlings' to 'Saplings' in product_cat
+    $old_seedlings = get_term_by('name', 'Seedlings', 'product_cat');
+    if (!$old_seedlings) {
+        $old_seedlings = get_term_by('slug', 'seedlings', 'product_cat');
+    }
+    if ($old_seedlings && !is_wp_error($old_seedlings)) {
+        wp_update_term($old_seedlings->term_id, 'product_cat', array(
+            'name' => 'Saplings',
+            'slug' => 'saplings'
+        ));
+    }
+
+    // B. Register the 9 categories and respective subcategories
+    $tree = gbh_get_client_category_tree();
+    foreach ($tree as $main_key => $cat_data) {
+        $parent_term = get_term_by('slug', $cat_data['slug'], 'product_cat');
+        if (!$parent_term) {
+            $parent_term = get_term_by('name', $cat_data['name'], 'product_cat');
+        }
+
+        $parent_id = 0;
+        if (!$parent_term) {
+            $inserted = wp_insert_term($cat_data['name'], 'product_cat', array(
+                'slug' => $cat_data['slug'],
+                'parent' => 0
+            ));
+            if (!is_wp_error($inserted)) {
+                $parent_id = $inserted['term_id'];
+            }
+        } else {
+            $parent_id = $parent_term->term_id;
+            wp_update_term($parent_id, 'product_cat', array('name' => $cat_data['name']));
+        }
+
+        // Subcategories
+        if ($parent_id && !empty($cat_data['subs'])) {
+            foreach ($cat_data['subs'] as $sub) {
+                $sub_term = get_term_by('slug', $sub['slug'], 'product_cat');
+                if (!$sub_term) {
+                    $sub_term = get_term_by('name', $sub['name'], 'product_cat');
+                }
+                if (!$sub_term) {
+                    wp_insert_term($sub['name'], 'product_cat', array(
+                        'slug' => $sub['slug'],
+                        'parent' => $parent_id
+                    ));
+                } else {
+                    wp_update_term($sub_term->term_id, 'product_cat', array(
+                        'name' => $sub['name'],
+                        'parent' => $parent_id
+                    ));
+                }
+            }
+        }
+    }
+    update_option('gbh_client_tree_synced_v2', 1);
+}
+add_action('init', 'gbh_setup_client_category_tree', 10);
+
+// ============================================================
+// 8. AUTO-SEED SHOWCASE PRODUCTS FOR ALL 9 CATEGORIES (CR §2 & §5)
+// ============================================================
+function gbh_seed_category_showcase_products()
+{
+    if (get_option('gbh_client_seed_synced_v2')) {
+        return;
+    }
+
+    $catalog = array(
+        array(
+            'title'       => 'Garden Basket Organic Plant Booster (500ml)',
+            'excerpt'     => 'All-in-one organic liquid nutrition booster for flowers, veggies, and potted plants.',
+            'content'     => 'Our signature organic plant growth booster formulated in Jaipur. Packed with micronutrients, humic acid, and sea kelp extracts to encourage lush foliage and abundant blooms.',
+            'cats'        => array('manures-fertilizers'),
+            'price'       => '399',
+            'offer_price' => '299',
+            'badge'       => 'Hero Product',
+            'type'        => 'Bio-Liquid Nutrition',
+            'season'      => 'All Year'
+        ),
+        array(
+            'title'       => 'Fragrant Asiatic Lily Bulbs (Pack of 5)',
+            'excerpt'     => 'Premium Dutch imported flowering lily bulbs producing large, intensely fragrant blooms.',
+            'content'     => 'High viability flowering bulbs suitable for balcony pots and garden borders in Indian climate.',
+            'cats'        => array('bulbs', 'lily-bulbs'),
+            'price'       => '499',
+            'offer_price' => '399',
+            'badge'       => 'New Season',
+            'type'        => 'Flowering Bulb',
+            'season'      => 'Winter'
+        ),
+        array(
+            'title'       => 'Zinnia & Marigold Flower Seed Mix',
+            'excerpt'     => 'Vibrant pollinator-attracting flower seeds with 85%+ germination rate.',
+            'content'     => 'Brighten your balcony with easy-to-grow, pest-repelling flower blooms that flower all season long.',
+            'cats'        => array('seeds', 'flower-seeds'),
+            'price'       => '199',
+            'offer_price' => '149',
+            'badge'       => 'Pollinator Friendly',
+            'type'        => 'Flowering Seed Mix',
+            'season'      => 'Summer'
+        ),
+        array(
+            'title'       => 'Exotic Swiss Chard & Kale Seeds Pack',
+            'excerpt'     => 'Nutrient-rich exotic leafy green seeds for kitchen gardens and indoor containers.',
+            'content'     => 'Grow superfoods right on your windowsill with premium non-GMO tested heirloom seed varieties.',
+            'cats'        => array('seeds', 'exotic-seeds'),
+            'price'       => '249',
+            'offer_price' => '199',
+            'badge'       => 'Exotic Variety',
+            'type'        => 'Heirloom Greens',
+            'season'      => 'Winter'
+        ),
+        array(
+            'title'       => 'Kitchen Garden Vegetable Seed Combo',
+            'excerpt'     => 'Complete combo kit containing 10 essential Indian cooking vegetable seed packs.',
+            'content'     => 'Includes Tomato, Okra, Chilli, Coriander, Spinach, Radish, Methi, Bottle Gourd, Brinjal, and Cucumber.',
+            'cats'        => array('combos', 'vegetable-seed-combos', 'seeds', 'vegetable-seeds'),
+            'price'       => '599',
+            'offer_price' => '449',
+            'badge'       => 'Bestseller Combo',
+            'type'        => '10-Pack Kitchen Kit',
+            'season'      => 'All Year'
+        ),
+        array(
+            'title'       => 'Rajasthan Native Forestry Seed Combo',
+            'excerpt'     => 'Hardy drought-tolerant indigenous tree seed collection: Khejri, Neem, Rohida, and Shisham.',
+            'content'     => 'Ideal for afforestation, farm boundaries, and eco-restoration projects across dry and arid regions.',
+            'cats'        => array('combos', 'forestry-seed-combos', 'seeds', 'forestry-seeds'),
+            'price'       => '699',
+            'offer_price' => '549',
+            'badge'       => 'Eco Initiative',
+            'type'        => 'Native Forestry Pack',
+            'season'      => 'Monsoon'
+        ),
+        array(
+            'title'       => 'Continuous Pressure Garden Sprayer 2L',
+            'excerpt'     => 'Adjustable brass nozzle hand sprayer for liquid fertilizers, neem oil, and misting.',
+            'content'     => 'Durable polyethylene tank with locking trigger mechanism for effortless one-handed spraying.',
+            'cats'        => array('sprayers'),
+            'price'       => '449',
+            'offer_price' => '349',
+            'badge'       => 'Essential Tool',
+            'type'        => 'Manual Compression',
+            'season'      => 'All Year'
+        ),
+        array(
+            'title'       => 'Heavy Duty HDPE Grow Bags 12x12 (Pack of 5)',
+            'excerpt'     => 'Tear-resistant UV-stabilized breathable grow bags with drainage holes for terrace gardening.',
+            'content'     => 'Engineered for optimal aeration and root pruning, preventing circling roots and boosting growth.',
+            'cats'        => array('grow-bags'),
+            'price'       => '349',
+            'offer_price' => '249',
+            'badge'       => 'UV Stabilized',
+            'type'        => '220 GSM HDPE',
+            'season'      => 'All Year'
+        ),
+        array(
+            'title'       => 'Handmade Terracotta Clay Planters (Set of 2)',
+            'excerpt'     => 'Traditional Jaipur artisan terracotta earthenware pots with natural porous clay breathing walls.',
+            'content'     => 'Handcrafted by local pottery communities in Rajasthan. Keeps soil cool in scorching summer heat.',
+            'cats'        => array('pots'),
+            'price'       => '599',
+            'offer_price' => '449',
+            'badge'       => 'Artisan Handmade',
+            'type'        => 'Natural Red Clay',
+            'season'      => 'All Year'
+        ),
+    );
+
+    foreach ($catalog as $item) {
+        $existing = gbh_get_product_by_title($item['title']);
+        if (!$existing) {
+            $p_id = wp_insert_post(array(
+                'post_type'    => 'product',
+                'post_title'   => $item['title'],
+                'post_excerpt' => $item['excerpt'],
+                'post_content' => $item['content'],
+                'post_status'  => 'publish'
+            ));
+            if ($p_id && !is_wp_error($p_id)) {
+                update_post_meta($p_id, 'product_price', $item['price']);
+                update_post_meta($p_id, 'product_offer_price', $item['offer_price']);
+                update_post_meta($p_id, 'discount_label', $item['badge']);
+                update_post_meta($p_id, 'seed_type', $item['type']);
+                
+                // Assign taxonomy terms
+                wp_set_object_terms($p_id, $item['cats'], 'product_cat');
+                wp_set_object_terms($p_id, $item['season'], 'product_season');
+            }
+        } else {
+            // Ensure categories are linked even if post exists
+            wp_set_object_terms($existing->ID, $item['cats'], 'product_cat');
+        }
+    }
+    update_option('gbh_client_seed_synced_v2', 1);
+}
+add_action('init', 'gbh_seed_category_showcase_products', 25);
+
+

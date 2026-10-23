@@ -103,6 +103,11 @@ import './../../src-utilities/footer';
             // Extract Vimeo ID
             let vId = videoUrl.split('/').pop();
             embedHtml = '<iframe src="https://player.vimeo.com/video/' + vId + '?autoplay=1" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+        } else if (videoUrl.includes('instagram.com/reel/') || videoUrl.includes('instagram.com/p/')) {
+            // Instagram Embed
+            let cleanIg = videoUrl.split('?')[0].replace(/\/+$/, '');
+            let igEmbed = cleanIg + '/embed';
+            embedHtml = '<iframe src="' + igEmbed + '" width="100%" height="100%" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen></iframe>';
         } else if (videoUrl.endsWith('.mp4') || videoUrl.endsWith('.webm')) {
             // Direct video file
             embedHtml = '<video src="' + videoUrl + '" width="100%" height="100%" controls autoplay></video>';

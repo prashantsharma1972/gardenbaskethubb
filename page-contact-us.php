@@ -27,29 +27,45 @@
     <section>
       <div class="contact-layout">
         <div class="contact-info">
-          <h2>Visit the garden</h2>
-          <p>Our nursery is open every day except Tuesdays. Come say hi, pet the shop cat, and pick your seedlings in
-            person.</p>
+          <h2>Contact our Shop</h2>
+          <p>Welcome to Garden Basket Hub in Jaipur! Come say hi, explore our seasonal saplings, seeds, pots, and soil fertilizers in person.</p>
 
           <div class="contact-row">
             <span class="ic">📍</span>
-            <div><strong>Nursery</strong><span>Jaipur, Rajasthan · 302001</span></div>
+            <div>
+              <strong>Shop Address</strong>
+              <span>Jaipur, Rajasthan · 302001</span>
+              <div style="margin-top: 8px;">
+                <a href="https://maps.app.goo.gl/PNbyJo98EydJKEWw7?g_st=ic" target="_blank" rel="noopener noreferrer" class="btn-locate-store" style="display:inline-flex;align-items:center;gap:6px;background:var(--leaf);color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:0.88rem;font-weight:600;">
+                  📍 Locate Store on Google Maps ➔
+                </a>
+              </div>
+            </div>
           </div>
           <div class="contact-row">
             <span class="ic">💬</span>
-            <div><strong>WhatsApp</strong><span>+91 98765 43210</span></div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span><a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!" target="_blank" rel="noopener noreferrer" style="color:var(--leaf);text-decoration:none;font-weight:600;">+91 9414216343</a></span>
+            </div>
           </div>
           <div class="contact-row">
             <span class="ic">📧</span>
-            <div><strong>Email</strong><span>hello@gardenbaskethub.in</span></div>
+            <div>
+              <strong>Email</strong>
+              <span><a href="mailto:prashant753@gmail.com" style="color:var(--leaf);text-decoration:none;font-weight:600;">prashant753@gmail.com</a></span>
+            </div>
           </div>
           <div class="contact-row">
             <span class="ic">📷</span>
-            <div><strong>Instagram</strong><span>@gardenbaskethub</span></div>
+            <div>
+              <strong>Instagram</strong>
+              <span><a href="https://www.instagram.com/garden_basket_hubb?stkn=cXloNG9mdjAxemYx" target="_blank" rel="noopener noreferrer" style="color:var(--leaf);text-decoration:none;font-weight:600;">@garden_basket_hubb</a></span>
+            </div>
           </div>
           <div class="contact-row">
             <span class="ic">🕒</span>
-            <div><strong>Hours</strong><span>Wed – Mon · 9 AM to 7 PM</span></div>
+            <div><strong>Hours</strong><span>Mon – Sun · 9 AM to 8 PM</span></div>
           </div>
         </div>
 

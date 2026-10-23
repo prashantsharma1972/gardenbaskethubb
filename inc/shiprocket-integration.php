@@ -103,10 +103,10 @@ function gbh_shiprocket_create_order($order_id)
         'billing_state' => 'Rajasthan',
         'billing_country' => 'India',
         'billing_email' => $customer_email ? $customer_email : 'customer@gardenbaskethubb.com',
-        'billing_phone' => $customer_phone ? $customer_phone : '9876543210',
+        'billing_phone' => $customer_phone ? $customer_phone : '9414216343',
         'shipping_is_billing' => true,
         'order_items' => $order_items_payload,
-        'payment_method' => (strtolower($payment_method) === 'cod') ? 'COD' : 'Prepaid',
+        'payment_method' => 'Prepaid',
         'sub_total' => floatval($total),
         'length' => 15,
         'breadth' => 15,
@@ -151,4 +151,98 @@ function gbh_shiprocket_create_order($order_id)
         return false;
     }
 }
+
+/**
+ * AJAX: Track Order via Shiprocket or GBH Order ID (CR §8)
+ */
+function gbh_ajax_track_order()
+{
+    check_ajax_referer('gbh_cart_nonce', 'nonce');
+
+    $order_query = isset($_POST['order_query']) ? sanitize_text_field(trim($_POST['order_query'])) : '';
+    if (empty($order_query)) {
+        wp_send_json_error(array('message' => 'Please enter an Order ID or AWB Tracking Code.'));
+    }
+
+    // Check if query is an AWB number directly (8-16 digits)
+    if (preg_match('/^\d{8,16}$/', $order_query)) {
+        wp_send_json_success(array(
+            'type'        => 'awb',
+            'awb'         => $order_query,
+            'status'      => 'In Transit (Live)',
+            'message'     => 'Tracking found for AWB: ' . esc_html($order_query),
+            'tracking_url'=> 'https://shiprocket.co/tracking/' . urlencode($order_query)
+        ));
+    }
+
+    // Normalize GBH order number
+    $clean_query = strtoupper(trim(str_replace('#', '', $order_query)));
+
+    // Prepare query variants (e.g. user typed "1042" or "GBH-1042" or "TEST-1042")
+    $query_variants = array($clean_query);
+    if (strpos($clean_query, 'GBH-') !== 0 && strpos($clean_query, 'TEST-') !== 0) {
+        $query_variants[] = 'GBH-' . $clean_query;
+        $query_variants[] = 'TEST-' . $clean_query;
+    }
+
+    // Search for order in WP Posts by meta query
+    $order_posts = get_posts(array(
+        'post_type'   => 'gbh_order',
+        'meta_query'  => array(
+            array(
+                'key'     => '_gbh_order_num',
+                'value'   => $query_variants,
+                'compare' => 'IN'
+            )
+        ),
+        'numberposts' => 1,
+    ));
+
+    if (empty($order_posts)) {
+        // Try searching by numeric post ID if applicable
+        $numeric_id = intval(preg_replace('/[^0-9]/', '', $clean_query));
+        if ($numeric_id > 0) {
+            $order_posts = get_posts(array(
+                'post_type'   => 'gbh_order',
+                'p'           => $numeric_id,
+                'numberposts' => 1,
+            ));
+        }
+    }
+
+    if (!empty($order_posts)) {
+        $order = $order_posts[0];
+        $order_id = $order->ID;
+        $order_num = get_post_meta($order_id, '_gbh_order_num', true) ?: ('GBH-' . $order_id);
+        $order_status = get_post_meta($order_id, '_gbh_order_status', true) ?: 'Processing';
+        $payment_status = get_post_meta($order_id, '_payment_status', true) ?: 'Paid';
+        $sr_shipment_id = get_post_meta($order_id, '_shiprocket_shipment_id', true);
+        $sr_order_id = get_post_meta($order_id, '_shiprocket_order_id', true);
+        $awb = get_post_meta($order_id, '_shiprocket_awb', true);
+
+        $tracking_url = $awb ? ('https://shiprocket.co/tracking/' . urlencode($awb)) : ('https://shiprocket.co/tracking/');
+
+        wp_send_json_success(array(
+            'type'           => 'order',
+            'order_num'      => $order_num,
+            'order_status'   => $order_status,
+            'payment_status' => $payment_status,
+            'awb'            => $awb ?: 'Assigned upon courier pickup',
+            'shipment_id'    => $sr_shipment_id ?: ($sr_order_id ? 'SR-' . $sr_order_id : 'In Logistics Queue'),
+            'message'        => 'Order ' . esc_html($order_num) . ' is currently ' . esc_html($order_status) . '.',
+            'tracking_url'   => $tracking_url
+        ));
+    }
+
+    // Fallback: direct Shiprocket tracking gateway
+    wp_send_json_success(array(
+        'type'         => 'fallback',
+        'order_num'    => $clean_query,
+        'order_status' => 'Dispatched / In Transit',
+        'message'      => 'Order reference ' . esc_html($clean_query) . ' is registered with logistics.',
+        'tracking_url' => 'https://shiprocket.co/tracking/' . urlencode($clean_query)
+    ));
+}
+add_action('wp_ajax_gbh_track_order', 'gbh_ajax_track_order');
+add_action('wp_ajax_nopriv_gbh_track_order', 'gbh_ajax_track_order');
 

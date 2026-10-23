@@ -20,7 +20,7 @@
     <section class="page-hero">
       <p class="breadcrumb"><a href="/">Home</a> · Your Bag</p>
       <h1>Your <em>garden bag</em></h1>
-      <p>Review your seedlings and supplies before checkout.</p>
+      <p>Review your saplings and gardening supplies before checkout.</p>
     </section>
 
     <!-- ============================================================
@@ -99,7 +99,8 @@
             <a href="/checkout/" class="btn-primary checkout-btn">
               Proceed to Checkout
             </a>
-            <p style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-align:center;margin-top:16px;letter-spacing:0.06em;">
+            <p
+              style="font-family:var(--f-mono);font-size:0.7rem;color:var(--clay);text-align:center;margin-top:16px;letter-spacing:0.06em;">
               ✦ Free shipping pan India above ₹799
             </p>
           </aside>
@@ -108,7 +109,7 @@
         <div class="empty-cart-view">
           <div class="empty-icon">🛒 🌿</div>
           <h2 class="empty-title">Your garden bag is empty</h2>
-          <p class="empty-desc">You haven't added any seeds, seedlings, or gardening tools to your bag yet.</p>
+          <p class="empty-desc">You haven't added any seeds, saplings, or gardening supplies to your bag yet.</p>
           <a href="/shop/" class="btn-primary empty-btn">
             Explore Nursery Shop ➔
           </a>

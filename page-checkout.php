@@ -90,24 +90,15 @@
 
             <!-- Step 3: Payment Options -->
             <div class="step">
-              <h3><span class="num">3</span> Select Payment Option</h3>
+              <h3><span class="num">3</span> Payment Method</h3>
 
-              <div class="pay-option selected">
+              <div class="pay-option selected" style="cursor:default;">
                 <span class="ic">📱</span>
                 <div>
-                  <div class="label">UPI / Razorpay</div>
-                  <div class="sub">Pay instantly via Google Pay, PhonePe, Paytm, Cards or Net Banking</div>
+                  <div class="label">Instant Online Payment (UPI / Cards / Net Banking)</div>
+                  <div class="sub">Pay securely via Google Pay, PhonePe, Paytm, UPI, Debit/Credit Card or Net Banking (Powered by Razorpay)</div>
                 </div>
               </div>
-
-              <div class="pay-option">
-                <span class="ic">💵</span>
-                <div>
-                  <div class="label">Cash on Delivery (COD)</div>
-                  <div class="sub">Pay cash to delivery executive (Available within Jaipur)</div>
-                </div>
-              </div>
-
             </div>
 
             <button type="submit" class="btn-primary btn-place-order" style="width:100%;text-align:center;padding:18px;">
