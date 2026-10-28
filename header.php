@@ -28,8 +28,8 @@ $cart_count = $cart_data['total_count'];
      ============================================================ -->
     <nav>
         <a href="<?php echo esc_url(home_url('/')); ?>" class="nav-logo" title="Garden Basket Hub">
-            <img src="/wp-content/uploads/2026/10/garden-basket-hub-official-logo.webp" alt="Garden Basket Hub"
-                class="site-logo-img">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/garden-basket-hub-logo.png'); ?>"
+                alt="Garden Basket Hub" class="site-logo-img">
         </a>
 
         <!-- Desktop Links -->
@@ -107,8 +107,8 @@ $cart_count = $cart_data['total_count'];
     <div id="gbh-mobile-drawer" class="mobile-drawer">
         <div class="mobile-drawer-header">
             <a href="<?php echo esc_url(home_url('/')); ?>" class="nav-logo" title="Garden Basket Hub">
-                <img src="/wp-content/uploads/2026/10/garden-basket-hub-official-logo.webp" alt="Garden Basket Hub"
-                    class="site-logo-img">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/garden-basket-hub-logo.png'); ?>"
+                    alt="Garden Basket Hub" class="site-logo-img">
             </a>
             <button id="gbh-mobile-close" class="mobile-close" aria-label="Close Menu">&times;</button>
         </div>

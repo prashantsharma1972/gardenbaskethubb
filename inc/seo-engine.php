@@ -14,7 +14,7 @@ function gbh_render_seo_meta_tags()
 {
     $site_name = get_bloginfo('name') ? get_bloginfo('name') : 'Garden Basket Hub';
     $site_desc = 'Jaipur’s Premier E-Commerce Nursery for Heirloom Seeds, Live Saplings, 100% Organic Vermicompost & Terracotta Clay Pots. Same-day delivery in Jaipur!';
-    $site_logo = get_template_directory_uri() . '/assets/images/og-banner.jpg';
+    $site_logo = get_template_directory_uri() . '/assets/images/garden-basket-hub-logo.png';
 
     $page_title = '';
     $meta_desc = $site_desc;

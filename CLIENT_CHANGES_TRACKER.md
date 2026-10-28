@@ -158,7 +158,7 @@ Core business rules for location-restricted sapling sales:
 ## 🎨 Phase 5: Visuals & Asset-Dependent Updates (CR §3, §4, §9 & §10)
 
 - [x] **5.1 Update Garden Basket Hub Logo (CR §3.2 & Client Msg #2)**
-  - *Details:* Integrated official `garden-basket-hub-official-logo.webp` across Desktop Navigation bar, Mobile Navigation Drawer, and Footer brand badge with responsive high-density styling.
+  - *Details:* Integrated official `garden-basket-hub-logo.png` (transparent background, cropped to artwork bounding box) across Desktop Navigation bar, Mobile Navigation Drawer, and Footer brand badge via `get_template_directory_uri()`.
   - *Files:* `header.php`, `footer.php`, `public/scss-utilities/_header.scss`, `public/scss-utilities/_footer.scss`.
   - *Status:* Completed ✅
 
