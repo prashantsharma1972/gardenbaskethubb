@@ -13,7 +13,7 @@
     <!-- ============================================================
      PAGE HERO
      ============================================================ -->
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-potted-plants-balcony-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Shop</p>
       <h1>The whole <em>garden</em>, in one place.</h1>
       <p>Filter by category, season, or what you're growing. Fresh saplings ship same-day in Jaipur.</p>

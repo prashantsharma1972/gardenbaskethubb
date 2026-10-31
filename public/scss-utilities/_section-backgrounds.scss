@@ -6,7 +6,33 @@
    Layout, overlays, and contrast treatments for botanical backgrounds
    ============================================================ */
 
-/* 1. Homepage Hero Section (CR §4.1) */
+/* 1. Page Hero Sections with Botanical Backgrounds (All Pages) */
+.page-hero {
+    position: relative;
+    overflow: hidden;
+
+    &[style*="background-image"],
+    &.has-bg-img {
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(253, 250, 245, 0.90) 0%, rgba(253, 250, 245, 0.74) 65%, rgba(253, 250, 245, 0.38) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        > * {
+            position: relative;
+            z-index: 2;
+        }
+    }
+}
+
 .page-hero.home-hero {
     background-size: cover !important;
     background-position: center bottom !important;

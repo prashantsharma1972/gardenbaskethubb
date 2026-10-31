@@ -14,7 +14,7 @@
     <!-- ============================================================
      BLOG HERO SECTION
      ============================================================ -->
-    <section class="page-hero doc-hero doc-hero-center">
+    <section class="page-hero doc-hero doc-hero-center" style="background-image: url('/wp-content/uploads/2026/10/hero-gardening-sunflowers-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Gardening Guides & Blog</p>
       <h1 class="hero-title">Gardening <em>Guides</em> & Tips.</h1>
       <p class="hero-desc">

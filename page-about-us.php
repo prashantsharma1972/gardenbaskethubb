@@ -19,7 +19,7 @@
     <!-- ============================================================
      HERO
      ============================================================ -->
-    <section class="page-hero about-hero">
+    <section class="page-hero about-hero" style="background-image: url('/wp-content/uploads/2026/10/section-climbing-ivy-vine-bg.webp');">
         <p class="breadcrumb"><a href="/">Home</a> · Our Story</p>
         <h1>Rooted in <em>Jaipur</em>,<br>growing happiness since 2019.</h1>
         <p class="hero-sub">Founded in 2019 — fresh saplings, heirloom non-GMO seeds, organic boosters &amp; a love for the gardening community.</p>

@@ -936,6 +936,19 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
   if (overlay) overlay.addEventListener('click', closeDrawer);
 
+  // Mobile category accordion subcategories toggle
+  const catToggles = drawer.querySelectorAll('.mobile-cat-accordion-btn');
+  catToggles.forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const parentItem = btn.closest('.mobile-cat-item');
+      if (parentItem) {
+        parentItem.classList.toggle('open');
+      }
+    });
+  });
+
   // Close drawer when any nav link inside it is clicked
   const drawerLinks = drawer.querySelectorAll('a');
   drawerLinks.forEach(link => {

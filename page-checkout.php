@@ -19,7 +19,7 @@
     <!-- ============================================================
      CHECKOUT HERO
      ============================================================ -->
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-white-jasmine-planters-bg.webp');">
       <p class="breadcrumb"><a href="/cart/">Bag</a> · Checkout</p>
       <h1>Almost in the <em>soil</em>.</h1>
       <p>Just a few details and your garden will be on its way.</p>

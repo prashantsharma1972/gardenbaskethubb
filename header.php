@@ -33,34 +33,111 @@ $cart_count = $cart_data['total_count'];
         </a>
 
         <!-- Desktop Links -->
-        <?php $gbh_nav_tree = function_exists('gbh_get_client_category_tree') ? gbh_get_client_category_tree() : array(); ?>
+        <?php
+        $gbh_nav_tree = function_exists('gbh_get_client_category_tree') ? gbh_get_client_category_tree() : array();
+        $gbh_mega_groups = array(
+            array(
+                'title'    => 'Seeds & Plants',
+                'subtitle' => 'Live & Heirloom',
+                'keys'     => array('seeds', 'saplings', 'bulbs'),
+            ),
+            array(
+                'title'    => 'Soil & Plant Care',
+                'subtitle' => 'Organic Nourishment',
+                'keys'     => array('combos', 'manures-fertilizers', 'sprayers'),
+            ),
+            array(
+                'title'    => 'Pots & Gardening Tools',
+                'subtitle' => 'Planters & Gear',
+                'keys'     => array('grow-bags', 'pots', 'tools'),
+            ),
+        );
+        $assigned_keys = array();
+        foreach ($gbh_mega_groups as $g) {
+            $assigned_keys = array_merge($assigned_keys, $g['keys']);
+        }
+        $extra_keys = array_diff(array_keys($gbh_nav_tree), $assigned_keys);
+        ?>
         <ul class="nav-links">
             <li class="nav-item-dropdown">
                 <a href="/shop/">Shop All Essentials <span class="dropdown-chevron">▾</span></a>
-                <div class="dropdown-menu-box">
-                    <?php foreach ($gbh_nav_tree as $cat_key => $cat_item): ?>
-                        <div class="cat-menu-item">
-                            <a href="/shop/?category=<?php echo esc_attr($cat_item['slug']); ?>" class="cat-main-link">
-                                <span><?php echo esc_html($cat_item['icon']); ?></span>
-                                <span><?php echo esc_html($cat_item['name']); ?></span>
-                                <?php if (!empty($cat_item['badge'])): ?>
-                                    <span class="badge-jaipur-mini"><?php echo esc_html($cat_item['badge']); ?></span>
-                                <?php endif; ?>
-                            </a>
-                            <?php if (!empty($cat_item['subs'])): ?>
-                                <div class="subcat-links">
-                                    <?php foreach ($cat_item['subs'] as $sub_item): ?>
-                                        <a
-                                            href="/shop/?category=<?php echo esc_attr($sub_item['slug']); ?>"><?php echo esc_html($sub_item['name']); ?></a>
-                                    <?php endforeach; ?>
+                <div class="dropdown-menu-box" role="region" aria-label="Product Categories Mega Menu">
+                    <div class="mega-columns-grid">
+                        <?php foreach ($gbh_mega_groups as $g_index => $group): ?>
+                            <div class="mega-menu-column">
+                                <div class="mega-column-header">
+                                    <span class="mega-column-title"><?php echo esc_html($group['title']); ?></span>
+                                    <span class="mega-column-subtitle"><?php echo esc_html($group['subtitle']); ?></span>
                                 </div>
-                            <?php endif; ?>
+                                <div class="mega-column-categories">
+                                    <?php
+                                    $col_keys = $group['keys'];
+                                    if ($g_index === 2 && !empty($extra_keys)) {
+                                        $col_keys = array_merge($col_keys, $extra_keys);
+                                    }
+                                    foreach ($col_keys as $ckey):
+                                        if (!isset($gbh_nav_tree[$ckey])) continue;
+                                        $cat_item = $gbh_nav_tree[$ckey];
+                                    ?>
+                                        <div class="mega-category-item <?php echo !empty($cat_item['subs']) ? 'has-subcategories' : ''; ?>">
+                                            <a href="/shop/?category=<?php echo esc_attr($cat_item['slug']); ?>" class="mega-cat-main-link">
+                                                <span class="mega-cat-icon-chip"><?php echo esc_html($cat_item['icon']); ?></span>
+                                                <span class="mega-cat-name"><?php echo esc_html($cat_item['name']); ?></span>
+                                                <?php if (!empty($cat_item['badge'])): ?>
+                                                    <span class="mega-badge-jaipur"><?php echo esc_html($cat_item['badge']); ?></span>
+                                                <?php endif; ?>
+                                                <span class="mega-cat-arrow" aria-hidden="true">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                                </span>
+                                            </a>
+                                            <?php if (!empty($cat_item['subs'])): ?>
+                                                <div class="mega-subcat-links">
+                                                    <?php foreach ($cat_item['subs'] as $sub_item): ?>
+                                                        <a href="/shop/?category=<?php echo esc_attr($sub_item['slug']); ?>" class="mega-subcat-item-link">
+                                                            <span class="subcat-indicator" aria-hidden="true">
+                                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                                            </span>
+                                                            <span class="subcat-text"><?php echo esc_html($sub_item['name']); ?></span>
+                                                        </a>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php endforeach; ?>
+
+                                    <?php if ($g_index === 2): ?>
+                                        <div class="mega-column-promo">
+                                            <div class="promo-tag">
+                                                <span class="promo-tag-dot"></span> Jaipur Nursery
+                                            </div>
+                                            <strong class="promo-heading">Same-Day Express Delivery</strong>
+                                            <span class="promo-subtext">Order fresh saplings &amp; organic soil before 2 PM.</span>
+                                            <a href="/shop/?category=saplings" class="promo-link">
+                                                <span>Shop Live Saplings</span>
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="mega-dropdown-footer">
+                        <div class="footer-perks">
+                            <span class="perk-item">
+                                <span class="perk-icon">🌱</span> 100% Organic &amp; Non-GMO
+                            </span>
+                            <span class="perk-sep">•</span>
+                            <span class="perk-item">
+                                <span class="perk-icon">🚚</span> Jaipur Same-Day &amp; Pan-India Courier
+                            </span>
                         </div>
-                    <?php endforeach; ?>
-                    <a href="/shop/" class="dropdown-footer-link">
-                        <span>Browse All Gardening Supplies ➔</span>
-                        <span>Jaipur Nursery &amp; Pan-India Shipping</span>
-                    </a>
+                        <a href="/shop/" class="btn-mega-catalog">
+                            <span>Explore Full Catalog</span>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </a>
+                    </div>
                 </div>
             </li>
             <li><a href="/reels/">Reels</a></li>
@@ -128,13 +205,35 @@ $cart_count = $cart_data['total_count'];
             <li>
                 <a href="/shop/">🌱 Shop All Essentials</a>
                 <div class="mobile-category-group">
-                    <div class="mobile-cat-heading">Categories</div>
-                    <div class="mobile-cat-grid">
+                    <div class="mobile-cat-heading">Categories &amp; Subcategories</div>
+                    <div class="mobile-cat-list">
                         <?php foreach ($gbh_nav_tree as $cat_key => $cat_item): ?>
-                            <a href="/shop/?category=<?php echo esc_attr($cat_item['slug']); ?>">
-                                <span><?php echo esc_html($cat_item['icon']); ?></span>
-                                <span><?php echo esc_html($cat_item['name']); ?></span>
-                            </a>
+                            <div class="mobile-cat-item <?php echo !empty($cat_item['subs']) ? 'has-subcats' : ''; ?>">
+                                <div class="mobile-cat-row">
+                                    <a href="/shop/?category=<?php echo esc_attr($cat_item['slug']); ?>" class="mobile-cat-parent-link">
+                                        <span class="m-cat-ic"><?php echo esc_html($cat_item['icon']); ?></span>
+                                        <span class="m-cat-text"><?php echo esc_html($cat_item['name']); ?></span>
+                                        <?php if (!empty($cat_item['badge'])): ?>
+                                            <span class="badge-jaipur-mini"><?php echo esc_html($cat_item['badge']); ?></span>
+                                        <?php endif; ?>
+                                    </a>
+                                    <?php if (!empty($cat_item['subs'])): ?>
+                                        <button type="button" class="mobile-cat-accordion-btn" aria-label="Toggle subcategories for <?php echo esc_attr($cat_item['name']); ?>">
+                                            <span class="m-toggle-arrow">▾</span>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                                <?php if (!empty($cat_item['subs'])): ?>
+                                    <div class="mobile-subcat-drawer">
+                                        <?php foreach ($cat_item['subs'] as $sub_item): ?>
+                                            <a href="/shop/?category=<?php echo esc_attr($sub_item['slug']); ?>" class="mobile-subcat-item-link">
+                                                <span class="cat-sub-bullet">↳</span>
+                                                <span class="sub-name"><?php echo esc_html($sub_item['name']); ?></span>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -292,6 +391,21 @@ $cart_count = $cart_data['total_count'];
                 toggleBtn.onclick = openDrawer;
                 if (closeBtn) closeBtn.onclick = closeDrawer;
                 if (overlay) overlay.onclick = closeDrawer;
+
+                // Mobile category accordion toggle
+                var catToggles = drawer.querySelectorAll('.mobile-cat-accordion-btn');
+                for (var i = 0; i < catToggles.length; i++) {
+                    catToggles[i].onclick = function (e) {
+                        if (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                        var parentItem = this.closest('.mobile-cat-item');
+                        if (parentItem) {
+                            parentItem.classList.toggle('open');
+                        }
+                    };
+                }
             }
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', initMobileNav);

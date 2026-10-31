@@ -16,7 +16,7 @@
   <?php get_header(); ?>
   <main>
 
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-climbing-ivy-vine-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Legal</p>
       <h1>Privacy <em>Policy</em></h1>
       <p>How we collect, use and protect your data while delivering gardening happiness.</p>

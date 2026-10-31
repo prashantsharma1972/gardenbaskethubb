@@ -13,7 +13,7 @@
     <!-- ============================================================
      CONTACT HERO
      ============================================================ -->
-    <section class="page-hero" style="text-align: center; width: 100%;">
+    <section class="page-hero" style="text-align: center; width: 100%; background-image: url('/wp-content/uploads/2026/10/section-white-jasmine-planters-bg.webp');">
       <p class="breadcrumb" style="justify-content: center;"><a href="/">Home</a> · Contact</p>
       <h1>Say <em>hello</em>.</h1>
       <p style="margin: 0 auto;">Plant questions, wholesale orders, partnerships or just gardening chats — we're here for it.</p>

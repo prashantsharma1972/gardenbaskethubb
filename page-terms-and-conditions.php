@@ -17,7 +17,7 @@
   <?php get_header(); ?>
   <main>
 
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-climbing-ivy-vine-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Legal</p>
       <h1>Terms &amp; <em>Conditions</em></h1>
       <p>The rules of our garden. Please read before placing an order with us.</p>

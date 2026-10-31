@@ -30,7 +30,7 @@
       ?>
 
       <!-- BLOG HERO -->
-      <section class="page-hero" style="padding-bottom: 24px;">
+      <section class="page-hero" style="padding-bottom: 24px; background-image: url('/wp-content/uploads/2026/10/hero-gardening-sunflowers-bg.webp');">
         <p class="breadcrumb"><a href="/blog">Blogs</a> · <?php echo esc_html($cat_name); ?></p>
         <h1 style="max-width:800px; margin:0 auto 16px;"><?php echo the_title(); ?></h1>
         

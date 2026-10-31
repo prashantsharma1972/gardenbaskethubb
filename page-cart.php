@@ -17,7 +17,7 @@
     <!-- ============================================================
      CART PAGE HERO
      ============================================================ -->
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-potted-plants-balcony-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Your Bag</p>
       <h1>Your <em>garden bag</em></h1>
       <p>Review your saplings and gardening supplies before checkout.</p>

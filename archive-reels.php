@@ -14,7 +14,7 @@
     <!-- ============================================================
      PAGE HERO
      ============================================================ -->
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-bougainvillea-floral-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Reels</p>
       <h1>Gardening <em>Reels</em>.</h1>
       <p>Watch and learn quick tips and tricks for your garden.</p>

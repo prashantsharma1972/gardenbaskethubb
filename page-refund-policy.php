@@ -16,7 +16,7 @@
   <?php get_header(); ?>
   <main>
 
-    <section class="page-hero">
+    <section class="page-hero" style="background-image: url('/wp-content/uploads/2026/10/section-climbing-ivy-vine-bg.webp');">
       <p class="breadcrumb"><a href="/">Home</a> · Legal</p>
       <h1>Refund &amp; <em>Shipping Policy</em></h1>
       <p>Our fresh plant guarantee, Jaipur same-day shipping rules, and replacement policy.</p>
