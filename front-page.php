@@ -110,15 +110,18 @@
               // Price with dual fallback (get_post_meta + get_field)
               $hp_price = get_post_meta($hp_id, 'product_price', true);
               if (!$hp_price && function_exists('get_field')) $hp_price = get_field('product_price');
+              if (!$hp_price) $hp_price = get_post_meta($hp_id, '_regular_price', true);
+              if (!$hp_price) $hp_price = get_post_meta($hp_id, '_price', true);
 
               $hp_offer = get_post_meta($hp_id, 'product_offer_price', true);
               if (!$hp_offer && function_exists('get_field')) $hp_offer = get_field('product_offer_price');
+              if (!$hp_offer) $hp_offer = get_post_meta($hp_id, '_sale_price', true);
 
               $hp_badge = get_post_meta($hp_id, 'discount_label', true);
               if (!$hp_badge && function_exists('get_field')) $hp_badge = get_field('discount_label');
 
-              // Thumbnail with fallback
-              $hp_thumb = get_the_post_thumbnail_url($hp_id, 'gbh-card');
+              // Thumbnail with fallback (uncropped large/full for clear packaging view)
+              $hp_thumb = get_the_post_thumbnail_url($hp_id, 'large');
               if (!$hp_thumb && function_exists('get_field')) $hp_thumb = get_field('product_image');
               if (!$hp_thumb) $hp_thumb = get_post_meta($hp_id, 'product_image', true);
 
@@ -134,10 +137,14 @@
                       }
                   }
               }
+              $hp_desc = function_exists('gbh_clean_text_snippet')
+                ? gbh_clean_text_snippet(get_the_excerpt(), 35)
+                : wp_trim_words(get_the_excerpt(), 35, '...');
+              $has_hp_discount = ($hp_offer && (!$hp_price || floatval($hp_offer) < floatval($hp_price)));
               ?>
               <div class="product-card" data-product-id="<?php echo esc_attr($hp_id); ?>" data-is-sapling="<?php echo $is_hp_sapling ? '1' : '0'; ?>" data-permalink="<?php the_permalink(); ?>">
                 <div class="product-img">
-                  <a href="<?php the_permalink(); ?>" style="display:block;width:100%;height:100%;text-decoration:none;color:inherit;">
+                  <a href="<?php the_permalink(); ?>" style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;text-decoration:none;color:inherit;">
                     <?php if ($hp_thumb): ?>
                       <img src="<?php echo esc_url($hp_thumb); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
                     <?php else: ?>
@@ -155,14 +162,14 @@
                 <div class="product-body">
                   <div class="product-category"><?php echo esc_html($hp_cat); ?></div>
                   <div class="product-name"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
-                  <div class="product-desc"><?php echo wp_trim_words(get_the_excerpt(), 10, '...'); ?></div>
+                  <div class="product-desc"><?php echo esc_html($hp_desc); ?></div>
                   <div class="product-footer">
                     <div class="product-price">
-                      <?php if ($hp_offer): ?>
+                      <?php if ($has_hp_discount): ?>
                         ₹<?php echo esc_html($hp_offer); ?>
                         <?php if ($hp_price): ?><del>₹<?php echo esc_html($hp_price); ?></del><?php endif; ?>
                       <?php else: ?>
-                        ₹<?php echo esc_html($hp_price ? $hp_price : '199'); ?>
+                        ₹<?php echo esc_html($hp_price ? $hp_price : ($hp_offer ? $hp_offer : '199')); ?>
                       <?php endif; ?>
                     </div>
                     <button class="add-btn" data-product-id="<?php echo esc_attr($hp_id); ?>" data-is-sapling="<?php echo $is_hp_sapling ? '1' : '0'; ?>">Add to bag</button>
@@ -215,23 +222,28 @@
     </section>
 
     <!-- ============================================================
-     CR §6: STAR FEATURED PRODUCT — ORGANIC PLANT BOOSTER SHOWCASE
-     High-Converting Showcase with Live Quantity Stepper & 1-Click Add
+     CR §6: STAR FEATURED PRODUCT — HIGH-CONVERTING SHOWCASE
+     100% Dynamic: Controlled from WP Admin -> Pages -> Home Page (or auto-detects)
      ============================================================ -->
     <?php
-    $booster_post = function_exists('gbh_get_product_by_title')
-        ? gbh_get_product_by_title('Garden Basket Organic Plant Booster (500ml)')
-        : null;
-    $booster_id = $booster_post ? $booster_post->ID : 0;
-    if (!$booster_id) {
-        $alt_booster_query = new WP_Query(array('post_type' => 'product', 's' => 'Plant Booster', 'posts_per_page' => 1));
-        if ($alt_booster_query->have_posts()) {
-            $alt_booster_query->the_post();
-            $booster_id = get_the_ID();
-            wp_reset_postdata();
-        }
-    }
-    $booster_img = $booster_id ? get_the_post_thumbnail_url($booster_id, 'large') : '';
+    $star_data = function_exists('gbh_get_star_product_data') ? gbh_get_star_product_data() : array();
+    $booster_id = !empty($star_data['id']) ? $star_data['id'] : 0;
+    $booster_img = !empty($star_data['img']) ? $star_data['img'] : '';
+    $star_title = !empty($star_data['title']) ? $star_data['title'] : 'Garden Basket Organic Plant Booster (500ml)';
+    $star_subtitle = !empty($star_data['subtitle']) ? $star_data['subtitle'] : 'All-in-one organic liquid nutrition booster for flowers, veggies, and potted plants.';
+    $star_desc = !empty($star_data['desc']) ? $star_data['desc'] : 'Formulated right in Jaipur, our signature bio-liquid plant booster combines cold-water seaweed kelp, humic acids, and essential micronutrients. Delivers visible greener leaves in 5 days and 3x more vibrant flower blooms.';
+    $star_badge = !empty($star_data['badge']) ? $star_data['badge'] : '⭐ Signature Bestseller';
+    $star_kicker = !empty($star_data['kicker']) ? $star_data['kicker'] : '★★★★★ 4.9/5 (180+ Happy Gardeners)';
+    $star_tag = !empty($star_data['tag']) ? $star_data['tag'] : 'Jaipur Formulated';
+    $star_price = !empty($star_data['price']) ? $star_data['price'] : '399';
+    $star_offer = !empty($star_data['offer_price']) ? $star_data['offer_price'] : '299';
+    $star_stock = !empty($star_data['stock']) ? $star_data['stock'] : '🟢 In Stock · Ready for Immediate Dispatch';
+
+    // Pricing & discount calculations
+    $curr_price = $star_offer ? $star_offer : $star_price;
+    $has_discount = ($star_price && $star_offer && intval($star_price) > intval($star_offer));
+    $save_amt = $has_discount ? (intval($star_price) - intval($star_offer)) : 0;
+    $save_pct = $has_discount ? round(($save_amt / intval($star_price)) * 100) : 0;
     ?>
     <section class="star-product-section" id="gbh-star-booster" style="background-image: url('/wp-content/uploads/2026/10/section-bougainvillea-floral-bg.webp');">
       <div class="container">
@@ -240,11 +252,11 @@
             
             <!-- Visual Column -->
             <div class="star-product-media">
-              <div class="star-badge-glow">⭐ Signature Bestseller</div>
+              <div class="star-badge-glow"><?php echo esc_html($star_badge); ?></div>
               <div class="star-img-wrapper">
                 <div class="star-img-display">
                   <?php if ($booster_img): ?>
-                    <img src="<?php echo esc_url($booster_img); ?>" alt="Garden Basket Organic Plant Booster" loading="lazy">
+                    <img src="<?php echo esc_url($booster_img); ?>" alt="<?php echo esc_attr($star_title); ?>" loading="lazy">
                   <?php else: ?>
                     <span>🌿 🧪 🌸</span>
                   <?php endif; ?>
@@ -255,54 +267,53 @@
                 </div>
               </div>
               <div class="star-media-thumbnails">
-                <span class="star-thumb active">🧪 500ml Bio-Elixir</span>
-                <span class="star-thumb">🌸 3x Flower Blooms</span>
-                <span class="star-thumb">🥬 Veggie Yield Boost</span>
+                <span class="star-thumb active"><?php echo esc_html(!empty($star_data['thumb_1']) ? $star_data['thumb_1'] : '🧪 500ml Bio-Elixir'); ?></span>
+                <span class="star-thumb"><?php echo esc_html(!empty($star_data['thumb_2']) ? $star_data['thumb_2'] : '🌸 3x Flower Blooms'); ?></span>
+                <span class="star-thumb"><?php echo esc_html(!empty($star_data['thumb_3']) ? $star_data['thumb_3'] : '🥬 Veggie Yield Boost'); ?></span>
               </div>
             </div>
 
             <!-- Content & Conversion Column -->
             <div class="star-product-content">
               <div class="star-kicker">
-                <span class="star-rating">★★★★★ 4.9/5 (180+ Happy Gardeners)</span>
-                <span class="star-tag">Jaipur Formulated</span>
+                <span class="star-rating"><?php echo esc_html($star_kicker); ?></span>
+                <span class="star-tag"><?php echo esc_html($star_tag); ?></span>
               </div>
               
-              <h2 class="star-title">Garden Basket Organic Plant Booster <span class="star-size">(500ml)</span></h2>
-              <p class="star-subtitle">All-in-one organic liquid nutrition booster for flowers, veggies, and potted plants.</p>
+              <h2 class="star-title"><?php echo esc_html($star_title); ?></h2>
+              <p class="star-subtitle"><?php echo esc_html($star_subtitle); ?></p>
               
               <p class="star-desc">
-                Formulated right in Jaipur, our signature bio-liquid plant booster combines cold-water seaweed kelp, humic acids, and essential micronutrients. Delivers visible greener leaves in 5 days and 3x more vibrant flower blooms.
+                <?php echo esc_html($star_desc); ?>
               </p>
 
               <!-- 4 Feature Badges -->
               <div class="star-features-grid">
-                <div class="star-feat-item">
-                  <span class="feat-ic">🌱</span>
-                  <div><strong>Root &amp; Shoot Vigor</strong><span>Fast nutrient uptake</span></div>
-                </div>
-                <div class="star-feat-item">
-                  <span class="feat-ic">🌸</span>
-                  <div><strong>3x More Blooms</strong><span>Abundant flowering &amp; fruiting</span></div>
-                </div>
-                <div class="star-feat-item">
-                  <span class="feat-ic">🛡️</span>
-                  <div><strong>Pest Resilience</strong><span>Boosts natural plant immunity</span></div>
-                </div>
-                <div class="star-feat-item">
-                  <span class="feat-ic">🇮🇳</span>
-                  <div><strong>Pan-India Delivery</strong><span>Ships safely across India</span></div>
-                </div>
+                <?php if (!empty($star_data['features']) && is_array($star_data['features'])): ?>
+                  <?php foreach ($star_data['features'] as $feat): ?>
+                    <div class="star-feat-item">
+                      <span class="feat-ic"><?php echo esc_html($feat['icon']); ?></span>
+                      <div><strong><?php echo esc_html($feat['title']); ?></strong><span><?php echo esc_html($feat['desc']); ?></span></div>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <div class="star-feat-item"><span class="feat-ic">🌱</span><div><strong>Root &amp; Shoot Vigor</strong><span>Fast nutrient uptake</span></div></div>
+                  <div class="star-feat-item"><span class="feat-ic">🌸</span><div><strong>3x More Blooms</strong><span>Abundant flowering &amp; fruiting</span></div></div>
+                  <div class="star-feat-item"><span class="feat-ic">🛡️</span><div><strong>Pest Resilience</strong><span>Boosts natural plant immunity</span></div></div>
+                  <div class="star-feat-item"><span class="feat-ic">🇮🇳</span><div><strong>Pan-India Delivery</strong><span>Ships safely across India</span></div></div>
+                <?php endif; ?>
               </div>
 
               <!-- Pricing Bar -->
               <div class="star-price-box">
                 <div class="star-price-wrap">
-                  <span class="star-price-curr">₹299</span>
-                  <del class="star-price-mrp">₹399</del>
-                  <span class="star-save-pill">Save 25% (₹100 OFF)</span>
+                  <span class="star-price-curr">₹<?php echo esc_html($curr_price); ?></span>
+                  <?php if ($has_discount): ?>
+                    <del class="star-price-mrp">₹<?php echo esc_html($star_price); ?></del>
+                    <span class="star-save-pill">Save <?php echo esc_html($save_pct); ?>% (₹<?php echo esc_html($save_amt); ?> OFF)</span>
+                  <?php endif; ?>
                 </div>
-                <div class="star-stock-indicator">🟢 In Stock · Ready for Immediate Dispatch</div>
+                <div class="star-stock-indicator"><?php echo esc_html($star_stock); ?></div>
               </div>
 
               <!-- Quantity Stepper & Direct 1-Click Add to Bag -->
@@ -319,7 +330,7 @@
                 <div class="star-cta-group">
                   <button type="button" class="btn-primary btn-star-add" id="star-add-to-bag-btn" 
                           data-product-id="<?php echo esc_attr($booster_id); ?>" 
-                          data-product-name="Garden Basket Organic Plant Booster (500ml)">
+                          data-product-name="<?php echo esc_attr($star_title); ?>">
                     🛒 Add to Bag ➔
                   </button>
                   <button type="button" class="btn-secondary btn-star-buy-now" id="star-buy-now-btn"
@@ -429,17 +440,30 @@
 
     <!-- ============================================================
      CR §10: AUTHENTIC SHOP PHOTO COLLAGE & STORY
+     100% Dynamic: Controlled from WP Admin -> Pages -> Home Page
      ============================================================ -->
+    <?php
+    $story_data = function_exists('gbh_get_story_collage_data') ? gbh_get_story_collage_data() : array();
+    $story_badge = !empty($story_data['badge']) ? $story_data['badge'] : '📍 Est. 2019 in Jaipur';
+    $story_heading = !empty($story_data['heading']) ? $story_data['heading'] : 'Step into our Jaipur nursery shop';
+    $story_lead = !empty($story_data['lead']) ? $story_data['lead'] : '<strong>Garden Basket started in 2019</strong> with a simple mission: bringing authentic, thriving green life into urban Jaipur homes and balconies.';
+    $story_text = !empty($story_data['text']) ? $story_data['text'] : 'What you see on our website comes directly from our physical nursery racks. Every potted sapling is hand-tended under Jaipur\'s natural sunlight, and every heirloom seed batch is personally germ-tested before dispatch.';
+    $story_img_main = !empty($story_data['img_main']) ? $story_data['img_main'] : '/wp-content/uploads/2026/10/our-story-jaipur-shop-front.webp';
+    $story_img_entrance = !empty($story_data['img_entrance']) ? $story_data['img_entrance'] : '/wp-content/uploads/2026/10/our-story-jaipur-shop-entrance.webp';
+    $story_img_saplings = !empty($story_data['img_saplings']) ? $story_data['img_saplings'] : '/wp-content/uploads/2026/10/our-story-fresh-saplings-rack.webp';
+    $story_maps = !empty($story_data['maps_url']) ? $story_data['maps_url'] : 'https://maps.app.goo.gl/PNbyJo98EydJKEWw7?g_st=ic';
+    $story_wa = !empty($story_data['whatsapp_url']) ? $story_data['whatsapp_url'] : 'https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!%20I%20would%20like%20to%20visit%20your%20Jaipur%20shop';
+    ?>
     <section class="about-shop-collage-section">
       <div class="container">
         <div class="shop-collage-grid">
           <!-- Visual Collage Column -->
           <div class="collage-visuals">
             <div class="collage-badge-floating">
-              <span>📍 Est. 2019 in Jaipur</span>
+              <span><?php echo esc_html($story_badge); ?></span>
             </div>
             <div class="collage-main-frame">
-              <img src="/wp-content/uploads/2026/10/our-story-jaipur-shop-front.webp" 
+              <img src="<?php echo esc_url($story_img_main); ?>" 
                    alt="Garden Basket Shop Storefront in Jaipur" 
                    class="collage-img-main" loading="lazy">
               <div class="collage-caption">
@@ -448,12 +472,12 @@
             </div>
             <div class="collage-sub-frames">
               <div class="sub-frame frame-entrance">
-                <img src="/wp-content/uploads/2026/10/our-story-jaipur-shop-entrance.webp" 
+                <img src="<?php echo esc_url($story_img_entrance); ?>" 
                      alt="Garden Basket Shop Entrance" loading="lazy">
                 <span class="sub-caption">Shop Entrance</span>
               </div>
               <div class="sub-frame frame-saplings">
-                <img src="/wp-content/uploads/2026/10/our-story-fresh-saplings-rack.webp" 
+                <img src="<?php echo esc_url($story_img_saplings); ?>" 
                      alt="Fresh Saplings Nursery Rack" loading="lazy">
                 <span class="sub-caption">Fresh Jaipur Saplings</span>
               </div>
@@ -463,12 +487,12 @@
           <!-- Story Narrative Column -->
           <div class="collage-story-content">
             <p class="section-label">Real Local Roots</p>
-            <h2 class="section-title">Step into our Jaipur nursery shop</h2>
+            <h2 class="section-title"><?php echo esc_html($story_heading); ?></h2>
             <p class="collage-lead">
-              <strong>Garden Basket started in 2019</strong> with a simple mission: bringing authentic, thriving green life into urban Jaipur homes and balconies.
+              <?php echo wp_kses_post($story_lead); ?>
             </p>
             <p class="collage-text">
-              What you see on our website comes directly from our physical nursery racks. Every potted sapling is hand-tended under Jaipur's natural sunlight, and every heirloom seed batch is personally germ-tested before dispatch.
+              <?php echo wp_kses_post($story_text); ?>
             </p>
             
             <div class="collage-features">
@@ -489,10 +513,10 @@
             </div>
 
             <div class="collage-cta-box">
-              <a href="https://maps.app.goo.gl/PNbyJo98EydJKEWw7?g_st=ic" target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <a href="<?php echo esc_url($story_maps); ?>" target="_blank" rel="noopener noreferrer" class="btn-primary">
                 📍 Locate Our Shop on Google Maps ➔
               </a>
-              <a href="https://wa.me/919414216343?text=Hi%20Garden%20Basket%20Hub!%20I%20would%20like%20to%20visit%20your%20Jaipur%20shop" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+              <a href="<?php echo esc_url($story_wa); ?>" target="_blank" rel="noopener noreferrer" class="btn-ghost">
                 💬 WhatsApp the Shop
               </a>
             </div>

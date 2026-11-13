@@ -26,9 +26,12 @@ remove_action('wp_head', 'rel_canonical');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10);
 remove_action('wp_head', 'rel_shortlink');
 
-// Disable Dashicons
+// Disable Dashicons on public frontend only (keep intact in WP Admin)
 function remove_dashicons_styles()
 {
+    if (is_admin() || is_user_logged_in()) {
+        return;
+    }
     wp_deregister_style('dashicons');
 }
 add_action('wp_print_styles', 'remove_dashicons_styles', 100);
@@ -45,26 +48,12 @@ function add_image_insert_override($size)
 }
 add_action("intermediate_image_sizes_advanced", "add_image_insert_override");
 
-// Block endpoints for public users only on wp-json requests
+// Block sensitive user enumeration endpoints for public unauthenticated requests only
 function allow_specific_rest_api_endpoints($endpoints)
 {
-    if (strpos($_SERVER['REQUEST_URI'], '/wp-json/') !== false) {
-        $allowed_endpoints = [
-            '/wp/v2/posts',
-            '/wp/v2/tags',
-            '/wp/v2/pages',
-            '/wp/v2/products',
-            '/wp/v2/gardening-reels',
-        ];
-        foreach ($endpoints as $route => $handlers) {
-            $route_match = false;
-            foreach ($allowed_endpoints as $allowed) {
-                if (strpos($route, $allowed) === 0) {
-                    $route_match = true;
-                    break;
-                }
-            }
-            if (!$route_match) {
+    if (!is_user_logged_in()) {
+        foreach (array_keys($endpoints) as $route) {
+            if (strpos($route, '/wp/v2/users') === 0) {
                 unset($endpoints[$route]);
             }
         }
@@ -124,6 +113,9 @@ function gbh_is_tester_email($email)
    2. LOAD MODULAR SUBSYSTEMS (/inc/ & /helpers/)
    ============================================================ */
 require_once GBH_THEME_DIR . '/inc/cpt-taxonomies.php';
+require_once GBH_THEME_DIR . '/inc/product-fields.php';
+require_once GBH_THEME_DIR . '/inc/product-importer.php';
+require_once GBH_THEME_DIR . '/inc/homepage-settings.php';
 require_once GBH_THEME_DIR . '/inc/cart-engine.php';
 require_once GBH_THEME_DIR . '/inc/razorpay-integration.php';
 require_once GBH_THEME_DIR . '/inc/shiprocket-integration.php';
@@ -147,8 +139,8 @@ function gbh_theme_setup()
     add_theme_support('html5', array('search-form', 'comment-form', 'comment-list', 'gallery', 'caption'));
     add_theme_support('custom-logo');
 
-    // Register Image Sizes
-    add_image_size('gbh-card', 600, 600, true);
+    // Register Image Sizes (keep product cards uncropped so full packaging fits)
+    add_image_size('gbh-card', 600, 600, false);
     add_image_size('gbh-hero', 1200, 800, true);
     add_image_size('gbh-thumb', 200, 200, true);
 }

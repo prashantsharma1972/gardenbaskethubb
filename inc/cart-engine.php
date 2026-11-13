@@ -124,10 +124,19 @@ function gbh_get_cart_data()
             $price = get_field('product_offer_price', $product_id);
         }
         if (!$price) {
+            $price = get_post_meta($product_id, '_sale_price', true);
+        }
+        if (!$price) {
             $price = get_post_meta($product_id, 'product_price', true);
         }
         if (!$price && function_exists('get_field')) {
             $price = get_field('product_price', $product_id);
+        }
+        if (!$price) {
+            $price = get_post_meta($product_id, '_regular_price', true);
+        }
+        if (!$price) {
+            $price = get_post_meta($product_id, '_price', true);
         }
 
         $price = floatval(preg_replace('/[^0-9.]/', '', strval($price)));
@@ -411,25 +420,32 @@ function gbh_ajax_filter_products()
             $price = get_post_meta($p_id, 'product_price', true);
             if (!$price && function_exists('get_field'))
                 $price = get_field('product_price', $p_id);
+            if (!$price) $price = get_post_meta($p_id, '_regular_price', true);
+            if (!$price) $price = get_post_meta($p_id, '_price', true);
 
             $offer_price = get_post_meta($p_id, 'product_offer_price', true);
             if (!$offer_price && function_exists('get_field'))
                 $offer_price = get_field('product_offer_price', $p_id);
+            if (!$offer_price) $offer_price = get_post_meta($p_id, '_sale_price', true);
 
             $discount_label = get_post_meta($p_id, 'discount_label', true);
             if (!$discount_label && function_exists('get_field'))
                 $discount_label = get_field('discount_label', $p_id);
 
-            $thumb_url = get_the_post_thumbnail_url($p_id, 'gbh-card');
+            $thumb_url = get_the_post_thumbnail_url($p_id, 'large');
             if (!$thumb_url && function_exists('get_field'))
                 $thumb_url = get_field('product_image', $p_id);
             if (!$thumb_url)
                 $thumb_url = get_post_meta($p_id, 'product_image', true);
+            $card_desc = function_exists('gbh_clean_text_snippet')
+                ? gbh_clean_text_snippet(get_the_excerpt(), 35)
+                : wp_trim_words(get_the_excerpt(), 35, '...');
+            $has_discount = ($offer_price && (!$price || floatval($offer_price) < floatval($price)));
             ?>
             <div class="product-card" data-product-id="<?php echo esc_attr($p_id); ?>" data-permalink="<?php the_permalink(); ?>">
                 <div class="product-img">
                     <a href="<?php the_permalink(); ?>"
-                        style="display:block;width:100%;height:100%;text-decoration:none;color:inherit;">
+                        style="display:flex;width:100%;height:100%;align-items:center;justify-content:center;text-decoration:none;color:inherit;">
                         <?php if ($thumb_url): ?>
                             <img src="<?php echo esc_url($thumb_url); ?>" alt="<?php the_title(); ?>">
                         <?php else: ?>
@@ -457,16 +473,16 @@ function gbh_ajax_filter_products()
                     </div>
 
                     <div class="product-desc">
-                        <?php echo wp_trim_words(get_the_excerpt(), 10, '...'); ?>
+                        <?php echo esc_html($card_desc); ?>
                     </div>
 
                     <div class="product-footer">
                         <div class="product-price">
-                            <?php if ($offer_price): ?>
+                            <?php if ($has_discount): ?>
                                 ₹<?php echo esc_html($offer_price); ?>
                                 <?php if ($price): ?><del>₹<?php echo esc_html($price); ?></del><?php endif; ?>
                             <?php else: ?>
-                                ₹<?php echo esc_html($price ? $price : '199'); ?>
+                                ₹<?php echo esc_html($price ? $price : ($offer_price ? $offer_price : '199')); ?>
                             <?php endif; ?>
                         </div>
 

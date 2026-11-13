@@ -139,11 +139,19 @@
                 $p_id = get_the_ID();
                 $title = get_field('product_title') ?: get_the_title();
                 $price = get_field('product_price') ?: get_post_meta($p_id, 'product_price', true);
+                if (!$price) $price = get_post_meta($p_id, '_regular_price', true);
+                if (!$price) $price = get_post_meta($p_id, '_price', true);
+
                 $offer_price = get_field('product_offer_price') ?: get_post_meta($p_id, 'product_offer_price', true);
+                if (!$offer_price) $offer_price = get_post_meta($p_id, '_sale_price', true);
                 $discount_label = get_field('discount_label') ?: get_post_meta($p_id, 'discount_label', true);
-                $image_url = get_field('product_image') ?: get_the_post_thumbnail_url($p_id, 'gbh-card');
+                $image_url = get_field('product_image') ?: get_the_post_thumbnail_url($p_id, 'large');
                 if (!$image_url) $image_url = get_post_meta($p_id, 'product_image', true);
                 $image_alt = get_field('product_image_alt') ?: get_the_title();
+                $card_desc = function_exists('gbh_clean_text_snippet')
+                    ? gbh_clean_text_snippet(get_the_excerpt(), 35)
+                    : wp_trim_words(get_the_excerpt(), 35, '...');
+                $has_discount = ($offer_price && (!$price || floatval($offer_price) < floatval($price)));
                 
                 $terms = get_the_terms($p_id, 'product_cat');
                 $cat_tokens = array();
@@ -178,7 +186,7 @@
                   data-is-sapling="<?php echo $is_jaipur_only ? '1' : '0'; ?>"
                   data-category="<?php echo esc_attr($cat_filter_attr); ?>"
                   data-title="<?php echo esc_attr(strtolower($title)); ?>"
-                  data-price="<?php echo esc_attr($offer_price ? $offer_price : ($price ? $price : 199)); ?>"
+                  data-price="<?php echo esc_attr($has_discount ? $offer_price : ($price ? $price : ($offer_price ? $offer_price : 199))); ?>"
                   data-date="<?php echo get_the_time('U', $p_id); ?>"
                   data-permalink="<?php the_permalink(); ?>">
                   
@@ -202,18 +210,17 @@
                     <div class="product-name">
                       <h2><a href="<?php the_permalink(); ?>"><?php echo esc_html($title); ?></a></h2>
                     </div>
-                    <!-- Assuming description comes from excerpt, keeping it short -->
                     <div class="product-desc">
-                      <?php echo wp_trim_words(get_the_excerpt(), 10, '...'); ?>
+                      <?php echo esc_html($card_desc); ?>
                     </div>
                     
                     <div class="product-footer">
                       <div class="product-price">
-                        <?php if ($offer_price): ?>
+                        <?php if ($has_discount): ?>
                           ₹<?php echo esc_html($offer_price); ?>
-                          <?php if ($price): ?><small style="text-decoration: line-through;">₹<?php echo esc_html($price); ?></small><?php endif; ?>
+                          <?php if ($price): ?><del>₹<?php echo esc_html($price); ?></del><?php endif; ?>
                         <?php else: ?>
-                          ₹<?php echo esc_html($price ? $price : '199'); ?>
+                          ₹<?php echo esc_html($price ? $price : ($offer_price ? $offer_price : '199')); ?>
                         <?php endif; ?>
                       </div>
 

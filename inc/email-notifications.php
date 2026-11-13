@@ -21,7 +21,7 @@ function gbh_send_order_confirmation_email($order_id)
     $payment_method = get_post_meta($order_id, '_payment_method', true);
     $is_tester = function_exists('gbh_is_tester_email') && gbh_is_tester_email($customer_email);
 
-    $subject = ($is_tester ? '🧪 [TEST ORDER] ' : '🌱 ') . 'Order Confirmed! #' . $order_id . ' — Garden Basket Hub';
+    $subject = ($is_tester ? '[TEST ORDER] ' : '') . 'Order Confirmed #' . $order_id . ' — Garden Basket Hub';
 
     $items_html = '';
     if (is_array($items)) {
@@ -73,7 +73,7 @@ function gbh_send_order_confirmation_email($order_id)
     if (empty($admin_email) || $admin_email === 'hello@gardenbaskethubb.com') {
         $admin_email = 'prashant753@gmail.com';
     }
-    $admin_subject = ($is_tester ? '🧪 [TEST ORDER] ' : '🔔 ') . 'New Order Received #' . $order_id;
+    $admin_subject = ($is_tester ? '[TEST ORDER] ' : '') . 'New Order Received #' . $order_id;
     $sent_admin = wp_mail($admin_email, $admin_subject, $message, $headers);
     error_log('[GBH Email] Admin notification sent to ' . $admin_email . ': ' . ($sent_admin ? 'SUCCESS' : 'FAILED'));
 }

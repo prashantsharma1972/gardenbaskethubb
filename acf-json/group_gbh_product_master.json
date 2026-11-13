@@ -1,0 +1,619 @@
+{
+    "key": "group_gbh_product_master",
+    "title": "Product Data",
+    "fields": [
+        {
+            "key": "field_gbh_tab_pricing",
+            "label": "Pricing & Inventory",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_gbh_product_price",
+            "label": "Regular Price (MRP ₹)",
+            "name": "product_price",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Regular retail price before discount.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": 249,
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_product_offer_price",
+            "label": "Sale Price (₹)",
+            "name": "product_offer_price",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Discounted selling price. Leave blank if no discount applies.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": 199,
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_discount_label",
+            "label": "Discount Badge",
+            "name": "discount_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional label shown on product cards (e.g. 25% OFF, Bestseller).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "25% OFF",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_sku",
+            "label": "SKU",
+            "name": "_sku",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Product SKU or internal reference code.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "GBH-001",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_stock_status",
+            "label": "Stock Status",
+            "name": "_stock_status",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Current availability.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "instock": "In Stock",
+                "outofstock": "Out of Stock"
+            },
+            "default_value": "instock",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_gbh_stock_quantity",
+            "label": "Stock Quantity",
+            "name": "stock_quantity",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "Available units in inventory.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 100,
+            "min": "",
+            "max": "",
+            "step": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_number_of_seeds",
+            "label": "Pack Size",
+            "name": "number_of_seeds",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Weight, volume, or count per unit (e.g. 50+ Seeds, 1 kg, Pack of 6).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "50+ Seeds",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_seed_type",
+            "label": "Variety \/ Type",
+            "name": "seed_type",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Seed or product type (e.g. Heirloom Non-GMO, Hybrid F1).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "Heirloom Non-GMO",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_tab_specs",
+            "label": "Growing Specifications",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_gbh_sowing_season",
+            "label": "Sowing Season",
+            "name": "sowing_season",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Recommended planting season.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "All Year": "All Year",
+                "Monsoon": "Monsoon (July - Sept)",
+                "Winter": "Winter (Oct - Feb)",
+                "Summer": "Summer (March - June)"
+            },
+            "default_value": "All Year",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_gbh_germ_temp",
+            "label": "Germination Temperature",
+            "name": "germination_temperature",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optimal range (e.g. 20-28°C).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "20-28°C",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_germ_time",
+            "label": "Germination Time",
+            "name": "germination_time",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Expected days to sprout (e.g. 6-8 Days).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "6-8 Days",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_first_harvest",
+            "label": "Time to Harvest",
+            "name": "first_harvest",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Estimated days to maturity (e.g. 60-70 Days).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "60-70 Days",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_pot_size",
+            "label": "Recommended Pot Size",
+            "name": "container_pot_size",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Minimum container or grow bag size (e.g. 10-12 Inch).",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "10-12 Inch",
+            "default_value": "",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_gbh_growing_level",
+            "label": "Care Level",
+            "name": "growing_level",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Difficulty level for growers.",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Beginner Friendly": "Beginner Friendly",
+                "Easy Care": "Easy Care",
+                "All Gardeners": "All Gardeners",
+                "Intermediate": "Intermediate"
+            },
+            "default_value": "Beginner Friendly",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "return_format": "value",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_gbh_tab_gallery",
+            "label": "Product Gallery",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_gbh_img_1",
+            "label": "Gallery Image 1",
+            "name": "product_image_1",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_gbh_img_2",
+            "label": "Gallery Image 2",
+            "name": "product_image_2",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_gbh_img_3",
+            "label": "Gallery Image 3",
+            "name": "product_image_3",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_gbh_img_4",
+            "label": "Gallery Image 4",
+            "name": "product_image_4",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_gbh_img_5",
+            "label": "Gallery Image 5",
+            "name": "product_image_5",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "url",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": 0,
+            "min_height": 0,
+            "min_size": 0,
+            "max_width": 0,
+            "max_height": 0,
+            "max_size": 0,
+            "mime_types": ""
+        },
+        {
+            "key": "field_gbh_tab_care",
+            "label": "Care & Growing Guides",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_gbh_how_to_grow",
+            "label": "How to Grow",
+            "name": "how_to_grow",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "placeholder": "Sowing depth, spacing, and initial watering instructions.",
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_gbh_plant_care_tips",
+            "label": "Care Requirements",
+            "name": "plant_care_tips",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Sunlight, watering schedule, and soil recommendations.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "placeholder": "6-8 hours of sunlight daily, well-draining soil...",
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_gbh_pests_and_diseases",
+            "label": "Pest & Disease Management",
+            "name": "pests_and_diseases",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "placeholder": "Recommended organic preventive care or neem oil schedule.",
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_gbh_harvesting_guide",
+            "label": "Harvesting Guide",
+            "name": "harvesting_guide",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "placeholder": "Signs of maturity and harvesting tips.",
+            "default_value": "",
+            "new_lines": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "product"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Product custom fields for pricing, inventory, specifications, gallery images, and growing guides.",
+    "show_in_rest": 1,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1794400682
+}

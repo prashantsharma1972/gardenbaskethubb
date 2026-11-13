@@ -13,10 +13,14 @@ function gbh_register_cpts_and_taxonomies()
     // CPT: Products
     register_post_type('product', array(
         'labels' => array(
-            'name' => 'Products',
-            'singular_name' => 'Product',
-            'add_new_item' => 'Add New Product',
-            'edit_item' => 'Edit Product',
+            'name'                  => 'Products',
+            'singular_name'         => 'Product',
+            'add_new_item'          => 'Add New Product',
+            'edit_item'             => 'Edit Product',
+            'featured_image'        => 'Featured Image',
+            'set_featured_image'    => 'Set featured image',
+            'remove_featured_image' => 'Remove featured image',
+            'use_featured_image'    => 'Use as featured image',
         ),
         'public' => true,
         'has_archive' => true,
@@ -51,10 +55,14 @@ function gbh_register_cpts_and_taxonomies()
     // CPT: Gardening Reels
     register_post_type('reels', array(
         'labels' => array(
-            'name' => 'Gardening Reels',
-            'singular_name' => 'Reel',
-            'add_new_item' => 'Add New Reel',
-            'edit_item' => 'Edit Reel',
+            'name'                  => 'Gardening Reels',
+            'singular_name'         => 'Reel',
+            'add_new_item'          => 'Add New Reel',
+            'edit_item'             => 'Edit Reel',
+            'featured_image'        => 'Featured Image',
+            'set_featured_image'    => 'Set featured image',
+            'remove_featured_image' => 'Remove featured image',
+            'use_featured_image'    => 'Use as featured image',
         ),
         'public' => true,
         'has_archive' => true,
