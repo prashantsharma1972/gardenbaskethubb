@@ -1,7 +1,9 @@
 /node_modules
 /exported_products_from_live_site/
+/products_from_client/
 __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
 *.log
+*.zip

@@ -233,23 +233,40 @@ function gbh_sideload_product_image($image_url, $post_id, $desc = '', $set_thumb
         }
     }
 
+    // 2. Check if image filename already exists in the WordPress Media Library (instant match regardless of domain or upload folder)
+    $clean_url = strtok($image_url, '?');
+    $filename = wp_basename($clean_url);
+    if ($filename && preg_match('/\.(jpe?g|png|webp|gif|svg)$/i', $filename)) {
+        global $wpdb;
+        $att_id = $wpdb->get_var($wpdb->prepare(
+            "SELECT post_id FROM $wpdb->postmeta 
+             WHERE meta_key = '_wp_attached_file' 
+             AND (meta_value = %s OR meta_value LIKE %s) 
+             ORDER BY post_id DESC LIMIT 1",
+            $filename,
+            '%/' . $wpdb->esc_like($filename)
+        ));
+        if ($att_id) {
+            $existing_id = (int) $att_id;
+            if ($set_thumbnail) {
+                set_post_thumbnail($post_id, $existing_id);
+            }
+            return $existing_id;
+        }
+    }
+
     // If relative path like /wp-content/uploads/..., prepend site_url
     if (strpos($image_url, '/wp-content/uploads/') === 0) {
         $image_url = site_url($image_url);
     }
 
-    if (!filter_var($image_url, FILTER_VALIDATE_URL)) {
-        return 0;
-    }
-
-    // 2. Check if the image is already in the Media Library (local URL)
-    $clean_url = strtok($image_url, '?');
+    // 3. Check if the image matches by exact URL in the Media Library
     $existing_id = attachment_url_to_postid($clean_url);
     if (!$existing_id) {
         $existing_id = attachment_url_to_postid($image_url);
     }
 
-    // 3. Check if previously sideloaded from the exact same source URL
+    // 4. Check if previously sideloaded from the exact same source URL
     if (!$existing_id) {
         $matched_attachments = get_posts(array(
             'post_type'      => 'attachment',
@@ -270,6 +287,10 @@ function gbh_sideload_product_image($image_url, $post_id, $desc = '', $set_thumb
             set_post_thumbnail($post_id, $existing_id);
         }
         return $existing_id;
+    }
+
+    if (!filter_var($image_url, FILTER_VALIDATE_URL)) {
+        return 0;
     }
 
     // 4. External URL: Sideload download once into Media Library
@@ -752,8 +773,8 @@ function gbh_process_csv_file($filepath)
             }
 
             if ($field['type'] === 'image') {
-                // Sideload only if field is empty and CSV contains a valid URL
-                if (!get_post_meta($p_id, $meta_name, true) && filter_var($val, FILTER_VALIDATE_URL)) {
+                // Sideload only if field is empty and CSV contains a valid URL or filename
+                if (!get_post_meta($p_id, $meta_name, true) && (filter_var($val, FILTER_VALIDATE_URL) || preg_match('/\.(jpe?g|png|webp|gif|svg)$/i', $val))) {
                     $gal_id = gbh_sideload_product_image($val, $p_id, $title . ' - ' . $field['label'], false);
                     if ($gal_id) {
                         gbh_save_acf_or_meta($p_id, $meta_name, $field['key'], $gal_id);
