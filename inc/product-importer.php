@@ -253,6 +253,47 @@ function gbh_sideload_product_image($image_url, $post_id, $desc = '', $set_thumb
             }
             return $existing_id;
         }
+
+        // 2b. If not registered in DB, check if file exists on disk (e.g. extracted via cPanel/FTP into uploads)
+        $upload_dir = wp_get_upload_dir();
+        $potential_disk_paths = array(
+            $upload_dir['basedir'] . '/2026/11/' . $filename,
+            $upload_dir['path'] . '/' . $filename,
+            $upload_dir['basedir'] . '/' . $filename,
+        );
+
+        foreach ($potential_disk_paths as $local_disk_file) {
+            if (file_exists($local_disk_file)) {
+                $filetype = wp_check_filetype($filename, null);
+                $clean_basedir = str_replace('\\', '/', $upload_dir['basedir']);
+                $clean_diskfile = str_replace('\\', '/', $local_disk_file);
+                $rel_attached_path = ltrim(str_replace($clean_basedir, '', $clean_diskfile), '/');
+
+                $attachment_data = array(
+                    'guid'           => $upload_dir['baseurl'] . '/' . $rel_attached_path,
+                    'post_mime_type' => $filetype['type'] ? $filetype['type'] : 'image/jpeg',
+                    'post_title'     => preg_replace('/\.[^.]+$/', '', $filename),
+                    'post_content'   => '',
+                    'post_status'    => 'inherit'
+                );
+
+                require_once(ABSPATH . 'wp-admin/includes/image.php');
+                require_once(ABSPATH . 'wp-admin/includes/file.php');
+                require_once(ABSPATH . 'wp-admin/includes/media.php');
+
+                $new_att_id = wp_insert_attachment($attachment_data, $local_disk_file, $post_id);
+                if (!is_wp_error($new_att_id) && $new_att_id) {
+                    $metadata = wp_generate_attachment_metadata($new_att_id, $local_disk_file);
+                    wp_update_attachment_metadata($new_att_id, $metadata);
+                    update_post_meta($new_att_id, '_wp_attached_file', $rel_attached_path);
+
+                    if ($set_thumbnail) {
+                        set_post_thumbnail($post_id, $new_att_id);
+                    }
+                    return (int) $new_att_id;
+                }
+            }
+        }
     }
 
     // If relative path like /wp-content/uploads/..., prepend site_url
